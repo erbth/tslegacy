@@ -1,0 +1,10 @@
+# Configure TPM
+export TPM_TARGET=/home/therb/projects/tslegacy/packaging/playground/target
+export TPM_PROGRAM_GZIP=pigz
+
+# Configure packaging Makefiles
+export PKG_ARCH=amd64
+export TPM=/home/therb/projects/other/TPM/tpm.native
+export BUILD_LOCATION=/home/therb/projects/tslegacy/packaging/playground/build_location
+export SOURCE_LOCATION=/home/therb/projects/tslegacy/packaging/playground/source_location
+export COLLECTING_REPO=/home/therb/projects/tslegacy/packaging/playground/collecting_repo
