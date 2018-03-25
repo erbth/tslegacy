@@ -13,19 +13,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := iproute2
+PKG_NAME := mpc
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.0
+PKG_VERSION := 1.1.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
 PKG_RDEPS := glibc linux
-SOURCE_ARCHIVE := iproute2-4.15.0.tar.xz
+SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -72,14 +73,22 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-html && \
 	> $(PWD)/$@
 
 built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	$(MAKE) && \
+	$(MAKE) html && \
+	> $(PWD)/built
 
 configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && ./configure --prefix=/usr && > $(PWD)/$@
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	./configure \
+		--prefix=/usr \
+		--disable-static && \
+	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \

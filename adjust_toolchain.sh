@@ -29,13 +29,12 @@ case $(uname -m)
 in
     x86_64)
         [ "$(readelf -l a.out | grep ': /lib')" == \
-        "[Requested program interpreter: /lib64/ld-linux-x86-64.so.2" ]
+        "[Requesting program interpreter: /lib64/ld-linux-x86-64.so.2" ]
         ;;
 
-    i586)
-    i686)
+    i?86)
         [ "$(readelf -l a.out | grep ': /lib')" == \
-        "[Requested program interpreter: /lib/ld-linux.so.2" ]
+        "[Requesting program interpreter: /lib/ld-linux.so.2" ]
         ;;
 
     *)
@@ -80,8 +79,7 @@ in
         "found ld-linux-x86-64.so.2 at /lib/ld-linux-x86-64.so.2" ]
         ;;
 
-    i586)
-    i686)
+    i?86)
         [ "$(grep found dummy.log)" == \
         "found ld-linux.so.2 at /lib/ld-linux.so.2" ]
         ;;

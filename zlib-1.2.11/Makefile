@@ -13,19 +13,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := iproute2
+PKG_NAME := zlib
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.0
+PKG_VERSION := 1.2.11
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
 PKG_RDEPS := glibc linux
-SOURCE_ARCHIVE := iproute2-4.15.0.tar.xz
+SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -72,7 +73,7 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
 	> $(PWD)/$@
 
 built: configured

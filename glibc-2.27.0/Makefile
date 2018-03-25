@@ -13,16 +13,16 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := iproute2
+PKG_NAME := glibc
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.0
+PKG_VERSION := 2.27.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc linux
-SOURCE_ARCHIVE := iproute2-4.15.0.tar.xz
+PKG_RDEPS := linux
+SOURCE_ARCHIVE := $(PKG_NAME)-2.27.tar.xz
 
 # Automatically derived information - shall be adapted if required
 SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)	# This may need to be adapted
@@ -71,15 +71,31 @@ adapted: $(wildcard $(ADAPTSH)) installed
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
 installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
+	touch etc/ld.so.conf && \
+	sed '/test-installation/s@$$(PERL)@echo not running@' -i ../Makefile && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
 	> $(PWD)/$@
 
 built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && $(MAKE) && > $(PWD)/built
 
 configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && ./configure --prefix=/usr && > $(PWD)/$@
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	mkdir -pv build && cd build && \
+	case $(uname -m) in \
+		i?86)   GCC_INCDIR=/usr/lib/gcc/$(uname -m)-pc-linux-gnu/7.3.0/include;; \
+		x86_64) GCC_INCDIR=/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include;; \
+		*) false;; \
+	esac && \
+	eval CC="gcc -isystem $$GCC_INCDIR -isystem /usr/include" && \
+	../configure \
+		--prefix=/usr \
+		--disable-werror \
+		--enable-kernel=3.2 \
+		--enable-stack-protector=strong \
+		libc_cv_slibdir=/lib && \
+		> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \

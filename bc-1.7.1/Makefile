@@ -13,19 +13,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := iproute2
+PKG_NAME := bc
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.0
+PKG_VERSION := 1.7.1
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc linux
-SOURCE_ARCHIVE := iproute2-4.15.0.tar.xz
+PKG_RDEPS := readline glibc linux
+SOURCE_ARCHIVE := $(PKG_NAME)-1.07.1.tar.gz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -72,14 +73,19 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
 	> $(PWD)/$@
 
 built: configured
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
 
 configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && ./configure --prefix=/usr && > $(PWD)/$@
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	./configure --prefix=/usr \
+		--with-readline \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info && \
+	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \

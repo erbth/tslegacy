@@ -13,19 +13,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := iproute2
+PKG_NAME := tzdata
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.0
+PKG_VERSION := 2018.4.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc linux
-SOURCE_ARCHIVE := iproute2-4.15.0.tar.xz
+PKG_RDEPS := glibc
+SOURCE_ARCHIVE := tzdata2018d.tar.gz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := tzdata
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -66,27 +67,15 @@ desc_initial: Makefile | $(WORKING_DIR)
 	if [ -e $(DESTDIR) ]; then rm -r $(DESTDIR); fi && \
 	$(TPM) --create-desc $(PKG_TYPE) && > $(PWD)/$@
 
-adapted: $(wildcard $(ADAPTSH)) installed
+adapted: $(wildcard $(ADAPTSH)) source_ready
 	if [ "$<" == "$(ADAPTSH)" ]; then \
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
-installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
-	> $(PWD)/$@
-
-built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
-
-configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && ./configure --prefix=/usr && > $(PWD)/$@
-
-patched: $(wildcard $(PATCHSH)) source_ready
-	if [ "$<" == "$(PATCHSH)" ]; then \
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(PATCHSH); fi && > $(PWD)/$@
-
 source_ready: Makefile $(SOURCE_ARCHIVE) | $(WORKING_DIR)
-	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(WORKING_DIR) && > $(PWD)/$@
+	cd $(WORKING_DIR) && \
+	mkdir $(SOURCE_DIR) && \
+	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(SOURCE_DIR) && \
+	> $(PWD)/$@
 
 $(WORKING_DIR):
 	mkdir -p $@

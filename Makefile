@@ -24,11 +24,23 @@ built_of_pkg = $(BUILD_LOCATION)/$(1)/$(PKG_ARCH)/$(1)_$(PKG_ARCH).tpm.tar
 
 # Packages to build
 # <package name>-<version triple>
-PKGS := amhello-1.0.0 basic_fhs-3.0.0 iproute2-4.15.0
+PKGS := amhello-1.0.0 \
+		basic_fhs-3.0.0 \
+		bc-1.7.1 \
+		binutils-2.30.0 \
+		gcc-7.3.0 \
+		glibc-2.27.0 \
+		gmp-6.1.2 \
+		iproute2-4.15.0 \
+		mpc-1.1.0 \
+		mpfr-4.0.1 \
+		readline-7.0.0 \
+		tzdata-2018.4.0 \
+		zlib-1.2.11
 
 # config
 TPM_CONF = $(TPM_TARGET)/etc/tpm/config.xml
-TOOLS_DIR = $(TPM_TARGET)/tools
+export TOOLS_DIR = $(TPM_TARGET)/tools
 
 # Automatically derived information
 PACKED_PKGS = $(PKGS:%=%_$(PKG_ARCH).tpm.tar)
@@ -45,11 +57,25 @@ all_packages: $(PKGS:%=%_installed)
 
 # Dependencies between package builds, and other targets.
 $(call built_of_pkg,iproute2-4.15.0): toolchain_adjusted
+$(call built_of_pkg,bc-1.7.1): ncurses-6.1.0_installed
 
-$(call built_of_pkg,amhello-1.0.0): basic_fhs-3.0.0_installed
-$(call built_of_pkg,amhello-1.0.0): tool_links_created
+$(call built_of_pkg,gcc-7.3.0): mpc-1.1.0_installed mpfr-4.0.1_installed
+$(call built_of_pkg,gcc-7.3.0): gmp-6.1.2_installed binutils-2.30.0_installed
+$(call built_of_pkg,gcc-7.3.0): zlib-1.2.11_installed
 
-toolchain_adjusted: amhello-1.0.0_installed
+$(call built_of_pkg,mpc-1.1.0): binutils-2.30.0_installed
+$(call built_of_pkg,mpfr-4.0.1): binutils-2.30.0_installed
+$(call built_of_pkg,gmp-6.1.2): binutils-2.30.0_installed
+$(call built_of_pkg,readline-7.0.0): toolchain_adjusted
+$(call built_of_pkg,binutils-2.30.0): zlib-1.2.11_installed
+$(call built_of_pkg,zlib-1.2.11): toolchain_adjusted
+
+$(call built_of_pkg,tzdata-2018.4.0): glibc-2.27.0_installed
+
+$(call built_of_pkg,glibc-2.27.0): linux-headers-4.15.13_installed
+$(call built_of_pkg,linux-headers-4.15.13): tool_links_created
+
+toolchain_adjusted: glibc-2.27.0_installed
 tool_links_created: basic_fhs-3.0.0_installed
 
 # General rules for building and packages and installing them to the runtime
@@ -65,6 +91,8 @@ tool_links_created:
 	eval PKG="$${PKG%-*}" && \
 	if $(TPM) --list-installed || kill $$$$ | grep -q "^$${PKG}$$"; then \
 		$(TPM) --remove $${PKG}; \
+	else \
+		if [ -L $(TPM_TARGET)/usr/lib/gcc ]; then rm $(TPM_TARGET)/usr/lib/gcc; fi; \
 	fi && \
 	$(TPM) --install $${PKG} && \
 	> $@
