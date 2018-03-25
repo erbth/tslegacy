@@ -24,7 +24,7 @@ built_of_pkg = $(BUILD_LOCATION)/$(1)/$(PKG_ARCH)/$(1)_$(PKG_ARCH).tpm.tar
 
 # Packages to build
 # <package name>-<version triple>
-PKGS := amhello-1.0.0 basic_fhs-3.0.0
+PKGS := amhello-1.0.0 basic_fhs-3.0.0 iproute2-4.15.0
 
 # config
 TPM_CONF = $(TPM_TARGET)/etc/tpm/config.xml
@@ -36,16 +36,30 @@ COLLECTED_PACKED_PKGS = $(PACKED_PKGS:%=$(COLLECTING_REPO)/$(PKG_ARCH)/%)
 BUILT_PACKED_PKGS = $(join $(PKGS:%=$(BUILD_LOCATION)/%/$(PKG_ARCH)/), $(PACKED_PKGS))
 
 .SECONDEXPANSION:
+# TPM's database does not allow for multiple simultaneous tpm invocations.
+.NOTPARALLEL:
 
 # The default rule ('main anchora' of the building process)
 all_packages: $(PKGS:%=%_installed)
 	> $@
 
 # Dependencies between package builds, and other targets.
+$(call built_of_pkg,iproute2-4.15.0): toolchain_adjusted
+
 $(call built_of_pkg,amhello-1.0.0): basic_fhs-3.0.0_installed
+$(call built_of_pkg,amhello-1.0.0): tool_links_created
+
+toolchain_adjusted: amhello-1.0.0_installed
+tool_links_created: basic_fhs-3.0.0_installed
 
 # General rules for building and packages and installing them to the runtime
 # system (bootstrapping):
+toolchain_adjusted:
+	cd $(TOOLS_DIR) && $(PWD)/adjust_toolchain.sh && > $(PWD)/$@
+
+tool_links_created:
+	cd $(TPM_TARGET) && $(PWD)/create_tool_links.sh && > $(PWD)/$@
+
 %_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar $(TPM_CONF)
 	eval PKG="$@" && \
 	eval PKG="$${PKG%-*}" && \
@@ -82,12 +96,8 @@ clean: clean_runtime clean_build_location clean_toolchain
 
 .PHONY: clean_toolchain
 clean_toolchain: clean_confirmation
-	cd $(TOOLS_DIR) && \
-	if [ -e bin/ld-old ]; then mv bin/{ld,ld-new} && mv bin/{ld-old,ld}; fi && \
-	if [ -e "$(uname -m)-pc-linux-gnu/bin/ld-old" ]; then \
-		mv $(uname -m)-pc-linux-gnu/bin/{ld,ld-new} && \
-		mv $(uname -m)-pc-linux-gnu/bin/{ld-old,ld}; \
-	fi
+	cd $(TOOLS_DIR) && $(PWD)/restore_toolchain.sh && \
+	rm -vf $(PWD)/toolchain_adjusted
 
 .PHONY: clean_build_location
 clean_build_location: $(PKGS:%=clean_pkg_%)
