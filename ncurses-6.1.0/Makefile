@@ -13,22 +13,23 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := linux-headers
+PKG_NAME := ncurses
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.13
+PKG_VERSION := 6.1.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS :=
-SOURCE_ARCHIVE := linux-$(PKG_VERSION).tar
+PKG_RDEPS := glibc linux
+SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
-WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
+export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
 PACKED := $(PKG_NAME)-$(PKG_VERSION)_$(PKG_ARCH).tpm.tar
 
 # config
@@ -38,7 +39,7 @@ PREUPDATESH := preupdate.sh
 ADAPTSH := adapt.sh
 PATCHSH := patch.sh
 DESCXML := desc.xml
-DESTDIR = destdir
+export DESTDIR = destdir
 
 $(WORKING_DIR)/$(PACKED): adapted desc_final postinstsh prermsh preupdatesh
 	cd $(WORKING_DIR) && $(TPM) --pack
@@ -72,15 +73,20 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	cp -rv tmp_dest/include/* $(WORKING_DIR)/$(DESTDIR)/usr/include && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
 	> $(PWD)/$@
 
-built: patched
+built: configured
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
+
+configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	rm -rvf tmp_dest && \
-	$(MAKE) mrproper && \
-	$(MAKE) INSTALL_HDR_PATH=tmp_dest headers_install && \
-	find tmp_dest/include \( -name .install -o -name ..install.cmd \) -delete && \
+	./configure --prefix=/usr \
+		--with-shared \
+		--without-debug \
+		--without-normal \
+		--enable-pc-files \
+		--enable-widec && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

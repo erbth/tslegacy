@@ -13,19 +13,19 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := linux-headers
+PKG_NAME := basic_fhs
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.13
+PKG_VERSION := 3.0.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
 PKG_RDEPS :=
-SOURCE_ARCHIVE := linux-$(PKG_VERSION).tar
+SOURCE_ARCHIVE := basic_fhs-3.0.tar.xz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)	# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)	# This may need to be adapted
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -72,16 +72,11 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	cp -rv tmp_dest/include/* $(WORKING_DIR)/$(DESTDIR)/usr/include && \
+	$(MAKE) ROOT=$(WORKING_DIR)/$(DESTDIR) install && \
 	> $(PWD)/$@
 
 built: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	rm -rvf tmp_dest && \
-	$(MAKE) mrproper && \
-	$(MAKE) INSTALL_HDR_PATH=tmp_dest headers_install && \
-	find tmp_dest/include \( -name .install -o -name ..install.cmd \) -delete && \
-	> $(PWD)/$@
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
 
 patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \

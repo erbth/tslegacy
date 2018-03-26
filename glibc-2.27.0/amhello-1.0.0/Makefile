@@ -13,19 +13,19 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := linux-headers
+PKG_NAME := amhello
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.13
+PKG_VERSION := 1.0.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS :=
-SOURCE_ARCHIVE := linux-$(PKG_VERSION).tar
+PKG_RDEPS := glibc linux
+SOURCE_ARCHIVE := amhello-1.0.tar.gz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)	# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)	# This may need to be adapted
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -72,16 +72,14 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	cp -rv tmp_dest/include/* $(WORKING_DIR)/$(DESTDIR)/usr/include && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
 	> $(PWD)/$@
 
-built: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	rm -rvf tmp_dest && \
-	$(MAKE) mrproper && \
-	$(MAKE) INSTALL_HDR_PATH=tmp_dest headers_install && \
-	find tmp_dest/include \( -name .install -o -name ..install.cmd \) -delete && \
-	> $(PWD)/$@
+built: configured
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
+
+configured: patched
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && ./configure --prefix=/usr && > $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \

@@ -13,22 +13,23 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := linux-headers
+PKG_NAME := binutils
 # The version must consist of exactly three parts
-PKG_VERSION := 4.15.13
+PKG_VERSION := 2.30.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS :=
-SOURCE_ARCHIVE := linux-$(PKG_VERSION).tar
+PKG_RDEPS := zlib glibc linux
+SOURCE_ARCHIVE := $(PKG_NAME)-2.30.tar.xz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
-WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
+export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
 PACKED := $(PKG_NAME)-$(PKG_VERSION)_$(PKG_ARCH).tpm.tar
 
 # config
@@ -38,7 +39,7 @@ PREUPDATESH := preupdate.sh
 ADAPTSH := adapt.sh
 PATCHSH := patch.sh
 DESCXML := desc.xml
-DESTDIR = destdir
+export DESTDIR = destdir
 
 $(WORKING_DIR)/$(PACKED): adapted desc_final postinstsh prermsh preupdatesh
 	cd $(WORKING_DIR) && $(TPM) --pack
@@ -71,16 +72,28 @@ adapted: $(wildcard $(ADAPTSH)) installed
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
 installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	cp -rv tmp_dest/include/* $(WORKING_DIR)/$(DESTDIR)/usr/include && \
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) tooldir=/usr install-strip && \
 	> $(PWD)/$@
 
-built: patched
+built: configured
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
+	$(MAKE) tooldir=/usr && \
+	> $(PWD)/built
+
+configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	rm -rvf tmp_dest && \
-	$(MAKE) mrproper && \
-	$(MAKE) INSTALL_HDR_PATH=tmp_dest headers_install && \
-	find tmp_dest/include \( -name .install -o -name ..install.cmd \) -delete && \
+	mkdir -p build && \
+	cd build && \
+	../configure \
+		--prefix=/usr \
+		--enable-gold \
+		--enable-ld=default \
+		--enable-plugins \
+		--enable-shared \
+		--disable-werror \
+		--enable-64-bit-bfd \
+		--with-system-zlib && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

@@ -7,8 +7,6 @@
 
 set -e
 
-cd ${WORKING_DIR}/${DESTDIR}
-
 # Historical location of the c preprocessor (required by the FHS)
 ln -sv ../usr/bin/cpp lib
 
@@ -17,5 +15,5 @@ ln -sv gcc usr/bin/cc
 
 # Compatibility symlink for compiling programs with LTO
 install -dm755 /usr/lib/bfs-plugins
-ln -sfv ../../libexec/gcc/$(usr/bin/gcc -dumpmachine)/${PKG_VERSION}/liblto_plugin.so \
+ln -sfv ../../libexec/gcc/$(usr/bin/gcc -dumpmachine)/${PKG_VERSION_gcc}/liblto_plugin.so \
     /usr/lib/bfd-plugins
