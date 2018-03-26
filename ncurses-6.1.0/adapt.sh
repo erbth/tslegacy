@@ -7,6 +7,7 @@
 
 set -e
 
+SOURCE_DIR=${PWD}
 cd ${WORKING_DIR}/${DESTDIR}
 
 mv -v usr/lib/libncursesw.so.6* lib
@@ -25,3 +26,7 @@ done
 rm -vf usr/lib/libcursesw.so
 echo "INPUT(-lncursesw)" > usr/lib/libcursesw.so
 ln -sfv libncurses.so usr/lib/libcurses.so
+
+# Install the documentation
+install -dm755 usr/share/doc/ncurses
+cp -v -R ${SOURCE_DIR}/doc/* usr/share/doc/ncurses

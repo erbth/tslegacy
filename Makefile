@@ -195,15 +195,15 @@ dist:
 		glibc-2.27.0 \
 		gmp-6.1.2 \
 		iproute2-4.15.0 \
-		linux-headers-4.15.0 \
+		linux-headers-4.15.13 \
 		mpc-1.1.0 \
 		mpfr-4.0.1 \
 		ncurses-6.1.0 \
 		readline-7.0.0 \
 		tzdata-2018.4.0 \
 		zlib-1.2.11 \
-		tslegacy_packaging
-	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz
+		tslegacy_packaging-$(TSLPACK_VERSION)
+	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz tslegacy_packaging-$(TSLPACK_VERSION)
 	rm -rf tslegacy_packaging-$(TSLPACK_VERSION)
 
 .PHONY: FORCE
