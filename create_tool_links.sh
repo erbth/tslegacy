@@ -3,35 +3,35 @@
 
 # Adapted from LFS 8.2
 
-for FILE in ../tools/bin/{bash,cat,dd,echo,ln,pwd,rm,stty}
+for FILE in bin/{bash,cat,dd,echo,ln,pwd,rm,stty}
 do
     if ! [ -e $FILE ] && ! [ -L $FILE ]
     then
-        ln -sv $FILE bin
+        ln -sv ../tools/$FILE bin
     fi
 done
 
-for FILE in ../../tools/bin/{install,perl}
+for FILE in bin/{install,perl}
 do
-    if ! [ -e $FILE ] && ! [ -L $FILE ]
+    if ! [ -e usr/$FILE ] && ! [ -L usr/$FILE ]
     then
-        ln -sv $FILE usr/bin
+        ln -sv ../../tools/$FILE usr/bin
     fi
 done
 
-for FILE in ../../tools/lib/libgcc_s.so{,.1}
+for FILE in lib/libgcc_s.so{,.1}
 do
-    if ! [ -e $FILE ] && ! [ -L $FILE ]
+    if ! [ -e usr/$FILE ] && ! [ -L usr/$FILE ]
     then
-        ln -sv $FILE usr/lib
+        ln -sv ../../tools/$FILE usr/bin
     fi
 done
 
-for FILE in ../../tools/lib/libstdc++.{a,so{,.6}}
+for FILE in lib/libstdc++.{a,so{,.6}}
 do
-    if ! [ -e $FILE ] && ! [ -L $FILE ]
+    if ! [ -e usr/$FILE ] && ! [ -L usr/$FILE ]
     then
-        ln -sv $FILE usr/lib
+        ln -sv ../../tools/$FILE usr/lib
     fi
 done
 
