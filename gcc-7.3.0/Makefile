@@ -14,7 +14,7 @@ endif
 # Package information:
 # The version must consist of exactly three parts
 PKG_TYPE_gcc := sw
-PKG_NAME_name := gcc
+PKG_NAME_gcc := gcc
 export PKG_VERSION_gcc := 7.3.0
 PKG_RDEPS_gcc := mpc mpfr gmp zlib binutils glibc linux
 
@@ -53,6 +53,8 @@ PKG_NAME_libatomic := libatomic
 PKG_VERSION_libatomic := $(PKG_VERSION_gcc)
 PKG_RDEPS_libatomic := glibc linux
 
+COMPONENTS := gcc libstdc++ libmpx libvtv libssp libquadmath libffi libatomic
+
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
@@ -66,6 +68,9 @@ SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME_gcc)-$(PKG_VERSION_gcc)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
 
+ARTIFACTS := $(join $(COMPONENTS:%=$(WORKING_DIR)/%/),$(foreach c,$(COMPONENTS),$(PKG_NAME_$c)-))
+ARTIFACTS := $(join $(ARTIFACTS),$(foreach c,$(COMPONENTS),$(PKG_VERSION_$c)_$(PKG_ARCH).tpm.tar))
+
 # config
 POSTINSTSH := postinst.sh
 PRERMSH := prerm.sh
@@ -75,19 +80,28 @@ PATCHSH := patch.sh
 DESCXML := desc.xml
 export DESTDIR = destdir
 
+# Configruation of Make
+.SECONDEXPANSION:
+
 .PHONY: all
-all: gcc libstdc++ libmpx libvtv libssp libquadmath libffi libatomic
+all: $(ARTIFACTS)
 
-%: $(WORKING_DIR)/%/$(PKG_NAME_%)-$(PKG_VERSION_%)_$(PKG_ARCH).tpm.tar
-
-$(WORKING_DIR)/%: adapted_$(patsubst %/,%,$(dir $(@:$(WORKING_DIR)/%=%))) \
-	desc_final_$(patsubst %/,%,$(dir $(@:$(WORKING_DIR)/%=%)))
+$(ARTIFACTS): \
+	adapted_$$(patsubst %/,%,$$(dir $$(patsubst $(WORKING_DIR)/%,%,$$@))) \
+	postinstsh_$$(patsubst %/,%,$$(dir $$(patsubst $(WORKING_DIR)/%,%,$$@))) \
+	desc_final_$$(patsubst %/,%,$$(dir $$(patsubst $(WORKING_DIR)/%,%,$$@)))
 	cd $(WORKING_DIR)/$(patsubst %/,%,$(dir $(@:$(WORKING_DIR)/%=%))) && \
 	$(TPM) --pack
 
-# postinstsh: $(wildcard $(POSTINSTSH)) | $(WORKING_DIR)
-#	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
-#
+$(COMPONENTS:%=postinstsh_%): \
+	$$(wildcard $(basename $(POSTINSTSH))_$$(patsubst postinstsh_%,%,$$@)$(suffix $(POSTINSTSH))) \
+	| $(WORKING_DIR)/$$(patsubst postinstsh_%,%,$$@)/
+	if [ -n "$<" ]; \
+	then \
+		cp -L "$<" $(WORKING_DIR)/$(@:postinstsh_%=%)/$(POSTINSTSH); \
+	fi && \
+	> $@
+
 # prermsh: $(wildcard $(PRERMSH)) | $(WORKING_DIR)
 #	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
 #
@@ -104,7 +118,7 @@ desc_final_%: desc_initial_% adapted_%
 	$(TPM) --add-files && \
 	> $(PWD)/$@
 
-desc_initial_%: Makefile | $(WORKING_DIR)/%
+desc_initial_%: Makefile | $(WORKING_DIR)/%/
 	cd $(WORKING_DIR)/$(@:desc_initial_%=%) && \
 	if [ -e $(DESCXML) ]; then rm $(DESCXML); fi && \
 	if [ -e $(DESTDIR) ]; then rm -r $(DESTDIR); fi && \
@@ -155,10 +169,10 @@ source_ready: Makefile $(SOURCE_ARCHIVE) | $(WORKING_DIR)
 $(WORKING_DIR):
 	mkdir -p $@
 
-$(WORKING_DIR)/%: $(WORKING_DIR)
+$(WORKING_DIR)/%/: $(WORKING_DIR)
 	mkdir -p $@
 
 .PHONY: clean
 clean:
-	rm -rvf $(PKG_BUILD_LOCATION) source_ready patched configured built desc_initial \
-	installed adapted desc_final postinstsh prermsh preupdatesh
+	rm -rvf $(PKG_BUILD_LOCATION) source_ready patched configured built desc_initial_* \
+	installed_* adapted_* desc_final_* postinstsh_* prermsh_* preupdatesh_*

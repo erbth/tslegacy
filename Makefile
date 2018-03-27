@@ -106,8 +106,8 @@ $(PACKED_GCC_AND_LIBS): \
 	mpc-1.1.0_installed mpfr-4.0.1_installed gmp-6.1.2_installed \
 	binutils-2.30.0_installed zlib-1.2.11_installed
 
-$(call built_of_normal_pkg,mpc-1.1.0): binutils-2.30.0_installed
-$(call built_of_normal_pkg,mpfr-4.0.1): binutils-2.30.0_installed
+$(call built_of_normal_pkg,mpc-1.1.0): mpfr-4.0.1_installed
+$(call built_of_normal_pkg,mpfr-4.0.1): gmp-6.1.2_installed
 $(call built_of_normal_pkg,gmp-6.1.2): binutils-2.30.0_installed
 $(call built_of_normal_pkg,binutils-2.30.0): zlib-1.2.11_installed
 $(call built_of_normal_pkg,zlib-1.2.11): toolchain_adjusted

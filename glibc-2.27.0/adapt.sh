@@ -51,6 +51,9 @@ case $(uname -m) in
             ;;
 esac
 
+# Handle info pages
+rm usr/share/info/dir
+
 # Config file and runtime directory for nscd
 # /etc was crated earlier in the Makefile
 cp -v ${SOURCE_DIR}/nscd/nscd.conf etc/nscd.conf

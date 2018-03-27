@@ -17,3 +17,6 @@ ln -sv gcc usr/bin/cc
 install -dm755 /usr/lib/bfs-plugins
 ln -sfv ../../libexec/gcc/$(usr/bin/gcc -dumpmachine)/${PKG_VERSION_gcc}/liblto_plugin.so \
     /usr/lib/bfd-plugins
+
+# Handle info pages
+rm usr/share/info/dir
