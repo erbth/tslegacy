@@ -3,6 +3,11 @@
 
 # Adapted from LFS 8.2
 
+if ! [ -d bin ]
+then
+    install -dm755 bin
+fi
+
 for FILE in bin/{bash,cat,dd,echo,ln,pwd,rm,stty}
 do
     if ! [ -e $FILE ] && ! [ -L $FILE ]
@@ -10,6 +15,11 @@ do
         ln -sv ../tools/$FILE bin
     fi
 done
+
+if ! [ -d usr/bin ]
+then
+    install -dm755 usr/bin
+fi
 
 for FILE in bin/{install,perl}
 do
@@ -19,11 +29,16 @@ do
     fi
 done
 
+if ! [ -d usr/lib ]
+then
+    install -dm755 usr/lib
+fi
+
 for FILE in lib/libgcc_s.so{,.1}
 do
     if ! [ -e usr/$FILE ] && ! [ -L usr/$FILE ]
     then
-        ln -sv ../../tools/$FILE usr/bin
+        ln -sv ../../tools/$FILE usr/lib
     fi
 done
 

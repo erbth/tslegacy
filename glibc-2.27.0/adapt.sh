@@ -10,6 +10,28 @@ set -e
 SOURCE_DIR=${PWD}
 cd ${WORKING_DIR}/${DESTDIR}
 
+# Perform stripping (the procedure was adapted from LFS 8.2)
+if [ -d usr/lib ]
+then
+    find usr/lib -type f -name \*.a -exec strip -v --strip-debug {} ';'
+    find usr/lib -type f -name \*.so* -exec strip -v --strip-unneeded {} ';'
+
+    find usr/lib -name \*.la -delete
+fi
+
+if [ -d lib ]
+then
+    find lib -type f -name \*.so* -exec strip -v --strip-unneeded {} ';'
+fi
+
+for DIR in {bin,sbin} usr/{bin,sbin,libexec}
+do
+    if [ -d $DIR ]
+    then
+        find $DIR -type f -exec strip -v --strip-all {} ';'
+    fi
+done
+
 case $(uname -m) in
         i?86)
             # For LSB compliance
@@ -17,6 +39,7 @@ case $(uname -m) in
             ;;
 
         x86_64)
+            install -dm755 lib64
             # Link the 64 bit dynamic linker in the appropriate location
             ln -sfv ../lib/ld-linux-x86-64.so.2 lib64
             #For LSB compliance
@@ -29,13 +52,9 @@ case $(uname -m) in
 esac
 
 # Config file and runtime directory for nscd
-cp -v ${SOURCE_DIR}/../nscd/nscd.conf etc/nscd.conf
+# /etc was crated earlier in the Makefile
+cp -v ${SOURCE_DIR}/nscd/nscd.conf etc/nscd.conf
 install -dm755 var/cache/nscd
-
-# Install basic locales
-install -dm755 usr/lib/locale
-usr/bin/localedef --prefix=${PWD} -i en_US -f ISO-8859-1 en_US
-usr/bin/localedef --prefix=${PWD} -i en_US -f UTF-8 en_US.UTF-8
 
 # Configure Glibc
 umask 0022

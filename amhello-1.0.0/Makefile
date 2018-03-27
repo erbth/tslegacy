@@ -25,7 +25,8 @@ PKG_RDEPS := glibc linux
 SOURCE_ARCHIVE := amhello-1.0.tar.gz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)

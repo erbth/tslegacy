@@ -76,8 +76,7 @@ DESCXML := desc.xml
 export DESTDIR = destdir
 
 .PHONY: all
-all: gcc installed_libstdc++ installed_libmpx installed_libvtv installed_libssp
-all: installed_libquadmath installed_libffi installed_libatomic
+all: gcc libstdc++ libmpx libvtv libssp libquadmath libffi libatomic
 
 %: $(WORKING_DIR)/%/$(PKG_NAME_%)-$(PKG_VERSION_%)_$(PKG_ARCH).tpm.tar
 

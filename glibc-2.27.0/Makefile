@@ -25,7 +25,8 @@ PKG_RDEPS := linux
 SOURCE_ARCHIVE := $(PKG_NAME)-2.27.tar.xz
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -72,9 +73,10 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
+	install -dm755 etc && \
 	touch etc/ld.so.conf && \
 	sed '/test-installation/s@$$(PERL)@echo not running@' -i ../Makefile && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
 	> $(PWD)/$@
 
 built: configured
@@ -83,12 +85,12 @@ built: configured
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
 	mkdir -pv build && cd build && \
-	case $(uname -m) in \
-		i?86)   GCC_INCDIR=/usr/lib/gcc/$(uname -m)-pc-linux-gnu/7.3.0/include;; \
+	case $$(uname -m) in \
+		i?86)   GCC_INCDIR=/usr/lib/gcc/$$(uname -m)-pc-linux-gnu/7.3.0/include;; \
 		x86_64) GCC_INCDIR=/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include;; \
 		*) false;; \
 	esac && \
-	eval CC="gcc -isystem $$GCC_INCDIR -isystem /usr/include" && \
+	CC="gcc -isystem $$GCC_INCDIR -isystem /usr/include" && \
 	../configure \
 		--prefix=/usr \
 		--disable-werror \

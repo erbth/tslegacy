@@ -22,19 +22,19 @@ endif
 export TSLPACK_VERSION := 1.0.0
 
 # Function definitions
-working_dir_of_packed = $(BUILD_LOCATION)/$(1:%_$(PKG_ARCH).tpm.tar=%)/$(PKG_ARCH)
-built_of_packed = $(call working_dir_of_packed,$(1))/$(1)
-built_of_pkg = $(BUILD_LOCATION)/$(1)/$(PKG_ARCH)/$(1)_$(PKG_ARCH).tpm.tar
+working_dir_of_normal_packed = $(BUILD_LOCATION)/$(1:%_$(PKG_ARCH).tpm.tar=%)/$(PKG_ARCH)
+built_of_normal_packed = $(call working_dir_of_normal_packed,$(1))/$(1)
 
 # Packages to build
 # <package name>-<version triple>
-PKGS := amhello-1.0.0 \
+NORMAL_PKGS := amhello-1.0.0 \
 		basic_fhs-3.0.0 \
 		bc-1.7.1 \
 		binutils-2.30.0 \
 		glibc-2.27.0 \
 		gmp-6.1.2 \
 		iproute2-4.15.0 \
+		linux-headers-4.15.13 \
 		mpc-1.1.0 \
 		mpfr-4.0.1 \
 		ncurses-6.1.0 \
@@ -42,22 +42,49 @@ PKGS := amhello-1.0.0 \
 		tzdata-2018.4.0 \
 		zlib-1.2.11
 
+NORMAL_PACKED_PKGS := $(join $(NORMAL_PKGS:%=$(BUILD_LOCATION)/%/$(PKG_ARCH)/), \
+	$(NORMAL_PKGS:%=%_$(PKG_ARCH).tpm.tar))
+
+PKGS := $(NORMAL_PKGS)
+PACKED_PKGS := $(NORMAL_PACKED_PKGS)
+
+# helper macros to deal with 'normal' packages
+built_of_normal_pkg = $(BUILD_LOCATION)/$(1)/$(PKG_ARCH)/$(1)_$(PKG_ARCH).tpm.tar
+
 # GCC and associated libraries
-PKGS +=	gcc-7.3.0 \
-		libstdc++-7.3.0 \
-		libmpx-7.3.0 \
-		libssp-7.3.0 \
-		libffi-7.3.0 \
-		libatomic-7.3.0 \
-		libqudmath-7.3.0
+GCC_VERSION :=	7.3.0
+GCC :=		gcc-$(GCC_VERSION)
+GCC_LIBS :=	libstdc++-$(GCC_VERSION) \
+			libmpx-$(GCC_VERSION) \
+			libvtv-$(GCC_VERSION) \
+			libssp-$(GCC_VERSION) \
+			libffi-$(GCC_VERSION) \
+			libatomic-$(GCC_VERSION) \
+			libqudmath-$(GCC_VERSION)
+
+GCC_AND_LIBS := $(GCC) $(GCC_LIBS)
+
+GCC_SUBDIRS :=	gcc \
+				libstdc++ \
+				libmpx \
+				libvtv \
+				libssp \
+				libffi \
+				libatomic \
+				libquadmath
+
+PACKED_GCC_AND_LIBS := $(join $(GCC_SUBDIRS:%=$(BUILD_LOCATION)/$(GCC)/$(PKG_ARCH)/%/), \
+	$(GCC_AND_LIBS:%=%_$(PKG_ARCH).tpm.tar))
+
+PACKED_PKGS += $(PACKED_GCC_AND_LIBS)
+PKGS += $(GCC_AND_LIBS)
 
 # config
 TPM_CONF = $(TPM_TARGET)/etc/tpm/config.xml
 export TOOLS_DIR = $(TPM_TARGET)/tools
 
 # Automatically derived information
-PACKED_PKGS = $(PKGS:%=%_$(PKG_ARCH).tpm.tar)
-COLLECTED_PACKED_PKGS = $(PACKED_PKGS:%=$(COLLECTING_REPO)/$(PKG_ARCH)/%)
+COLLECTED_PACKED_PKGS = $(patsubst %,$(COLLECTING_REPO)/$(PKG_ARCH)/%,$(notdir $(PACKED_PKGS)))
 
 .SECONDEXPANSION:
 # TPM's database does not allow for multiple simultaneous tpm invocations.
@@ -68,39 +95,41 @@ all_packages: $(COLLECTED_PACKED_PKGS)
 	> $@
 
 # Dependencies between package builds, and other targets.
-$(call built_of_pkg,iproute2-4.15.0): gcc-7.3.0_installed
-$(call built_of_pkg,bc-1.7.1): readline-7.0_installed
+$(call built_of_normal_pkg,iproute2-4.15.0): gcc-7.3.0_installed
+$(call built_of_normal_pkg,bc-1.7.1): readline-7.0_installed
+$(call built_of_normal_pkg,amhello-1.0.0): gcc-7.3.0_installed
 
-$(call built_of_pkg,ncurses-6.1.0): gcc-7.3.0_installed
+$(call built_of_normal_pkg,ncurses-6.1.0): gcc-7.3.0_installed
+$(call built_of_normal_pkg,readline-7.0.0): gcc-7.3.0_installed
 
-$(call built_of_pkg,gcc-7.3.0): mpc-1.1.0_installed mpfr-4.0.1_installed
-$(call built_of_pkg,gcc-7.3.0): gmp-6.1.2_installed binutils-2.30.0_installed
-$(call built_of_pkg,gcc-7.3.0): zlib-1.2.11_installed
+$(PACKED_GCC_AND_LIBS): \
+	mpc-1.1.0_installed mpfr-4.0.1_installed gmp-6.1.2_installed \
+	binutils-2.30.0_installed zlib-1.2.11_installed
 
-$(call built_of_pkg,mpc-1.1.0): binutils-2.30.0_installed
-$(call built_of_pkg,mpfr-4.0.1): binutils-2.30.0_installed
-$(call built_of_pkg,gmp-6.1.2): binutils-2.30.0_installed
-$(call built_of_pkg,readline-7.0.0): toolchain_adjusted
-$(call built_of_pkg,binutils-2.30.0): zlib-1.2.11_installed
-$(call built_of_pkg,zlib-1.2.11): toolchain_adjusted
+$(call built_of_normal_pkg,mpc-1.1.0): binutils-2.30.0_installed
+$(call built_of_normal_pkg,mpfr-4.0.1): binutils-2.30.0_installed
+$(call built_of_normal_pkg,gmp-6.1.2): binutils-2.30.0_installed
+$(call built_of_normal_pkg,binutils-2.30.0): zlib-1.2.11_installed
+$(call built_of_normal_pkg,zlib-1.2.11): toolchain_adjusted
 
-$(call built_of_pkg,tzdata-2018.4.0): glibc-2.27.0_installed
+$(call built_of_normal_pkg,tzdata-2018.4.0): glibc-2.27.0_installed
 
-$(call built_of_pkg,glibc-2.27.0): linux-headers-4.15.13_installed
-$(call built_of_pkg,linux-headers-4.15.13): tool_links_created
+$(call built_of_normal_pkg,glibc-2.27.0): linux-headers-4.15.13_installed
+$(call built_of_normal_pkg,linux-headers-4.15.13): basic_fhs-3.0.0_installed
+$(call built_of_normal_pkg,basic_fhs-3.0.0): tool_links_created
 
 toolchain_adjusted: glibc-2.27.0_installed
-tool_links_created: basic_fhs-3.0.0_installed
 
 # General rules for building and packages and installing them to the runtime
 # system (bootstrapping):
-toolchain_adjusted:
+toolchain_adjusted: adjust_toolchain.sh
 	cd $(TOOLS_DIR) && $(PWD)/adjust_toolchain.sh && > $(PWD)/$@
 
-tool_links_created:
+tool_links_created: create_tool_links.sh
 	cd $(TPM_TARGET) && $(PWD)/create_tool_links.sh && > $(PWD)/$@
 
-%_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar $(TPM_CONF)
+$(patsubst %,%_installed,$(NORMAL_PKGS) $(GCC_LIBS)): \
+	$$(patsubst %_installed,$(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar,$$@) $(TPM_CONF) | /tmp
 	eval PKG="$@" && \
 	eval PKG="$${PKG%-*}" && \
 	if $(TPM) --list-installed || kill $$$$ | grep -q "^$${PKG}$$"; then \
@@ -110,7 +139,7 @@ tool_links_created:
 	> $@
 
 # Special rule for gcc since a temporary symlink might have to be removed first
-gcc-%_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/gcc-%_$(PKG_ARCH).tpm.tar $(TPM_CONF)
+$(GCC)_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/$(GCC)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
 	eval PKG="gcc" && \
 	if $(TPM) --list-installed || kill $$$$ | grep -q "^$${PKG}$$"; then \
 		$(TPM) --remove $${PKG}; \
@@ -120,21 +149,21 @@ gcc-%_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/gcc-%_$(PKG_ARCH).tpm.tar $(TPM_
 	$(TPM) --install $${PKG} && \
 	> $@
 
-$(COLLECTING_REPO)/$(PKG_ARCH)/%: $(call built_of_packed,$(notdir $@)) \
+$(patsubst %,$(COLLECTING_REPO)/$(PKG_ARCH)/%,$(notdir $(NORMAL_PACKED_PKGS))): \
+	$$(call built_of_normal_packed,$$(notdir $$@)) \
 	Makefile | $(COLLECTING_REPO)/$(PKG_ARCH)
 	cp -f $< $@
 
-$(patsubst %,$(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar,\
-	gcc-7.3.0 libstdc++-7.3.0 libmpx-7.3.0 libssp-7.3.0 libffi-7.3.0 libatomic-7.3.0 libquadmath-7.3.0): \
-	$(BUILD_LOCATION)/gcc-7.3.0/$(patsubst %-7.3.0_$(PKG_ARCH).tpm.tar,%,$@)/$(notdir $@) \
+$(GCC_AND_LIBS:%=$(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar): \
+	$(BUILD_LOCATION)/$(GCC)/$(PKG_ARCH)/$$(patsubst %-$(GCC_VERSION)_$(PKG_ARCH).tpm.tar,%,$$(notdir $$@))/$$(notdir $$@) \
 	Makefile | $(COLLECTING_REPO)/$(PKG_ARCH)
 	cp -f $< $@
 
-$(BUILD_LOCATION)/%_$(PKG_ARCH).tpm.tar: FORCE
+$(NORMAL_PACKED_PKGS): FORCE
 	cd $(patsubst %_$(PKG_ARCH).tpm.tar,%,$(notdir $@)) && $(MAKE)
 
-$(BUILD_LOCATION)/gcc-7.3.0/%_$(PKG_ARCH).tpm.tar: FORCE
-	cd $(dir $@) && $(MAKE)
+$(PACKED_GCC_AND_LIBS): FORCE
+	cd $(GCC) && $(MAKE)
 
 $(TPM_CONF):
 	install -dm755 $(dir $@)
@@ -145,12 +174,15 @@ $(TPM_CONF):
 	    <arch>$(PKG_ARCH)</arch>\n\
 	</tpm>" || kill $$$$) $@
 
+/tmp:
+	install -dm 1777 /tmp
+
 $(COLLECTING_REPO)/$(PKG_ARCH):
 	mkdir -p $@
 
 .PHONY: clean
 clean: clean_runtime clean_build_location clean_toolchain
-	rm -rvf all_packages
+	rm -vf all_packages
 
 .PHONY: clean_toolchain
 clean_toolchain: clean_confirmation
@@ -161,8 +193,14 @@ clean_toolchain: clean_confirmation
 clean_build_location: $(PKGS:%=clean_pkg_%)
 
 .PHONY: $(PKGS:%=clean_pkg_%)
-$(PKGS:%=clean_pkg_%): clean_confirmation
-	$(MAKE) -C $(@:clean_pkg_%=%) clean
+$(NORMAL_PKGS:%=clean_pkg_%): clean_confirmation
+	cd $(@:clean_pkg_%=%) && \
+	$(MAKE) clean
+
+$(GCC_AND_LIBS:%=clean_pkg_%): clean_gcc_and_libs
+.PHONY: clean_gcc_and_libs
+clean_gcc_and_libs: clean_confirmation
+	cd $(GCC) && $(MAKE) clean
 
 .PHONY: clean_runtime
 clean_runtime: clean_confirmation

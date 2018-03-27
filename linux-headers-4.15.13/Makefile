@@ -25,7 +25,8 @@ PKG_RDEPS :=
 SOURCE_ARCHIVE := linux-$(PKG_VERSION).tar
 
 # Automatically derived information - shall be adapted if required
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)	# This may need to be adapted
+# This may need to be adapted
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -72,6 +73,7 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	install -dm755 $(WORKING_DIR)/$(DESTDIR)/usr/include && \
 	cp -rv tmp_dest/include/* $(WORKING_DIR)/$(DESTDIR)/usr/include && \
 	> $(PWD)/$@
 

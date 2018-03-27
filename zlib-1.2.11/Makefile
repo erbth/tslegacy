@@ -22,11 +22,11 @@ $(error PKG_ARCH not set)
 endif
 
 PKG_RDEPS := glibc linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -73,7 +73,7 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
 	> $(PWD)/$@
 
 built: configured

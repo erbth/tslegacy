@@ -1,4 +1,5 @@
-#!/bin/bash
+# No shebang here bcause, when this file is executed, /bin/bash does not exist
+# yet. Therefore rely on Make's ability to find an appropriate bash.
 
 set -e
 
