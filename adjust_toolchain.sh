@@ -13,10 +13,18 @@ then
     ln -sv ../../bin/ld $(uname -m)-pc-linux-gnu/bin/ld
 fi
 
-gcc -dumpspecs | sed -e 's@/tools@@g' \
+GCC=${TOOLS_DIR}/bin/gcc
+
+$GCC -dumpspecs | sed -e 's@/tools@@g' \
     -e '/\*startfile_prefix_spec:/{n;s@.*@/usr/lib/ @}' \
     -e '/\*cpp:/{n;s@$@ -isystem /usr/include@}' > \
-    `dirname $(gcc --print-libgcc-file-name)`/specs
+    `dirname $($GCC --print-libgcc-file-name)`/specs
+
+if [ -x ${TPM_TARGET}/usr/bin/gcc ]
+then
+    echo "The final compiler is already in place, no need to test the adjusted toolchain."
+    exit 0
+fi
 
 echo "Testing the adjusted toolchain:"
 

@@ -8,4 +8,4 @@ set -e
 [ $UID -eq 0 ]
 
 # Handle info pages
-rm usr/share/info/dir
+rm -vf usr/share/info/dir

@@ -22,7 +22,7 @@ $(error PKG_ARCH not set)
 endif
 
 PKG_RDEPS := glibc linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.gz
+SOURCE_ARCHIVE := $(PKG_NAME)-6.1.tar.gz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
@@ -73,7 +73,7 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
 	> $(PWD)/$@
 
 built: configured

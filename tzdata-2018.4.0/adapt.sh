@@ -23,4 +23,5 @@ done
 cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
 zic -d $ZONEINFO -p America/New_York
 
+install -dm755 ${WORKING_DIR}/${DESTDIR}/etc
 ln -s /usr/share/zoneinfo/Europe/Berlin ${WORKING_DIR}/${DESTDIR}/etc/localtime

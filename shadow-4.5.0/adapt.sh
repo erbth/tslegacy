@@ -9,5 +9,9 @@ set -e
 
 cd ${WORKING_DIR}/${DESTDIR}
 
-# Handle info pages
-rm -vf usr/share/info/dir
+if ! [ -d bin ]
+then
+    install -dm755 bin
+fi
+
+mv -v usr/bin/passwd bin || true

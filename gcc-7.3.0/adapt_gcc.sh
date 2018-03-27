@@ -7,16 +7,23 @@
 
 set -e
 
+[ $UID -eq 0 ]
+
 # Historical location of the c preprocessor (required by the FHS)
-ln -sv ../usr/bin/cpp lib
+if ! [ -d lib ]
+then
+    install -dm755 lib
+fi
+
+ln -sfv ../usr/bin/cpp lib
 
 # Required according to LFS 8.2, p.118
-ln -sv gcc usr/bin/cc
+ln -sfv gcc usr/bin/cc
 
 # Compatibility symlink for compiling programs with LTO
-install -dm755 /usr/lib/bfs-plugins
+install -dm755 usr/lib/bfd-plugins
 ln -sfv ../../libexec/gcc/$(usr/bin/gcc -dumpmachine)/${PKG_VERSION_gcc}/liblto_plugin.so \
-    /usr/lib/bfd-plugins
+    usr/lib/bfd-plugins
 
 # Handle info pages
-rm usr/share/info/dir
+rm -vf usr/share/info/dir

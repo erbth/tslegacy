@@ -38,7 +38,9 @@ NORMAL_PKGS := amhello-1.0.0 \
 		mpc-1.1.0 \
 		mpfr-4.0.1 \
 		ncurses-6.1.0 \
+		pkg-config-0.29.2 \
 		readline-7.0.0 \
+		shadow-4.5.0 \
 		tzdata-2018.4.0 \
 		zlib-1.2.11
 
@@ -58,9 +60,8 @@ GCC_LIBS :=	libstdc++-$(GCC_VERSION) \
 			libmpx-$(GCC_VERSION) \
 			libvtv-$(GCC_VERSION) \
 			libssp-$(GCC_VERSION) \
-			libffi-$(GCC_VERSION) \
 			libatomic-$(GCC_VERSION) \
-			libqudmath-$(GCC_VERSION)
+			libquadmath-$(GCC_VERSION)
 
 GCC_AND_LIBS := $(GCC) $(GCC_LIBS)
 
@@ -69,7 +70,6 @@ GCC_SUBDIRS :=	gcc \
 				libmpx \
 				libvtv \
 				libssp \
-				libffi \
 				libatomic \
 				libquadmath
 
@@ -95,11 +95,16 @@ all_packages: $(COLLECTED_PACKED_PKGS)
 	> $@
 
 # Dependencies between package builds, and other targets.
+$(call built_of_normal_pkg,shadow-4.5.0): ncurses-6.1.0_installed
+
+$(call built_of_normal_pkg,pkg-config-0.29.2): gcc-7.3.0_installed
 $(call built_of_normal_pkg,iproute2-4.15.0): gcc-7.3.0_installed
-$(call built_of_normal_pkg,bc-1.7.1): readline-7.0_installed
+$(call built_of_normal_pkg,bc-1.7.1): readline-7.0.0_installed ncurses-6.1.0_installed
 $(call built_of_normal_pkg,amhello-1.0.0): gcc-7.3.0_installed
 
-$(call built_of_normal_pkg,ncurses-6.1.0): gcc-7.3.0_installed
+$(call built_of_normal_pkg,ncurses-6.1.0): gcc-7.3.0_installed \
+	pkg-config-0.29.2_installed
+
 $(call built_of_normal_pkg,readline-7.0.0): gcc-7.3.0_installed
 
 $(PACKED_GCC_AND_LIBS): \
@@ -140,11 +145,10 @@ $(patsubst %,%_installed,$(NORMAL_PKGS) $(GCC_LIBS)): \
 
 # Special rule for gcc since a temporary symlink might have to be removed first
 $(GCC)_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/$(GCC)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
+	if [ -L $(TPM_TARGET)/usr/lib/gcc ]; then rm $(TPM_TARGET)/usr/lib/gcc; fi && \
 	eval PKG="gcc" && \
 	if $(TPM) --list-installed || kill $$$$ | grep -q "^$${PKG}$$"; then \
 		$(TPM) --remove $${PKG}; \
-	else \
-		if [ -L $(TPM_TARGET)/usr/lib/gcc ]; then rm $(TPM_TARGET)/usr/lib/gcc; fi; \
 	fi && \
 	$(TPM) --install $${PKG} && \
 	> $@
@@ -162,7 +166,10 @@ $(GCC_AND_LIBS:%=$(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar): \
 $(NORMAL_PACKED_PKGS): FORCE
 	cd $(patsubst %_$(PKG_ARCH).tpm.tar,%,$(notdir $@)) && $(MAKE)
 
-$(PACKED_GCC_AND_LIBS): FORCE
+$(PACKED_GCC_AND_LIBS): build_gcc
+
+.PHONY: build_gcc
+build_gcc:
 	cd $(GCC) && $(MAKE)
 
 $(TPM_CONF):
@@ -225,21 +232,8 @@ dist:
 		restore_toolchain.sh \
 		set_env.sample \
 		update_playground.sh \
-		amhello-1.0.0 \
-		basic_fhs-3.0.0 \
-		bc-1.7.1 \
-		binutils-2.30.0 \
-		gcc-7.3.0 \
-		glibc-2.27.0 \
-		gmp-6.1.2 \
-		iproute2-4.15.0 \
-		linux-headers-4.15.13 \
-		mpc-1.1.0 \
-		mpfr-4.0.1 \
-		ncurses-6.1.0 \
-		readline-7.0.0 \
-		tzdata-2018.4.0 \
-		zlib-1.2.11 \
+		$(NORMAL_PKGS) \
+		$(GCC) \
 		tslegacy_packaging-$(TSLPACK_VERSION)
 	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz tslegacy_packaging-$(TSLPACK_VERSION)
 	rm -rf tslegacy_packaging-$(TSLPACK_VERSION)

@@ -52,7 +52,7 @@ case $(uname -m) in
 esac
 
 # Handle info pages
-rm usr/share/info/dir
+rm -vf usr/share/info/dir
 
 # Config file and runtime directory for nscd
 # /etc was crated earlier in the Makefile

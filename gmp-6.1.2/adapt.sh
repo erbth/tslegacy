@@ -10,4 +10,4 @@ set -e
 cd ${WORKING_DIR}/${DESTDIR}
 
 # Handle info pages
-rm usr/share/info/dir
+rm -vf usr/share/info/dir

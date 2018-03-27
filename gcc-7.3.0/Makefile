@@ -43,17 +43,12 @@ PKG_NAME_libquadmath := libquadmath
 PKG_VERSION_libquadmath := $(PKG_VERSION_gcc)
 PKG_RDEPS_libquadmath := glibc linux
 
-PKG_TYPE_libffi := sw
-PKG_NAME_libffi := libffi
-PKG_VERSION_libffi := $(PKG_VERSION_gcc)
-PKG_RDEPS_libffi := glibc linux
-
 PKG_TYPE_libatomic := sw
 PKG_NAME_libatomic := libatomic
 PKG_VERSION_libatomic := $(PKG_VERSION_gcc)
 PKG_RDEPS_libatomic := glibc linux
 
-COMPONENTS := gcc libstdc++ libmpx libvtv libssp libquadmath libffi libatomic
+COMPONENTS := gcc libstdc++ libmpx libvtv libssp libquadmath libatomic
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
@@ -125,17 +120,26 @@ desc_initial_%: Makefile | $(WORKING_DIR)/%/
 	$(TPM) --create-desc $(PKG_TYPE_$(@:desc_initial_%=%)) && \
 	> $(PWD)/$@
 
-adapted_%: $(wildcard $(basename $(ADAPTSH))_%.$(suffix $(ADAPTSH))) installed_%
-	eval ADAPTSH="$(basename $(ADAPTSH))_$(@:adapted_%=%).$(suffix $(ADAPTSH))" && \
-	if [ "$<" == "${ADAPTSH}" ]; then \
+$(COMPONENTS:%=adapted_%): \
+	$$(wildcard $(basename $(ADAPTSH))_$$(patsubst adapted_%,%,$$@)$(suffix $(ADAPTSH))) \
+	installed_$$(patsubst adapted_%,%,$$@)
+	eval ADAPTSH="$(basename $(ADAPTSH))_$(@:adapted_%=%)$(suffix $(ADAPTSH))" && \
+	if [ "$<" == "$${ADAPTSH}" ]; then \
 	cd $(WORKING_DIR)/$(@:adapted_%=%)/$(DESTDIR) && \
-	$(PWD)/${ADAPTSH}; fi && \
+	$(PWD)/$${ADAPTSH}; fi && \
 	> $(PWD)/$@
 
 installed_gcc: built desc_initial_gcc
 	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
 	$(MAKE) DESTDIR=$(WORKING_DIR)/gcc/$(DESTDIR) install-strip && \
 	> $(PWD)/$@
+
+installed_libstdc++: built desc_initial_libstdc++
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(@:installed_%=%)/$(DESTDIR) \
+	install-strip-target-libstdc++-v3 && \
+	> $(PWD)/$@
+
 
 installed_%: built desc_initial_%
 	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
@@ -156,6 +160,7 @@ configured: patched
 		--enable-languages=c,c++ \
 		--disable-multilib \
 		--disable-bootstrap \
+		--enable-libssp \
 		--with-system-zlib && \
 	> $(PWD)/$@
 
