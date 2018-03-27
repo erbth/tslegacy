@@ -33,6 +33,7 @@ NORMAL_PKGS := amhello-1.0.0 \
 		binutils-2.30.0 \
 		glibc-2.27.0 \
 		gmp-6.1.2 \
+		iana-etc-2.30.0 \
 		iproute2-4.15.0 \
 		linux-headers-4.15.13 \
 		mpc-1.1.0 \
@@ -95,6 +96,10 @@ all_packages: $(COLLECTED_PACKED_PKGS)
 	> $@
 
 # Dependencies between package builds, and other targets.
+# Not each of the following packages may depend on ncurses however this
+# dependency lowers the complexity of the dependency graph and as this
+# Makefile is not parallel it is no performance issue.
+$(call built_of_normal_pkg,iana-etc-2.30.0): ncurses-6.1.0_installed
 $(call built_of_normal_pkg,shadow-4.5.0): ncurses-6.1.0_installed
 
 $(call built_of_normal_pkg,pkg-config-0.29.2): gcc-7.3.0_installed
