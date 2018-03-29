@@ -18,6 +18,11 @@ PKG_NAME_gcc := gcc
 export PKG_VERSION_gcc := 7.3.0
 PKG_RDEPS_gcc := mpc mpfr gmp zlib binutils glibc linux
 
+PKG_TYPE_libgcc := sw
+PKG_NAME_libgcc := libgcc
+PKG_VERSION_libgcc := $(PKG_VERSION_gcc)
+PKG_RDEPS_libgcc := glibc linux
+
 PKG_TYPE_libstdc++ := sw
 PKG_NAME_libstdc++ := libstdc++
 PKG_VERSION_libstdc++ := $(PKG_VERSION_gcc)
@@ -48,7 +53,7 @@ PKG_NAME_libatomic := libatomic
 PKG_VERSION_libatomic := $(PKG_VERSION_gcc)
 PKG_RDEPS_libatomic := glibc linux
 
-COMPONENTS := gcc libstdc++ libmpx libvtv libssp libquadmath libatomic
+COMPONENTS := gcc libgcc libstdc++ libmpx libvtv libssp libquadmath libatomic
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)

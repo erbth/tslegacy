@@ -28,22 +28,45 @@ built_of_normal_packed = $(call working_dir_of_normal_packed,$(1))/$(1)
 # Packages to build
 # <package name>-<version triple>
 NORMAL_PKGS := amhello-1.0.0 \
+		bash-4.4.18 \
 		basic_fhs-3.0.0 \
 		bc-1.7.1 \
 		binutils-2.30.0 \
+		eudev-3.2.5 \
 		glibc-2.27.0 \
+		grub-2.2.0 \
 		gmp-6.1.2 \
 		iana-etc-2.30.0 \
 		iproute2-4.15.0 \
+		kbd-2.0.4 \
+		kmod-25.0.0 \
+		less-530.0.0 \
 		linux-headers-4.15.13 \
 		mpc-1.1.0 \
 		mpfr-4.0.1 \
 		ncurses-6.1.0 \
+		openssl-1.1.8 \
 		pkg-config-0.29.2 \
+		procps-ng-3.3.12 \
 		readline-7.0.0 \
 		shadow-4.5.0 \
+		sysvinit-2.88.0 \
+		tpm-1.0.0 \
+		tslegacy-sysconfig-1.0.0 \
 		tzdata-2018.4.0 \
+		util-linux-2.32.0 \
+		vim-8.0.586 \
 		zlib-1.2.11
+
+# Packages that need to be referenced later shall be defined as variabled here,
+# to allow for changing their version number easily
+COREUTILS := coreutils-8.29.0
+
+# Packages that shall be installed with a general installation scheme
+NORMAL_TO_INSTALL_PKGS := $(NORMAL_PKGS)
+
+# These packages are normal apart from their installation procedure
+NORMAL_PLGS += $(COREUTILS)
 
 NORMAL_PACKED_PKGS := $(join $(NORMAL_PKGS:%=$(BUILD_LOCATION)/%/$(PKG_ARCH)/), \
 	$(NORMAL_PKGS:%=%_$(PKG_ARCH).tpm.tar))
@@ -57,7 +80,8 @@ built_of_normal_pkg = $(BUILD_LOCATION)/$(1)/$(PKG_ARCH)/$(1)_$(PKG_ARCH).tpm.ta
 # GCC and associated libraries
 GCC_VERSION :=	7.3.0
 GCC :=		gcc-$(GCC_VERSION)
-GCC_LIBS :=	libstdc++-$(GCC_VERSION) \
+GCC_LIBS :=	libgcc-$(GCC_VERSION) \
+			libstdc++-$(GCC_VERSION) \
 			libmpx-$(GCC_VERSION) \
 			libvtv-$(GCC_VERSION) \
 			libssp-$(GCC_VERSION) \
@@ -67,6 +91,7 @@ GCC_LIBS :=	libstdc++-$(GCC_VERSION) \
 GCC_AND_LIBS := $(GCC) $(GCC_LIBS)
 
 GCC_SUBDIRS :=	gcc \
+				libgcc \
 				libstdc++ \
 				libmpx \
 				libvtv \
@@ -96,11 +121,34 @@ all_packages: $(COLLECTED_PACKED_PKGS)
 	> $@
 
 # Dependencies between package builds, and other targets.
-# Not each of the following packages may depend on ncurses however this
+$(call built_of_normal_pkg,vim-8.0.586): ncurses-6.1.0_installed
+$(call built_of_normal_pkg,tpm-1.0.0): glibc-2.27.0_installed
+
+# Not each of the following packages may depend on coreutils however this
 # dependency lowers the complexity of the dependency graph and as this
 # Makefile is not parallel it is no performance issue.
+$(call built_of_normal_pkg,util-linux-2.32.0): eudev-3.2.5_installed ncurses-6.1.0_installed
+$(call built_of_normal_pkg,eudev-3.2.5): $(COREUTILS)_installed \
+	tslegacy-sysconfig-1.0.0_installed
+
+$(call built_of_normal_pkg,sysvinit-2.88.0): $(COREUTILS)_installed \
+	tslegacy-sysconfig-1.0.0_installed
+
+$(call built_of_normal_pkg,kbd-2.0.4): $(COREUTILS)_installed
+$(call built_of_normal_pkg,less-530.0.0): $(COREUTILS)_installed
+$(call built_of_normal_pkg,grub-2.2.0): $(COREUTILS)_installed
+
+# Same thing here however with ncurses
+$(call built_of_normal_pkg,$(COREUTILS)): ncurses-6.1.0_installed
+$(call built_of_normal_pkg,procps-ng-3.3.12): ncurses-6.1.0_installed
+$(call built_of_normal_pkg,openssl-1.1.8): ncurses-6.1.0_installed
+$(call built_of_normal_pkg,kmod-25.0.0): ncurses-6.1.0_installed
+$(call built_of_normal_pkg,bash-4.4.18): ncurses-6.1.0_installed readline-7.0.0_installed
 $(call built_of_normal_pkg,iana-etc-2.30.0): ncurses-6.1.0_installed
-$(call built_of_normal_pkg,shadow-4.5.0): ncurses-6.1.0_installed
+$(call built_of_normal_pkg,shadow-4.5.0): ncurses-6.1.0_installed \
+	tslegacy-sysconfig-1.0.0_installed
+
+$(call built_of_normal_pkg,tslegacy-sysconfig-1.0.0): basic_fhs-3.0.0_installed
 
 $(call built_of_normal_pkg,pkg-config-0.29.2): gcc-7.3.0_installed
 $(call built_of_normal_pkg,iproute2-4.15.0): gcc-7.3.0_installed
@@ -138,11 +186,11 @@ toolchain_adjusted: adjust_toolchain.sh
 tool_links_created: create_tool_links.sh
 	cd $(TPM_TARGET) && $(PWD)/create_tool_links.sh && > $(PWD)/$@
 
-$(patsubst %,%_installed,$(NORMAL_PKGS) $(GCC_LIBS)): \
+$(patsubst %,%_installed,$(NORMAL_TO_INSTALL_PKGS) $(GCC_LIBS)): \
 	$$(patsubst %_installed,$(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar,$$@) $(TPM_CONF) | /tmp
 	eval PKG="$@" && \
 	eval PKG="$${PKG%-*}" && \
-	if $(TPM) --list-installed || kill $$$$ | grep -q "^$${PKG}$$"; then \
+	if $(TPM) --list-installed | grep -q "^$${PKG}$$"; then \
 		$(TPM) --remove $${PKG}; \
 	fi && \
 	$(TPM) --install $${PKG} && \
@@ -151,21 +199,39 @@ $(patsubst %,%_installed,$(NORMAL_PKGS) $(GCC_LIBS)): \
 # Special rule for gcc since a temporary symlink might have to be removed first
 $(GCC)_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/$(GCC)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
 	if [ -L $(TPM_TARGET)/usr/lib/gcc ]; then rm $(TPM_TARGET)/usr/lib/gcc; fi && \
-	eval PKG="gcc" && \
-	if $(TPM) --list-installed || kill $$$$ | grep -q "^$${PKG}$$"; then \
+	eval PKG="$(GCC)" && \
+	PKG="$${PKG%-*}" && \
+	if $(TPM) --list-installed | grep -q "^$${PKG}$$"; then \
 		$(TPM) --remove $${PKG}; \
+	else \
+		rm -vf $(TPM_TARGET)/usr/lib/{libgcc_s.so{,.1},libstdc++.{a,so{,.6}}}; \
+	fi && \
+	$(TPM) --install $${PKG} && \
+	> $@
+
+# Special rule for installing coreutils since the preliminary runtime system
+# has some temporary symlinks which need to be removed no
+$(COREUTILS)_installed: \
+	$(COLLECTING_REPO)/$(PKG_ARCH)/$(COREUTILS)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
+	eval PKG="$(COREUTILS)" && \
+	PKG="$${PKG%-*}" && \
+	if $(TPM) --list-installed | grep -q "^$${PKG}$$"; then \
+		$(TPM) --remove $${PKG}; \
+	else \
+		rm -vf $(TPM_TARGET)/usr/bin/install && \
+		rm -vf $(TPM_TARGET)/bin/{cat,dd,echo,ln,pwd,rm,stty}; \
 	fi && \
 	$(TPM) --install $${PKG} && \
 	> $@
 
 $(patsubst %,$(COLLECTING_REPO)/$(PKG_ARCH)/%,$(notdir $(NORMAL_PACKED_PKGS))): \
 	$$(call built_of_normal_packed,$$(notdir $$@)) \
-	Makefile | $(COLLECTING_REPO)/$(PKG_ARCH)
+	| $(COLLECTING_REPO)/$(PKG_ARCH)
 	cp -f $< $@
 
 $(GCC_AND_LIBS:%=$(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar): \
 	$(BUILD_LOCATION)/$(GCC)/$(PKG_ARCH)/$$(patsubst %-$(GCC_VERSION)_$(PKG_ARCH).tpm.tar,%,$$(notdir $$@))/$$(notdir $$@) \
-	Makefile | $(COLLECTING_REPO)/$(PKG_ARCH)
+	| $(COLLECTING_REPO)/$(PKG_ARCH)
 	cp -f $< $@
 
 $(NORMAL_PACKED_PKGS): FORCE
@@ -217,7 +283,7 @@ clean_gcc_and_libs: clean_confirmation
 .PHONY: clean_runtime
 clean_runtime: clean_confirmation
 	rm -rvf $(TPM_TARGET)/{bin,boot,etc,home,lib,lib64,media,mnt,opt,root,sbin,srv,tmp,usr,var}
-	rm -vf *_installed
+	rm -vf *_installed tool_links_created
 
 .PHONY: clean_confirmation
 clean_confirmation:
