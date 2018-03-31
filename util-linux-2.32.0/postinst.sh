@@ -13,7 +13,4 @@ umask 0022
 
 # If eudev is installed already, the hwdb needs to be updated since eudev did
 # not have the a required library contained in this package.
-if [ -x ${TPM_TARGET}/sbin/udevadm ]
-then
-    ${TPM_TARGET}/sbin/udevadm hwdb --update --root=${TPM_TARGET}
-fi
+chroot ${TPM_TARGET} bash -c "if type udevadm; then /sbin/udevadm hwdb --update; fi"

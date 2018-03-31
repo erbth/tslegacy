@@ -27,7 +27,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc linux
+PKG_RDEPS := glibc tar gzip linux
 SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
 
 # Automatically derived information - shall be adapted if required

@@ -32,15 +32,19 @@ NORMAL_PKGS := amhello-1.0.0 \
 		basic_fhs-3.0.0 \
 		bc-1.7.1 \
 		binutils-2.30.0 \
+		elfutils-0.170.0 \
 		eudev-3.2.5 \
 		glibc-2.27.0 \
 		grub-2.2.0 \
 		gmp-6.1.2 \
+		gzip-1.9.0 \
 		iana-etc-2.30.0 \
 		iproute2-4.15.0 \
 		kbd-2.0.4 \
 		kmod-25.0.0 \
 		less-530.0.0 \
+		lfs-bootscripts-2017.6.26 \
+		linux-4.15.14 \
 		linux-headers-4.15.13 \
 		mpc-1.1.0 \
 		mpfr-4.0.1 \
@@ -51,8 +55,10 @@ NORMAL_PKGS := amhello-1.0.0 \
 		readline-7.0.0 \
 		shadow-4.5.0 \
 		sysvinit-2.88.0 \
+		tar-1.30.0 \
 		tpm-1.0.0 \
 		tslegacy-sysconfig-1.0.0 \
+		tslegacy-utils-1.0.0 \
 		tzdata-2018.4.0 \
 		util-linux-2.32.0 \
 		vim-8.0.586 \
@@ -121,12 +127,20 @@ all_packages: $(COLLECTED_PACKED_PKGS)
 	> $@
 
 # Dependencies between package builds, and other targets.
+$(call built_of_normal_pkg,linux-4.15.14): $(GCC)_installed \
+	bc-1.7.1_installed openssl-1.1.8_installed elfutils-0.170.0_installed
+
+$(call built_of_normal_pkg,tslegacy-utils-1.0.0): util-linux-2.32.0_installed
 $(call built_of_normal_pkg,vim-8.0.586): ncurses-6.1.0_installed
 $(call built_of_normal_pkg,tpm-1.0.0): glibc-2.27.0_installed
 
 # Not each of the following packages may depend on coreutils however this
 # dependency lowers the complexity of the dependency graph and as this
 # Makefile is not parallel it is no performance issue.
+$(call built_of_normal_pkg,tar-1.30.0): $(COREUTILS)_installed
+$(call built_of_normal_pkg,gzip-1.9.0): $(COREUTILS)_installed
+$(call built_of_normal_pkg,lfs-bootscripts-2017.6.26): $(COREUTILS)_installed
+$(call built_of_normal_pkg,elfutils-0.170.0): $(COREUTILS)_installed
 $(call built_of_normal_pkg,util-linux-2.32.0): eudev-3.2.5_installed ncurses-6.1.0_installed
 $(call built_of_normal_pkg,eudev-3.2.5): $(COREUTILS)_installed \
 	tslegacy-sysconfig-1.0.0_installed

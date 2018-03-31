@@ -14,8 +14,6 @@ set -e
 # since the owner does not have to be then)
 [ $UID -eq 0 ]
 
-SOURCE_DIR=${WORKING_DIR}/${SOURCE_DIR}
-
 # Change to the installation location
 cd ${WORKING_DIR}/${DESTDIR}
 
@@ -53,38 +51,4 @@ cd ${WORKING_DIR}/${DESTDIR}
 # done
 
 # Handle info pages
-# rm -vf usr/share/info/dir
-
-# Install the kernel's boot image (adapted from LFS 8.2, p.256)
-if ! [ -d boot ]
-then
-    install -dm755 boot
-fi
-
-install -m644 ${SOURCE_DIR}/arch/x86/boot/bzImage boot/vmlinuz-${PKG_VERSION}
-install -m644 ${SOURCE_DIR}/System.map boot/System.map-${PKG_VERSION}
-install -m644 ${SOURCE_DIR}/.config boot/config-${PKG_VERSION}
-
-# Install the documentation (adapted from LFS 8.2, p.256)
-DOCDIR=usr/share/doc/linux-${PKG_VERSION}
-
-if ! [ -d ${DOCDIR} ]
-then
-    install -dm755 ${DOCDIR}
-fi
-
-cp -r ${SOURCE_DIR}/Documentation/* ${DOCDIR}
-chown -R 0:0 ${DOCDIR}
-chmod -R 0755 ${DOCDIR}
-
-cat > ${DOCDIR}/README.tslegacy << "EOF"
-The kernel's configuration is based on a configuration from the Debian package
-linux-image-4.9.0-6-amd64. Starting from there, I have made some adaptions and
-followed the suffestions given in the book `Linux From Scratch', `Version 8.2'
-by Gerard Beekmans and Managing Editor Bruce Dubbs. At the time I initially
-wrote this file, the book was available from www.linuxfromscratch.org/lfs.
-
-Maintainer of the TSClient legacy package:
-Thomas Erbesdobler <t.erbesdobler@gmx.de>
-
-EOF
+rm -vf usr/share/info/dir

@@ -1,0 +1,39 @@
+--- src/Makefile.orig	2018-03-31 00:56:42.374763417 +0200
++++ src/Makefile	2018-03-31 01:02:55.587733189 +0200
+@@ -16,19 +16,17 @@
+ # For some known distributions we do not build all programs, otherwise we do.
+ BIN	=
+ SBIN	= init halt shutdown runlevel killall5 fstab-decode
+-USRBIN	= last mesg
+ 
+-MAN1	= last.1 lastb.1 mesg.1
++MAN1	=
+ MAN5	= initscript.5 inittab.5
+-MAN8	= halt.8 init.8 killall5.8 pidof.8 poweroff.8 reboot.8 runlevel.8
++MAN8	= halt.8 init.8 killall5.8 poweroff.8 reboot.8 runlevel.8
+ MAN8	+= shutdown.8 telinit.8 fstab-decode.8
+ 
+ ifeq ($(DISTRO),)
+-BIN	+= mountpoint
+-SBIN	+= sulogin bootlogd
+-USRBIN	+= utmpdump wall
+-MAN1	+= utmpdump.1 mountpoint.1 wall.1
+-MAN8	+= sulogin.8 bootlogd.8
++SBIN	+= bootlogd
++USRBIN	+=
++MAN1	+=
++MAN8	+= bootlogd.8
+ endif
+ 
+ ifeq ($(DISTRO),Debian)
+@@ -154,10 +152,6 @@
+ 		ln -sf halt $(ROOT)/sbin/reboot
+ 		ln -sf halt $(ROOT)/sbin/poweroff
+ 		ln -sf init $(ROOT)/sbin/telinit
+-		ln -sf /sbin/killall5 $(ROOT)/bin/pidof
+-		if [ ! -f $(ROOT)/usr/bin/lastb ]; then \
+-			ln -sf last $(ROOT)/usr/bin/lastb; \
+-		fi
+ 		$(INSTALL_DIR) $(ROOT)/usr/include/
+ 		$(INSTALL_DATA) initreq.h $(ROOT)/usr/include/
+ 		$(INSTALL_DIR) $(ROOT)$(MANDIR)/man1/

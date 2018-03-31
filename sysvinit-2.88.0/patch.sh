@@ -14,6 +14,10 @@ set -e
 # since the owner does not have to be then)
 [ $UID -eq 0 ]
 
-# This patch adapts the SysVinit package to fit the needs of TSClient legacy.
-# It performs the following:
-# patch -p0 < ${PACKAGING_RESOURCE_DIR}/adapt_sysvinit.patch
+# This patch removes the following programs since they are installed by
+# util-linux and procps-ng:
+#   mountpoint, pidof, sulogin, mesg, last, lastb, utmpdump, wall
+#
+# LFS 8.2 does also remove some programs from SysVinit and I believe it is a
+# good idea because the versions from SysVinit are reasonable to be older.
+patch -p0 < ${PACKAGING_RESOURCE_DIR}/adapt_sysvinit.patch

@@ -16,5 +16,5 @@ umask 0022
 # a similar command.
 if [ -n "$(find ${TPM_TARGET}/{lib{,64},usr} -name libblkid*)" ]
 then
-    ${TPM_TARGET}/sbin/udevadm hwdb --update --root=${TPM_TARGET}
+    chroot ${TPM_TARGET} /sbin/udevadm hwdb --update
 fi

@@ -19,20 +19,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := linux
+PKG_NAME := gzip
 # The version must consist of exactly three parts
-export PKG_VERSION := 4.15.14
+PKG_VERSION := 1.9.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar
+PKG_RDEPS := glibc linux
+SOURCE_ARCHIVE := $(PKG_NAME)-1.9.tar.xz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)
+export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)-$(PKG_VERSION)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -80,7 +80,7 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) INSTALL_MOD_PATH=$(WORKING_DIR)/$(DESTDIR) modules_install && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
 	> $(PWD)/$@
 
 built: configured
@@ -88,23 +88,15 @@ built: configured
 
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	cp $(PWD)/config .config && \
-	$(MAKE) oldconfig && \
+	./configure --prefix=/usr && \
 	> $(PWD)/$@
 
-patched: $(wildcard $(PATCHSH)) source_ready Makefile
+patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(PATCHSH); fi && > $(PWD)/$@
 
-# Pay attention when changing this rule because it does, unlike in the other
-# packages, not depend on the Makefile. I wanted this to avoid full rebuilds
-# when the Makefile changes. These do not happen with the other packages since
-# they do not have the `make mrproper' step.
-source_ready: $(SOURCE_ARCHIVE) | $(WORKING_DIR)
-	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(WORKING_DIR) && \
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) mrproper && \
-	> $(PWD)/$@
+source_ready: Makefile $(SOURCE_ARCHIVE) | $(WORKING_DIR)
+	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(WORKING_DIR) && > $(PWD)/$@
 
 $(WORKING_DIR):
 	mkdir -p $@
