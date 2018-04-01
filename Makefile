@@ -34,7 +34,9 @@ NORMAL_PKGS := amhello-1.0.0 \
 		binutils-2.30.0 \
 		elfutils-0.170.0 \
 		eudev-3.2.5 \
+		findutils-4.6.0 \
 		glibc-2.27.0 \
+		grep-3.1.0 \
 		grub-2.2.0 \
 		gmp-6.1.2 \
 		gzip-1.9.0 \
@@ -43,7 +45,7 @@ NORMAL_PKGS := amhello-1.0.0 \
 		kbd-2.0.4 \
 		kmod-25.0.0 \
 		less-530.0.0 \
-		lfs-bootscripts-2017.6.26 \
+		tslegacy-bootscripts-1.0.0 \
 		linux-4.15.14 \
 		linux-headers-4.15.13 \
 		mpc-1.1.0 \
@@ -53,6 +55,7 @@ NORMAL_PKGS := amhello-1.0.0 \
 		pkg-config-0.29.2 \
 		procps-ng-3.3.12 \
 		readline-7.0.0 \
+		sed-4.4.0 \
 		shadow-4.5.0 \
 		sysvinit-2.88.0 \
 		tar-1.30.0 \
@@ -72,7 +75,7 @@ COREUTILS := coreutils-8.29.0
 NORMAL_TO_INSTALL_PKGS := $(NORMAL_PKGS)
 
 # These packages are normal apart from their installation procedure
-NORMAL_PLGS += $(COREUTILS)
+NORMAL_PKGS += $(COREUTILS)
 
 NORMAL_PACKED_PKGS := $(join $(NORMAL_PKGS:%=$(BUILD_LOCATION)/%/$(PKG_ARCH)/), \
 	$(NORMAL_PKGS:%=%_$(PKG_ARCH).tpm.tar))
@@ -137,9 +140,12 @@ $(call built_of_normal_pkg,tpm-1.0.0): glibc-2.27.0_installed
 # Not each of the following packages may depend on coreutils however this
 # dependency lowers the complexity of the dependency graph and as this
 # Makefile is not parallel it is no performance issue.
+$(call built_of_normal_pkg,findutils-4.6.0): $(COREUTILS)_installed
+$(call built_of_normal_pkg,grep-3.1.0): $(COREUTILS)_installed
+$(call built_of_normal_pkg,sed-4.4.0): $(COREUTILS)_installed
 $(call built_of_normal_pkg,tar-1.30.0): $(COREUTILS)_installed
 $(call built_of_normal_pkg,gzip-1.9.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,lfs-bootscripts-2017.6.26): $(COREUTILS)_installed
+$(call built_of_normal_pkg,tslegacy-bootscripts-1.0.0): $(COREUTILS)_installed
 $(call built_of_normal_pkg,elfutils-0.170.0): $(COREUTILS)_installed
 $(call built_of_normal_pkg,util-linux-2.32.0): eudev-3.2.5_installed ncurses-6.1.0_installed
 $(call built_of_normal_pkg,eudev-3.2.5): $(COREUTILS)_installed \
@@ -160,7 +166,7 @@ $(call built_of_normal_pkg,kmod-25.0.0): ncurses-6.1.0_installed
 $(call built_of_normal_pkg,bash-4.4.18): ncurses-6.1.0_installed readline-7.0.0_installed
 $(call built_of_normal_pkg,iana-etc-2.30.0): ncurses-6.1.0_installed
 $(call built_of_normal_pkg,shadow-4.5.0): ncurses-6.1.0_installed \
-	tslegacy-sysconfig-1.0.0_installed
+	tslegacy-sysconfig-1.0.0_installed sed-4.4.0_installed
 
 $(call built_of_normal_pkg,tslegacy-sysconfig-1.0.0): basic_fhs-3.0.0_installed
 

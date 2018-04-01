@@ -21,7 +21,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc linux
+PKG_RDEPS := glibc sed linux
 SOURCE_ARCHIVE := $(PKG_NAME)-4.5.tar.gz
 
 # Automatically derived information - shall be adapted if required

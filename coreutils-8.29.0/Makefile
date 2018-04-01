@@ -88,7 +88,8 @@ configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
 	FORCE_UNSAFE_CONFIGURE=1 ./configure \
 		--prefix=/usr \
-		--enable-no-install-program=kill,uptime && \
+		--enable-no-install-program=kill,uptime \
+		--enable-install-program=hostname && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
