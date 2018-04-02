@@ -19,85 +19,80 @@ $(error PKG_ARCH not set)
 endif
 
 # The version of the packaging scripts
-export TSLPACK_VERSION := 1.0.0
+export TSLPACK_VERSION := 1.0.1
 
 # Function definitions
 working_dir_of_normal_packed = $(BUILD_LOCATION)/$(1:%_$(PKG_ARCH).tpm.tar=%)/$(PKG_ARCH)
 built_of_normal_packed = $(call working_dir_of_normal_packed,$(1))/$(1)
+built_of_normal_pkg = $(BUILD_LOCATION)/$(1)/$(PKG_ARCH)/$(1)_$(PKG_ARCH).tpm.tar
 
 # Packages to build
 # <package name>-<version triple>
-NORMAL_PKGS := amhello-1.0.0 \
-		bash-4.4.18 \
-		basic_fhs-3.0.0 \
-		bc-1.7.1 \
-		binutils-2.30.0 \
-		elfutils-0.170.0 \
-		eudev-3.2.5 \
-		findutils-4.6.0 \
-		glibc-2.27.0 \
-		grep-3.1.0 \
-		grub-2.2.0 \
-		gmp-6.1.2 \
-		gzip-1.9.0 \
-		iana-etc-2.30.0 \
-		iproute2-4.15.0 \
-		kbd-2.0.4 \
-		kmod-25.0.0 \
-		less-530.0.0 \
-		tslegacy-bootscripts-1.0.0 \
-		linux-4.15.14 \
-		linux-headers-4.15.13 \
-		mpc-1.1.0 \
-		mpfr-4.0.1 \
-		ncurses-6.1.0 \
-		openssl-1.1.8 \
-		pkg-config-0.29.2 \
-		procps-ng-3.3.12 \
-		readline-7.0.0 \
-		sed-4.4.0 \
-		shadow-4.5.0 \
-		sysvinit-2.88.0 \
-		tar-1.30.0 \
-		tpm-1.0.0 \
-		tslegacy-sysconfig-1.0.0 \
-		tslegacy-utils-1.0.0 \
-		tzdata-2018.4.0 \
-		util-linux-2.32.0 \
-		vim-8.0.586 \
-		zlib-1.2.11
-
-# Packages that need to be referenced later shall be defined as variabled here,
-# to allow for changing their version number easily
-COREUTILS := coreutils-8.29.0
+NORMAL_PKGS := \
+		amhello \
+		bash \
+		basic_fhs \
+		bc \
+		binutils \
+		elfutils \
+		eudev \
+		findutils \
+		glibc \
+		grep \
+		grub \
+		gmp \
+		gzip \
+		iana-etc \
+		iproute2 \
+		kbd \
+		kmod \
+		less \
+		tslegacy-bootscripts \
+		linux \
+		linux-headers \
+		mpc \
+		mpfr \
+		ncurses \
+		openssl \
+		pkg-config \
+		procps-ng \
+		readline \
+		sed \
+		shadow \
+		sysvinit \
+		tar \
+		tpm \
+		tslegacy-sysconfig \
+		tslegacy-utils \
+		tzdata \
+		util-linux \
+		vim \
+		zlib
 
 # Packages that shall be installed with a general installation scheme
 NORMAL_TO_INSTALL_PKGS := $(NORMAL_PKGS)
 
 # These packages are normal apart from their installation procedure
-NORMAL_PKGS += $(COREUTILS)
+NORMAL_PKGS += coreutils
 
-NORMAL_PACKED_PKGS := $(join $(NORMAL_PKGS:%=$(BUILD_LOCATION)/%/$(PKG_ARCH)/), \
-	$(NORMAL_PKGS:%=%_$(PKG_ARCH).tpm.tar))
+# The built packed forms of normal packages
+# The build artifact of a normal package is its packed shape therefore
+# NORMAL_PACKED_PKGS could also been named BUIT_NORMAL_PKGS.
+NORMAL_PACKED_PKGS := $(foreach PKG,$(NORMAL_PKGS),$(call built_of_normal_pkg,$(PKG)))
 
 PKGS := $(NORMAL_PKGS)
 PACKED_PKGS := $(NORMAL_PACKED_PKGS)
 
-# helper macros to deal with 'normal' packages
-built_of_normal_pkg = $(BUILD_LOCATION)/$(1)/$(PKG_ARCH)/$(1)_$(PKG_ARCH).tpm.tar
-
 # GCC and associated libraries
-GCC_VERSION :=	7.3.0
-GCC :=		gcc-$(GCC_VERSION)
-GCC_LIBS :=	libgcc-$(GCC_VERSION) \
-			libstdc++-$(GCC_VERSION) \
-			libmpx-$(GCC_VERSION) \
-			libvtv-$(GCC_VERSION) \
-			libssp-$(GCC_VERSION) \
-			libatomic-$(GCC_VERSION) \
-			libquadmath-$(GCC_VERSION)
+GCC_LIBS :=	libgcc \
+			libstdc \
+			libmpx \
+			libvtv \
+			libssp \
+			libatomic \
+			libquadmath
 
-GCC_AND_LIBS := $(GCC) $(GCC_LIBS)
+GCC_AND_LIBS := gcc $(GCC_LIBS)
 
 GCC_SUBDIRS :=	gcc \
 				libgcc \
@@ -108,7 +103,7 @@ GCC_SUBDIRS :=	gcc \
 				libatomic \
 				libquadmath
 
-PACKED_GCC_AND_LIBS := $(join $(GCC_SUBDIRS:%=$(BUILD_LOCATION)/$(GCC)/$(PKG_ARCH)/%/), \
+PACKED_GCC_AND_LIBS := $(join $(GCC_SUBDIRS:%=$(BUILD_LOCATION)/gcc/$(PKG_ARCH)/%/), \
 	$(GCC_AND_LIBS:%=%_$(PKG_ARCH).tpm.tar))
 
 PACKED_PKGS += $(PACKED_GCC_AND_LIBS)
@@ -130,73 +125,73 @@ all_packages: $(COLLECTED_PACKED_PKGS)
 	> $@
 
 # Dependencies between package builds, and other targets.
-$(call built_of_normal_pkg,linux-4.15.14): $(GCC)_installed \
-	bc-1.7.1_installed openssl-1.1.8_installed elfutils-0.170.0_installed
+$(call built_of_normal_pkg,linux): gcc_installed \
+	bc_installed openssl_installed elfutils_installed
 
-$(call built_of_normal_pkg,tslegacy-utils-1.0.0): util-linux-2.32.0_installed
-$(call built_of_normal_pkg,vim-8.0.586): ncurses-6.1.0_installed
-$(call built_of_normal_pkg,tpm-1.0.0): glibc-2.27.0_installed
+$(call built_of_normal_pkg,tslegacy-utils): util-linux_installed
+$(call built_of_normal_pkg,vim): ncurses_installed
+$(call built_of_normal_pkg,tpm): glibc_installed
 
 # Not each of the following packages may depend on coreutils however this
 # dependency lowers the complexity of the dependency graph and as this
 # Makefile is not parallel it is no performance issue.
-$(call built_of_normal_pkg,findutils-4.6.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,grep-3.1.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,sed-4.4.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,tar-1.30.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,gzip-1.9.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,tslegacy-bootscripts-1.0.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,elfutils-0.170.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,util-linux-2.32.0): eudev-3.2.5_installed ncurses-6.1.0_installed
-$(call built_of_normal_pkg,eudev-3.2.5): $(COREUTILS)_installed \
-	tslegacy-sysconfig-1.0.0_installed
+$(call built_of_normal_pkg,findutils): coreutils_installed
+$(call built_of_normal_pkg,grep): coreutils_installed
+$(call built_of_normal_pkg,sed): coreutils_installed
+$(call built_of_normal_pkg,tar): coreutils_installed
+$(call built_of_normal_pkg,gzip): coreutils_installed
+$(call built_of_normal_pkg,tslegacy-bootscripts): coreutils_installed
+$(call built_of_normal_pkg,elfutils): coreutils_installed
+$(call built_of_normal_pkg,util-linux): eudev_installed ncurses_installed
+$(call built_of_normal_pkg,eudev): coreutils_installed \
+	tslegacy-sysconfig_installed
 
-$(call built_of_normal_pkg,sysvinit-2.88.0): $(COREUTILS)_installed \
-	tslegacy-sysconfig-1.0.0_installed
+$(call built_of_normal_pkg,sysvinit): coreutils_installed \
+	tslegacy-sysconfig_installed
 
-$(call built_of_normal_pkg,kbd-2.0.4): $(COREUTILS)_installed
-$(call built_of_normal_pkg,less-530.0.0): $(COREUTILS)_installed
-$(call built_of_normal_pkg,grub-2.2.0): $(COREUTILS)_installed
+$(call built_of_normal_pkg,kbd): coreutils_installed
+$(call built_of_normal_pkg,less): coreutils_installed
+$(call built_of_normal_pkg,grub): coreutils_installed
 
 # Same thing here however with ncurses
-$(call built_of_normal_pkg,$(COREUTILS)): ncurses-6.1.0_installed
-$(call built_of_normal_pkg,procps-ng-3.3.12): ncurses-6.1.0_installed
-$(call built_of_normal_pkg,openssl-1.1.8): ncurses-6.1.0_installed
-$(call built_of_normal_pkg,kmod-25.0.0): ncurses-6.1.0_installed
-$(call built_of_normal_pkg,bash-4.4.18): ncurses-6.1.0_installed readline-7.0.0_installed
-$(call built_of_normal_pkg,iana-etc-2.30.0): ncurses-6.1.0_installed
-$(call built_of_normal_pkg,shadow-4.5.0): ncurses-6.1.0_installed \
-	tslegacy-sysconfig-1.0.0_installed sed-4.4.0_installed
+$(call built_of_normal_pkg,coreutils): ncurses_installed
+$(call built_of_normal_pkg,procps-ng): ncurses_installed
+$(call built_of_normal_pkg,openssl): ncurses_installed
+$(call built_of_normal_pkg,kmod): ncurses_installed
+$(call built_of_normal_pkg,bash): ncurses_installed readline_installed
+$(call built_of_normal_pkg,iana-etc): ncurses_installed
+$(call built_of_normal_pkg,shadow): ncurses_installed \
+	tslegacy-sysconfig_installed sed_installed
 
-$(call built_of_normal_pkg,tslegacy-sysconfig-1.0.0): basic_fhs-3.0.0_installed
+$(call built_of_normal_pkg,tslegacy-sysconfig): basic_fhs_installed
 
-$(call built_of_normal_pkg,pkg-config-0.29.2): gcc-7.3.0_installed
-$(call built_of_normal_pkg,iproute2-4.15.0): gcc-7.3.0_installed
-$(call built_of_normal_pkg,bc-1.7.1): readline-7.0.0_installed ncurses-6.1.0_installed
-$(call built_of_normal_pkg,amhello-1.0.0): gcc-7.3.0_installed
+$(call built_of_normal_pkg,pkg-config): gcc_installed
+$(call built_of_normal_pkg,iproute2): gcc_installed
+$(call built_of_normal_pkg,bc): readline_installed ncurses_installed
+$(call built_of_normal_pkg,amhello): gcc_installed
 
-$(call built_of_normal_pkg,ncurses-6.1.0): gcc-7.3.0_installed \
-	pkg-config-0.29.2_installed
+$(call built_of_normal_pkg,ncurses): gcc_installed \
+	pkg-config_installed
 
-$(call built_of_normal_pkg,readline-7.0.0): gcc-7.3.0_installed
+$(call built_of_normal_pkg,readline): gcc_installed
 
 $(PACKED_GCC_AND_LIBS): \
-	mpc-1.1.0_installed mpfr-4.0.1_installed gmp-6.1.2_installed \
-	binutils-2.30.0_installed zlib-1.2.11_installed
+	mpc_installed mpfr_installed gmp_installed \
+	binutils_installed zlib_installed
 
-$(call built_of_normal_pkg,mpc-1.1.0): mpfr-4.0.1_installed
-$(call built_of_normal_pkg,mpfr-4.0.1): gmp-6.1.2_installed
-$(call built_of_normal_pkg,gmp-6.1.2): binutils-2.30.0_installed
-$(call built_of_normal_pkg,binutils-2.30.0): zlib-1.2.11_installed
-$(call built_of_normal_pkg,zlib-1.2.11): toolchain_adjusted
+$(call built_of_normal_pkg,mpc): mpfr_installed
+$(call built_of_normal_pkg,mpfr): gmp_installed
+$(call built_of_normal_pkg,gmp): binutils_installed
+$(call built_of_normal_pkg,binutils): zlib_installed
+$(call built_of_normal_pkg,zlib): toolchain_adjusted
 
-$(call built_of_normal_pkg,tzdata-2018.4.0): glibc-2.27.0_installed
+$(call built_of_normal_pkg,tzdata): glibc_installed
 
-$(call built_of_normal_pkg,glibc-2.27.0): linux-headers-4.15.13_installed
-$(call built_of_normal_pkg,linux-headers-4.15.13): basic_fhs-3.0.0_installed
-$(call built_of_normal_pkg,basic_fhs-3.0.0): tool_links_created
+$(call built_of_normal_pkg,glibc): linux-headers_installed
+$(call built_of_normal_pkg,linux-headers): basic_fhs_installed
+$(call built_of_normal_pkg,basic_fhs): tool_links_created
 
-toolchain_adjusted: glibc-2.27.0_installed
+toolchain_adjusted: glibc_installed
 
 # General rules for building and packages and installing them to the runtime
 # system (bootstrapping):
@@ -207,41 +202,37 @@ tool_links_created: create_tool_links.sh
 	cd $(TPM_TARGET) && $(PWD)/create_tool_links.sh && > $(PWD)/$@
 
 $(patsubst %,%_installed,$(NORMAL_TO_INSTALL_PKGS) $(GCC_LIBS)): \
-	$$(patsubst %_installed,$(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar,$$@) $(TPM_CONF) | /tmp
-	eval PKG="$@" && \
-	eval PKG="$${PKG%-*}" && \
-	if $(TPM) --list-installed | grep -q "^$${PKG}$$"; then \
-		$(TPM) --remove $${PKG}; \
+	override PKG_NAME := $(patsubst %_installed,%,$@)
+$(patsubst %,%_installed,$(NORMAL_TO_INSTALL_PKGS) $(GCC_LIBS)): \
+	$(COLLECTING_REPO)/$(PKG_ARCH)/$$(PKG_NAME)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
+	if $(TPM) --list-installed | grep -q "^$(PKG_NAME)$$"; then \
+		$(TPM) --remove $(PKG_NAME); \
 	fi && \
-	$(TPM) --install $${PKG} && \
+	$(TPM) --install $(PKG_NAME) && \
 	> $@
 
 # Special rule for gcc since a temporary symlink might have to be removed first
-$(GCC)_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/$(GCC)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
+gcc_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/gcc_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
 	if [ -L $(TPM_TARGET)/usr/lib/gcc ]; then rm $(TPM_TARGET)/usr/lib/gcc; fi && \
-	eval PKG="$(GCC)" && \
-	PKG="$${PKG%-*}" && \
-	if $(TPM) --list-installed | grep -q "^$${PKG}$$"; then \
-		$(TPM) --remove $${PKG}; \
+	if $(TPM) --list-installed | grep -q "^gcc$$"; then \
+		$(TPM) --remove gcc; \
 	else \
 		rm -vf $(TPM_TARGET)/usr/lib/{libgcc_s.so{,.1},libstdc++.{a,so{,.6}}}; \
 	fi && \
-	$(TPM) --install $${PKG} && \
+	$(TPM) --install gcc && \
 	> $@
 
 # Special rule for installing coreutils since the preliminary runtime system
 # has some temporary symlinks which need to be removed no
-$(COREUTILS)_installed: \
-	$(COLLECTING_REPO)/$(PKG_ARCH)/$(COREUTILS)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
-	eval PKG="$(COREUTILS)" && \
-	PKG="$${PKG%-*}" && \
-	if $(TPM) --list-installed | grep -q "^$${PKG}$$"; then \
-		$(TPM) --remove $${PKG}; \
+coreutils_installed: \
+	$(COLLECTING_REPO)/$(PKG_ARCH)/coreutils_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
+	if $(TPM) --list-installed | grep -q "^coreutils$$"; then \
+		$(TPM) --remove coreutils; \
 	else \
 		rm -vf $(TPM_TARGET)/usr/bin/install && \
 		rm -vf $(TPM_TARGET)/bin/{cat,dd,echo,ln,pwd,rm,stty}; \
 	fi && \
-	$(TPM) --install $${PKG} && \
+	$(TPM) --install coreutils && \
 	> $@
 
 $(patsubst %,$(COLLECTING_REPO)/$(PKG_ARCH)/%,$(notdir $(NORMAL_PACKED_PKGS))): \
@@ -250,7 +241,7 @@ $(patsubst %,$(COLLECTING_REPO)/$(PKG_ARCH)/%,$(notdir $(NORMAL_PACKED_PKGS))): 
 	cp -f $< $@
 
 $(GCC_AND_LIBS:%=$(COLLECTING_REPO)/$(PKG_ARCH)/%_$(PKG_ARCH).tpm.tar): \
-	$(BUILD_LOCATION)/$(GCC)/$(PKG_ARCH)/$$(patsubst %-$(GCC_VERSION)_$(PKG_ARCH).tpm.tar,%,$$(notdir $$@))/$$(notdir $$@) \
+	$(BUILD_LOCATION)/gcc/$(PKG_ARCH)/$$(patsubst %_$(PKG_ARCH).tpm.tar,%,$$(notdir $$@))/$$(notdir $$@) \
 	| $(COLLECTING_REPO)/$(PKG_ARCH)
 	cp -f $< $@
 
@@ -261,7 +252,7 @@ $(PACKED_GCC_AND_LIBS): build_gcc
 
 .PHONY: build_gcc
 build_gcc:
-	cd $(GCC) && $(MAKE)
+	cd gcc && $(MAKE)
 
 $(TPM_CONF):
 	install -dm755 $(dir $@)
@@ -298,7 +289,7 @@ $(NORMAL_PKGS:%=clean_pkg_%): clean_confirmation
 $(GCC_AND_LIBS:%=clean_pkg_%): clean_gcc_and_libs
 .PHONY: clean_gcc_and_libs
 clean_gcc_and_libs: clean_confirmation
-	cd $(GCC) && $(MAKE) clean
+	cd gcc && $(MAKE) clean
 
 .PHONY: clean_runtime
 clean_runtime: clean_confirmation
@@ -324,7 +315,7 @@ dist:
 		set_env.sample \
 		update_playground.sh \
 		$(NORMAL_PKGS) \
-		$(GCC) \
+		gcc \
 		tslegacy_packaging-$(TSLPACK_VERSION)
 	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz tslegacy_packaging-$(TSLPACK_VERSION)
 	rm -rf tslegacy_packaging-$(TSLPACK_VERSION)

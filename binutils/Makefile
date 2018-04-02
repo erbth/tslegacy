@@ -1,10 +1,4 @@
 # Tab size: 4
-
-# For building the upstream package I adapted the process used in the book
-# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
-# Bruce Dubbs. At the time I initially wrote this file, the book was available
-# from www.linuxfromscratch.org/lfs.
-
 SHELL := bash
 TPM	?= tpm
 TAR ?= tar
@@ -19,25 +13,24 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := binutils
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 2.30.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := zlib glibc linux
+SOURCE_ARCHIVE := $(PKG_NAME)-2.30.tar.xz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
 PACKED := $(PKG_NAME)_$(PKG_ARCH).tpm.tar
-export PACKAGING_RESOURCE_DIR := $(PWD)
 
 # config
 POSTINSTSH := postinst.sh
@@ -79,20 +72,28 @@ adapted: $(wildcard $(ADAPTSH)) installed
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
 installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) tooldir=/usr install-strip && \
 	> $(PWD)/$@
 
 built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
+	$(MAKE) tooldir=/usr && \
+	> $(PWD)/built
 
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
+	mkdir -p build && \
+	cd build && \
+	../configure \
+		--prefix=/usr \
+		--enable-gold \
+		--enable-ld=default \
+		--enable-plugins \
+		--enable-shared \
+		--disable-werror \
+		--enable-64-bit-bfd \
+		--with-system-zlib && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

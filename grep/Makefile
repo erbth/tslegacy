@@ -19,16 +19,16 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := grep
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 3.1.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := glibc linux
+SOURCE_ARCHIVE := $(PKG_NAME)-3.1.tar.xz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
@@ -86,13 +86,11 @@ installed: built desc_initial
 built: configured
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
 
+# The LFS bootscripts I currently use expect `grep' in /bin
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
 	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
+		--bindir=/bin && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

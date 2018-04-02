@@ -5,6 +5,11 @@
 # Bruce Dubbs. At the time I initially wrote this file, the book was available
 # from www.linuxfromscratch.org/lfs.
 
+# Pay attention when changing any part of this file because the rules do not,
+# unlike in the other packages, on the Makefile. I wanted this to avoid full
+# rebuilds when the Makefile changes. These do not happen with the other
+# packages since they do not have the `make mrproper' step.
+
 SHELL := bash
 TPM	?= tpm
 TAR ?= tar
@@ -19,20 +24,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := linux
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+export PKG_VERSION := 4.15.15
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := coreutils kmod
+SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -51,14 +56,20 @@ export DESTDIR = destdir
 $(WORKING_DIR)/$(PACKED): adapted desc_final postinstsh prermsh preupdatesh
 	cd $(WORKING_DIR) && $(TPM) --pack
 
-postinstsh: $(wildcard $(POSTINSTSH)) | $(WORKING_DIR)
+postinstsh: postinst.sh | $(WORKING_DIR)
 	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
 
-prermsh: $(wildcard $(PRERMSH)) | $(WORKING_DIR)
+prermsh: prerm.sh | $(WORKING_DIR)
 	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
 
 preupdatesh: $(wildcard $(PREUPDATESH)) | $(WORKING_DIR)
 	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
+
+postinst.sh: postinst.sh.in
+	sed -e 's/PKG_VERSION/${PKG_VERSION}/g' $< > $@
+
+prerm.sh: prerm.sh.in
+	sed -e 's/PKG_VERSION/${PKG_VERSION}/g' $< > $@
 
 desc_final: desc_initial adapted
 	cd $(WORKING_DIR) && \
@@ -68,7 +79,7 @@ desc_final: desc_initial adapted
 	( for RDEP in $(PKG_RDEPS); do $(TPM) --add-rdependency $$RDEP || exit; done ) && \
 	$(TPM) --add-files && > $(PWD)/$@
 
-desc_initial: Makefile | $(WORKING_DIR)
+desc_initial: | $(WORKING_DIR)
 	cd $(WORKING_DIR) && \
 	if [ -e $(DESCXML) ]; then rm $(DESCXML); fi && \
 	if [ -e $(DESTDIR) ]; then rm -r $(DESTDIR); fi && \
@@ -80,27 +91,27 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	$(MAKE) INSTALL_MOD_PATH=$(WORKING_DIR)/$(DESTDIR) modules_install && \
 	> $(PWD)/$@
 
 built: configured
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
 
-configured: patched
+configured: patched config
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
+	cp $(PWD)/config .config && \
+	$(MAKE) olddefconfig && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(PATCHSH); fi && > $(PWD)/$@
 
-source_ready: Makefile $(SOURCE_ARCHIVE) | $(WORKING_DIR)
-	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(WORKING_DIR) && > $(PWD)/$@
+source_ready: $(SOURCE_ARCHIVE) | $(WORKING_DIR)
+	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(WORKING_DIR) && \
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	$(MAKE) mrproper && \
+	> $(PWD)/$@
 
 $(WORKING_DIR):
 	mkdir -p $@
@@ -108,4 +119,5 @@ $(WORKING_DIR):
 .PHONY: clean
 clean:
 	rm -rvf $(PKG_BUILD_LOCATION) source_ready patched configured built desc_initial \
-	installed adapted desc_final postinstsh prermsh preupdatesh
+	installed adapted desc_final postinstsh prermsh preupdatesh postinst.sh \
+	prerm.sh

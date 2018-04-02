@@ -1,10 +1,5 @@
 # Tab size: 4
 
-# For building the upstream package I adapted the process used in the book
-# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
-# Bruce Dubbs. At the time I initially wrote this file, the book was available
-# from www.linuxfromscratch.org/lfs.
-
 SHELL := bash
 TPM	?= tpm
 TAR ?= tar
@@ -19,15 +14,15 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := tslegacy-bootscripts
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 1.0.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
+PKG_RDEPS := glibc sed coreutils grep findutils linux
 SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
 
 # Automatically derived information - shall be adapted if required
@@ -78,21 +73,9 @@ adapted: $(wildcard $(ADAPTSH)) installed
 	if [ "$<" == "$(ADAPTSH)" ]; then \
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
-installed: built desc_initial
+installed: patched desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
-	> $(PWD)/$@
-
-built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
-
-configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

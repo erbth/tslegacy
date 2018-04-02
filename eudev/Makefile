@@ -19,20 +19,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := eudev
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 3.2.5
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := glibc util-linux linux
+SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -78,21 +78,32 @@ adapted: $(wildcard $(ADAPTSH)) installed
 	if [ "$<" == "$(ADAPTSH)" ]; then \
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
+# LD_LIBRARY_PATH is used in LFS 8.2, p. 206
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	$(MAKE) LD_LIBRARY_PATH=/tools/lib \
+	DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
 	> $(PWD)/$@
 
 built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
+	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	LIBRARY_PATH=/tools/lib $(MAKE) && \
+	> $(PWD)/built
 
+# The parameters to configure were taken from LFS 8.2, p.206
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
 	./configure --prefix=/usr \
-		--exec-prefix= \
+		--bindir=/sbin \
+		--sbindir=/sbin \
 		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--libexecdir=/lib \
+		--with-rootprefix= \
+		--with-rootlibdir=/lib \
+		--enable-manpages \
 		--disable-static \
-		--disable-kill && \
+		--config-cache && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

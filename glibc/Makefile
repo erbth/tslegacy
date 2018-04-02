@@ -1,10 +1,4 @@
 # Tab size: 4
-
-# For building the upstream package I adapted the process used in the book
-# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
-# Bruce Dubbs. At the time I initially wrote this file, the book was available
-# from www.linuxfromscratch.org/lfs.
-
 SHELL := bash
 TPM	?= tpm
 TAR ?= tar
@@ -19,25 +13,24 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := glibc
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 2.27.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := linux
+SOURCE_ARCHIVE := $(PKG_NAME)-2.27.tar.xz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
 PACKED := $(PKG_NAME)_$(PKG_ARCH).tpm.tar
-export PACKAGING_RESOURCE_DIR := $(PWD)
 
 # config
 POSTINSTSH := postinst.sh
@@ -79,21 +72,32 @@ adapted: $(wildcard $(ADAPTSH)) installed
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
 installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
+	install -dm755 etc && \
+	touch etc/ld.so.conf && \
+	sed '/test-installation/s@$$(PERL)@echo not running@' -i ../Makefile && \
+	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
 	> $(PWD)/$@
 
 built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && $(MAKE) && > $(PWD)/built
 
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
-	> $(PWD)/$@
+	mkdir -pv build && cd build && \
+	case $$(uname -m) in \
+		i?86)   GCC_INCDIR=/usr/lib/gcc/$$(uname -m)-pc-linux-gnu/7.3.0/include;; \
+		x86_64) GCC_INCDIR=/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include;; \
+		*) false;; \
+	esac && \
+	CC="gcc -isystem $$GCC_INCDIR -isystem /usr/include" && \
+	../configure \
+		--prefix=/usr \
+		--disable-werror \
+		--enable-kernel=3.2 \
+		--enable-stack-protector=strong \
+		libc_cv_slibdir=/lib && \
+		> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \

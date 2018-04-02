@@ -19,20 +19,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := findutils
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 4.6.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
 PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -86,13 +86,11 @@ installed: built desc_initial
 built: configured
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
 
+# The localstatedir part is from LFS 8.2
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
+	./configure --prefix=/usr
+		--localstatedir=/var/lib/locate && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

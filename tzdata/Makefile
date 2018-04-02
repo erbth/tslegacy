@@ -1,10 +1,4 @@
 # Tab size: 4
-
-# For building the upstream package I adapted the process used in the book
-# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
-# Bruce Dubbs. At the time I initially wrote this file, the book was available
-# from www.linuxfromscratch.org/lfs.
-
 SHELL := bash
 TPM	?= tpm
 TAR ?= tar
@@ -19,25 +13,24 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := tzdata
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 2018.4.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := glibc
+SOURCE_ARCHIVE := tzdata2018d.tar.gz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+SOURCE_DIR := tzdata
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
 PACKED := $(PKG_NAME)_$(PKG_ARCH).tpm.tar
-export PACKAGING_RESOURCE_DIR := $(PWD)
 
 # config
 POSTINSTSH := postinst.sh
@@ -74,33 +67,15 @@ desc_initial: Makefile | $(WORKING_DIR)
 	if [ -e $(DESTDIR) ]; then rm -r $(DESTDIR); fi && \
 	$(TPM) --create-desc $(PKG_TYPE) && > $(PWD)/$@
 
-adapted: $(wildcard $(ADAPTSH)) installed
+adapted: $(wildcard $(ADAPTSH)) source_ready
 	if [ "$<" == "$(ADAPTSH)" ]; then \
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
-installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
-	> $(PWD)/$@
-
-built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
-
-configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
-	> $(PWD)/$@
-
-patched: $(wildcard $(PATCHSH)) source_ready
-	if [ "$<" == "$(PATCHSH)" ]; then \
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(PATCHSH); fi && > $(PWD)/$@
-
 source_ready: Makefile $(SOURCE_ARCHIVE) | $(WORKING_DIR)
-	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(WORKING_DIR) && > $(PWD)/$@
+	cd $(WORKING_DIR) && \
+	mkdir $(SOURCE_DIR) && \
+	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(SOURCE_DIR) && \
+	> $(PWD)/$@
 
 $(WORKING_DIR):
 	mkdir -p $@

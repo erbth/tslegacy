@@ -18,10 +18,10 @@ $(error SOURCE_LOCATION not set)
 endif
 
 # Package information:
-PKG_TYPE := sw
-PKG_NAME := skel
+PKG_TYPE := conf
+PKG_NAME := tslegacy-sysconfig
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 1.0.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
@@ -80,20 +80,11 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	$(MAKE) ROOT=$(WORKING_DIR)/$(DESTDIR) install && \
 	> $(PWD)/$@
 
-built: configured
+built: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
-
-configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
-	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
 	if [ "$<" == "$(PATCHSH)" ]; then \

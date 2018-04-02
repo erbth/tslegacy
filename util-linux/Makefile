@@ -19,20 +19,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := util-linux
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 2.32.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := glibc ncurses eudev zlib linux
+SOURCE_ARCHIVE := $(PKG_NAME)-2.32.tar
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -86,13 +86,24 @@ installed: built desc_initial
 built: configured
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
 
+# The FHS version 3.0 requires the adjtime file to be located in
+# /var/lib/hwclock
+# The options passed to configure were taken from LFS 8.2, p. 208
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
+	./configure ADJTIME_PATH=/var/lib/hwclock/adjtime \
+		--prefix=/usr \
+		--disable-chfn-chsh \
+		--disable-login \
+		--disable-nologin \
+		--disable-su \
+		--disable-setpriv \
+		--disable-runuser \
+		--disable-pylibmount \
 		--disable-static \
-		--disable-kill && \
+		--without-python \
+		--without-systemd \
+		--without-systemdsystemunitdir && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

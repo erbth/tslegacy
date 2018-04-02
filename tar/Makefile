@@ -19,16 +19,16 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := tar
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 1.30.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := glibc linux
+SOURCE_ARCHIVE := $(PKG_NAME)-1.30.tar.xz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
@@ -81,6 +81,7 @@ adapted: $(wildcard $(ADAPTSH)) installed
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
 	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	$(MAKE) -C doc DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-html && \
 	> $(PWD)/$@
 
 built: configured
@@ -88,11 +89,8 @@ built: configured
 
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
+	FORCE_UNSAFE_CONFIGURE=1 ./configure \
+		--prefix=/usr && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready
