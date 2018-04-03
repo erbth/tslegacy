@@ -24,20 +24,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := isc-dhcp-client
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 4.4.1
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := glibc linux
+SOURCE_ARCHIVE := dhcp-$(PKG_VERSION).tar.gz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -83,21 +83,32 @@ adapted: $(wildcard $(ADAPTSH)) installed
 	if [ "$<" == "$(ADAPTSH)" ]; then \
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
+# I read in BLFS 8.2 that the client and the script can be installed that way.
 installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	cd $(WORKING_DIR)/$(SOURCE_DIR)/client && \
+	$(MAKE) -j 1 DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
+	install -v -dm755 "$(WORKING_DIR)/$(DESTDIR)"/sbin && \
+	install -v -m755 scripts/linux "$(WORKING_DIR)/$(DESTDIR)"/sbin/dhclient-script && \
 	> $(PWD)/$@
 
+# BLFS 8.2 suggests to build single threaded
 built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(MAKE) && > $(PWD)/built
+	cd $(WORKING_DIR)/$(SOURCE_DIR)&& $(MAKE) -j 1 && > $(PWD)/built
 
+# I took this configure procedure from BLFS 8.2. It looks like if it increases
+# FHS compatibility, which is a good thing.
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	CFLAGS="-D_PATH_DHCLIENT_SCRIPT='\"/sbin/dhclient-script\"' \
+			-D_PATH_DHCPD_CONF='\"/etc/dhcp/dhcpd.conf\"' \
+			-D_PATH_DHCLIENT_CONF='\"/etc/dhcp/dhclient.conf\"'" && \
 	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
+		--sysconfdir=/etc/dhcp \
+		--localstatedir=/var \
+		--with-srv-lease-file=/var/lib/dhcpd/dhcpd.leases \
+		--with-srv6-lease-file=/var/lib/dhcpd/dhcpd6.leases \
+		--with-cli-lease-file=/var/lib/dhclient/dhclient.leases \
+		--with-cli6-lease-file=/var/lib/dhclient/dhclient6.leases && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

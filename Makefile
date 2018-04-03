@@ -29,14 +29,21 @@ built_of_normal_pkg = $(BUILD_LOCATION)/$(1)/$(PKG_ARCH)/$(1)_$(PKG_ARCH).tpm.ta
 # Packages to build
 # <package name>-<version triple>
 NORMAL_PKGS := \
+		alsa-lib \
+		alsa-utils \
 		amhello \
 		bash \
 		basic_fhs \
 		bc \
 		binutils \
+		cifs-utils \
+		e2fsprogs \
 		elfutils \
 		eudev \
+		expat \
+		file \
 		findutils \
+		gdbm \
 		glibc \
 		grep \
 		grub \
@@ -44,18 +51,24 @@ NORMAL_PKGS := \
 		gzip \
 		iana-etc \
 		iproute2 \
+		isc-dhcp-client \
 		kbd \
 		kmod \
 		less \
+		talloc \
 		tslegacy-bootscripts \
+		libffi \
 		linux \
 		linux-headers \
 		mpc \
 		mpfr \
 		ncurses \
+		ntfs-3g \
 		openssl \
 		pkg-config \
 		procps-ng \
+		python \
+		python3 \
 		readline \
 		sed \
 		shadow \
@@ -85,7 +98,7 @@ PACKED_PKGS := $(NORMAL_PACKED_PKGS)
 
 # GCC and associated libraries
 GCC_LIBS :=	libgcc \
-			libstdc \
+			libstdc++ \
 			libmpx \
 			libvtv \
 			libssp \
@@ -128,6 +141,21 @@ all_packages: $(COLLECTED_PACKED_PKGS)
 $(call built_of_normal_pkg,linux): gcc_installed \
 	bc_installed openssl_installed elfutils_installed
 
+# The packages below depend on util linux to simplify the dependency graph.
+$(call built_of_normal_pkg,alsa-utils): alsa-lib_installed
+$(call built_of_normal_pkg,alsa-lib): util-linux_installed
+$(call built_of_normal_pkg,ntfs-3g): util-linux_installed
+$(call built_of_normal_pkg,isc-dhcp-client): util-linux_installed file_installed
+
+$(call built_of_normal_pkg,cifs-utils): talloc_installed
+$(call built_of_normal_pkg,talloc): python_installed
+$(call built_of_normal_pkg,python3): libffi_installed expat_installed \
+	gdbm_installed ncurses_installed
+
+$(call built_of_normal_pkg,python): libffi_installed expat_installed \
+	gdbm_installed ncurses_installed
+
+$(call built_of_normal_pkg,e2fsprogs): util-linux_installed
 $(call built_of_normal_pkg,tslegacy-utils): util-linux_installed
 $(call built_of_normal_pkg,vim): ncurses_installed
 $(call built_of_normal_pkg,tpm): glibc_installed
@@ -135,6 +163,10 @@ $(call built_of_normal_pkg,tpm): glibc_installed
 # Not each of the following packages may depend on coreutils however this
 # dependency lowers the complexity of the dependency graph and as this
 # Makefile is not parallel it is no performance issue.
+$(call built_of_normal_pkg,file): coreutils_installed zlib_installed
+$(call built_of_normal_pkg,gdbm): coreutils_installed
+$(call built_of_normal_pkg,libffi): coreutils_installed
+$(call built_of_normal_pkg,expat): coreutils_installed
 $(call built_of_normal_pkg,findutils): coreutils_installed
 $(call built_of_normal_pkg,grep): coreutils_installed
 $(call built_of_normal_pkg,sed): coreutils_installed
@@ -202,7 +234,7 @@ tool_links_created: create_tool_links.sh
 	cd $(TPM_TARGET) && $(PWD)/create_tool_links.sh && > $(PWD)/$@
 
 $(patsubst %,%_installed,$(NORMAL_TO_INSTALL_PKGS) $(GCC_LIBS)): \
-	override PKG_NAME := $(patsubst %_installed,%,$@)
+	override PKG_NAME = $(patsubst %_installed,%,$@)
 $(patsubst %,%_installed,$(NORMAL_TO_INSTALL_PKGS) $(GCC_LIBS)): \
 	$(COLLECTING_REPO)/$(PKG_ARCH)/$$(PKG_NAME)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
 	if $(TPM) --list-installed | grep -q "^$(PKG_NAME)$$"; then \

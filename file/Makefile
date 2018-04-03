@@ -5,11 +5,6 @@
 # Bruce Dubbs. At the time I initially wrote this file, the book was available
 # from www.linuxfromscratch.org/lfs.
 
-# For building the upstream package I adapted the process used in the book
-# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development Team.
-# At the time I initially wrote this file, the book was available
-# from www.linuxfromscratch.org/blfs.
-
 SHELL := bash
 TPM	?= tpm
 TAR ?= tar
@@ -24,20 +19,20 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := skel
+PKG_NAME := file
 # The version must consist of exactly three parts
-PKG_VERSION := 0.0.0
+PKG_VERSION := 5.32.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_RDEPS := glibc zlib linux
+SOURCE_ARCHIVE := $(PKG_NAME)-5.32.tar.gz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
+export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
@@ -93,11 +88,7 @@ built: configured
 
 configured: patched
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure --prefix=/usr \
-		--exec-prefix= \
-		--libdir=/usr/lib \
-		--disable-static \
-		--disable-kill && \
+	./configure --prefix=/usr && \
 	> $(PWD)/$@
 
 patched: $(wildcard $(PATCHSH)) source_ready

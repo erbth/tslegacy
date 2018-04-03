@@ -12,10 +12,7 @@ cd ${WORKING_DIR}/${DESTDIR}
 
 install -dm755 lib
 
-# Remember me to check if .so6* can be changed to .so.*
-exit 1
-
-mv -v usr/lib/libncursesw.so.6* lib && \
+mv -v usr/lib/libncursesw.so.* lib && \
 ln -sfv ../../lib/$(readlink usr/lib/libncursesw.so) usr/lib/libncursesw.so || \
 true
 

@@ -84,3 +84,11 @@ include /etc/ld.so.conf.d/*.conf
 EOF
 
 install -dm755 etc/ld.so.conf.d
+
+# Finally, run ldconfig
+if [ -n "${TPM_TARGET}" ]
+then
+    ldconfig -r "${TPM_TARGET}"
+else
+    ldconfig
+fi
