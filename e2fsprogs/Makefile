@@ -27,7 +27,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc util-linux linux
+PKG_RDEPS := glibc util-linux
 SOURCE_ARCHIVE := e2fsprogs-libs-$(PKG_VERSION).tar
 
 # Automatically derived information - shall be adapted if required

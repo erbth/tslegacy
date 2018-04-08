@@ -21,7 +21,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS :=
+PKG_RDEPS := basic_fhs
 SOURCE_ARCHIVE := linux-$(PKG_VERSION).tar
 
 # Automatically derived information - shall be adapted if required

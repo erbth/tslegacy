@@ -27,7 +27,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc talloc linux
+PKG_RDEPS := glibc talloc
 SOURCE_ARCHIVE := $(PKG_NAME)-6.8.tar.bz2
 
 # Automatically derived information - shall be adapted if required

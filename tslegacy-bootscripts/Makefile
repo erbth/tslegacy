@@ -22,7 +22,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc sed coreutils grep findutils linux
+PKG_RDEPS := glibc sed coreutils grep findutils bash
 SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
 
 # Automatically derived information - shall be adapted if required

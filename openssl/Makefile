@@ -24,7 +24,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc zlib linux
+PKG_RDEPS := glibc zlib
 SOURCE_ARCHIVE := $(PKG_NAME)-1.1.0h.tar.gz
 
 # Automatically derived information - shall be adapted if required

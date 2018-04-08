@@ -27,7 +27,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc linux
+PKG_RDEPS := glibc bash
 SOURCE_ARCHIVE := $(PKG_NAME)-1.9.tar.xz
 
 # Automatically derived information - shall be adapted if required
@@ -41,6 +41,7 @@ export PACKAGING_RESOURCE_DIR := $(PWD)
 
 # config
 POSTINSTSH := postinst.sh
+CONFIGURESH := configure.sh
 PRERMSH := prerm.sh
 PREUPDATESH := preupdate.sh
 ADAPTSH := adapt.sh
@@ -48,10 +49,13 @@ PATCHSH := patch.sh
 DESCXML := desc.xml
 export DESTDIR = destdir
 
-$(WORKING_DIR)/$(PACKED): adapted desc_final postinstsh prermsh preupdatesh
+$(WORKING_DIR)/$(PACKED): adapted desc_final postinstsh configuresh prermsh preupdatesh
 	cd $(WORKING_DIR) && $(TPM) --pack
 
 postinstsh: $(wildcard $(POSTINSTSH)) | $(WORKING_DIR)
+	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
+
+configuresh: $(wildcard $(CONFIGURESH)) | $(WORKING_DIR)
 	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
 
 prermsh: $(wildcard $(PRERMSH)) | $(WORKING_DIR)

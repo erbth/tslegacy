@@ -1,1 +1,0 @@
-postinst_gcc.sh

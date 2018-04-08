@@ -27,7 +27,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc expat libffi gdbm linux
+PKG_RDEPS := glibc expat libffi gdbm
 SOURCE_ARCHIVE := Python-$(PKG_VERSION).tar.xz
 
 # Automatically derived information - shall be adapted if required

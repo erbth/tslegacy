@@ -21,7 +21,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc ncurses linux
+PKG_RDEPS := glibc ncurses
 SOURCE_ARCHIVE := $(PKG_NAME)-530.tar.gz
 
 # Automatically derived information - shall be adapted if required

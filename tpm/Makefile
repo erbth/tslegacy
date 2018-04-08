@@ -21,13 +21,13 @@ endif
 PKG_TYPE := sw
 PKG_NAME := tpm
 # The version must consist of exactly three parts
-PKG_VERSION := 1.0.1
+PKG_VERSION := 1.0.2
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc tar gzip linux
+PKG_RDEPS := glibc tar gzip coreutils bash
 SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
 
 # Automatically derived information - shall be adapted if required

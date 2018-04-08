@@ -19,7 +19,7 @@ $(error PKG_ARCH not set)
 endif
 
 # The version of the packaging scripts
-export TSLPACK_VERSION := 1.0.1
+export TSLPACK_VERSION := 1.0.2
 
 # Function definitions
 working_dir_of_normal_packed = $(BUILD_LOCATION)/$(1:%_$(PKG_ARCH).tpm.tar=%)/$(PKG_ARCH)
@@ -238,9 +238,9 @@ $(patsubst %,%_installed,$(NORMAL_TO_INSTALL_PKGS) $(GCC_LIBS)): \
 $(patsubst %,%_installed,$(NORMAL_TO_INSTALL_PKGS) $(GCC_LIBS)): \
 	$(COLLECTING_REPO)/$(PKG_ARCH)/$$(PKG_NAME)_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
 	if $(TPM) --list-installed | grep -q "^$(PKG_NAME)$$"; then \
-		$(TPM) --remove $(PKG_NAME); \
+		$(TPM) --remove --ignore-noncritical $(PKG_NAME); \
 	fi && \
-	$(TPM) --install $(PKG_NAME) && \
+	$(TPM) --install --ignore-noncritical $(PKG_NAME) && \
 	> $@
 
 # Special rule for gcc since a temporary symlink might have to be removed first

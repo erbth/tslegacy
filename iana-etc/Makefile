@@ -21,7 +21,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc linux
+PKG_RDEPS := basic_fhs
 SOURCE_ARCHIVE := $(PKG_NAME)-2.30.tar.bz2
 
 # Automatically derived information - shall be adapted if required

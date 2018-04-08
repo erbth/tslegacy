@@ -32,7 +32,7 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := coreutils kmod
+PKG_RDEPS := kmod bash
 SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar
 
 # Automatically derived information - shall be adapted if required
@@ -46,6 +46,7 @@ export PACKAGING_RESOURCE_DIR := $(PWD)
 
 # config
 POSTINSTSH := postinst.sh
+CONFIGURESH := configure.sh
 PRERMSH := prerm.sh
 PREUPDATESH := preupdate.sh
 ADAPTSH := adapt.sh
@@ -53,10 +54,13 @@ PATCHSH := patch.sh
 DESCXML := desc.xml
 export DESTDIR = destdir
 
-$(WORKING_DIR)/$(PACKED): adapted desc_final postinstsh prermsh preupdatesh
+$(WORKING_DIR)/$(PACKED): adapted desc_final postinstsh configuresh prermsh preupdatesh
 	cd $(WORKING_DIR) && $(TPM) --pack
 
-postinstsh: postinst.sh | $(WORKING_DIR)
+postinstsh: $(wildcard $(POSTINSTSH)) | $(WORKING_DIR)
+	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
+
+configuresh: configure.sh | $(WORKING_DIR)
 	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
 
 prermsh: prerm.sh | $(WORKING_DIR)
@@ -65,11 +69,11 @@ prermsh: prerm.sh | $(WORKING_DIR)
 preupdatesh: $(wildcard $(PREUPDATESH)) | $(WORKING_DIR)
 	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
 
-postinst.sh: postinst.sh.in
-	sed -e 's/PKG_VERSION/${PKG_VERSION}/g' $< > $@
+configure.sh: configure.sh.in
+	sed -e 's/PKG_VERSION/$(PKG_VERSION)/g' $< > $@
 
 prerm.sh: prerm.sh.in
-	sed -e 's/PKG_VERSION/${PKG_VERSION}/g' $< > $@
+	sed -e 's/PKG_VERSION/$(PKG_VERSION)/g' $< > $@
 
 desc_final: desc_initial adapted
 	cd $(WORKING_DIR) && \
@@ -91,6 +95,7 @@ adapted: $(wildcard $(ADAPTSH)) installed
 
 installed: built desc_initial
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+	rm -rf $(WORKING_DIR)/$(DESTDIR)/* && \
 	$(MAKE) INSTALL_MOD_PATH=$(WORKING_DIR)/$(DESTDIR) modules_install && \
 	> $(PWD)/$@
 

@@ -16,42 +16,42 @@ endif
 PKG_TYPE_gcc := sw
 PKG_NAME_gcc := gcc
 export PKG_VERSION_gcc := 7.3.0
-PKG_RDEPS_gcc := mpc mpfr gmp zlib binutils glibc linux
+PKG_RDEPS_gcc := mpc mpfr gmp zlib binutils glibc bash
 
 PKG_TYPE_libgcc := sw
 PKG_NAME_libgcc := libgcc
 PKG_VERSION_libgcc := $(PKG_VERSION_gcc)
-PKG_RDEPS_libgcc := glibc linux
+PKG_RDEPS_libgcc := glibc bash
 
 PKG_TYPE_libstdc++ := sw
 PKG_NAME_libstdc++ := libstdc++
 PKG_VERSION_libstdc++ := $(PKG_VERSION_gcc)
-PKG_RDEPS_libstdc++ := glibc linux
+PKG_RDEPS_libstdc++ := glibc bash
 
 PKG_TYPE_libmpx := sw
 PKG_NAME_libmpx := libmpx
 PKG_VERSION_libmpx := $(PKG_VERSION_gcc)
-PKG_RDEPS_libmpx := glibc linux
+PKG_RDEPS_libmpx := glibc bash
 
 PKG_TYPE_libvtv := sw
 PKG_NAME_libvtv := libvtv
 PKG_VERSION_libvtv := $(PKG_VERSION_gcc)
-PKG_RDEPS_libvtv := glibc linux
+PKG_RDEPS_libvtv := glibc bash
 
 PKG_TYPE_libssp := sw
 PKG_NAME_libssp := libssp
 PKG_VERSION_libssp := $(PKG_VERSION_gcc)
-PKG_RDEPS_libssp := glibc linux
+PKG_RDEPS_libssp := glibc bash
 
 PKG_TYPE_libquadmath := sw
 PKG_NAME_libquadmath := libquadmath
 PKG_VERSION_libquadmath := $(PKG_VERSION_gcc)
-PKG_RDEPS_libquadmath := glibc linux
+PKG_RDEPS_libquadmath := glibc bash
 
 PKG_TYPE_libatomic := sw
 PKG_NAME_libatomic := libatomic
 PKG_VERSION_libatomic := $(PKG_VERSION_gcc)
-PKG_RDEPS_libatomic := glibc linux
+PKG_RDEPS_libatomic := glibc bash
 
 COMPONENTS := gcc libgcc libstdc++ libmpx libvtv libssp libquadmath libatomic
 
@@ -73,6 +73,7 @@ ARTIFACTS := $(join $(ARTIFACTS),$(foreach c,$(COMPONENTS),_$(PKG_ARCH).tpm.tar)
 
 # config
 POSTINSTSH := postinst.sh
+CONFIGURESH := configure.sh
 PRERMSH := prerm.sh
 PREUPDATESH := preupdate.sh
 ADAPTSH := adapt.sh
@@ -88,17 +89,17 @@ all: $(ARTIFACTS)
 
 $(ARTIFACTS): \
 	adapted_$$(patsubst %/,%,$$(dir $$(patsubst $(WORKING_DIR)/%,%,$$@))) \
-	postinstsh_$$(patsubst %/,%,$$(dir $$(patsubst $(WORKING_DIR)/%,%,$$@))) \
+	configuresh_$$(patsubst %/,%,$$(dir $$(patsubst $(WORKING_DIR)/%,%,$$@))) \
 	desc_final_$$(patsubst %/,%,$$(dir $$(patsubst $(WORKING_DIR)/%,%,$$@)))
 	cd $(WORKING_DIR)/$(patsubst %/,%,$(dir $(@:$(WORKING_DIR)/%=%))) && \
 	$(TPM) --pack
 
-$(COMPONENTS:%=postinstsh_%): \
-	$$(wildcard $(basename $(POSTINSTSH))_$$(patsubst postinstsh_%,%,$$@)$(suffix $(POSTINSTSH))) \
+$(COMPONENTS:%=configure_%): \
+	$$(wildcard $(basename $(CONFIGURESH))_$$(patsubst configuresh_%,%,$$@)$(suffix $(CONFIGURESH))) \
 	| $(WORKING_DIR)/$$(patsubst postinstsh_%,%,$$@)/
 	if [ -n "$<" ]; \
 	then \
-		cp -L "$<" $(WORKING_DIR)/$(@:postinstsh_%=%)/$(POSTINSTSH); \
+		cp -L "$<" $(WORKING_DIR)/$(@:configuresh_%=%)/$(CONFIGURESH); \
 	fi && \
 	> $@
 
