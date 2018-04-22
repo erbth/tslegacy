@@ -75,6 +75,7 @@ NORMAL_PKGS := \
 		sysvinit \
 		tar \
 		tpm \
+		tslegacy-installer \
 		tslegacy-sysconfig \
 		tslegacy-utils \
 		tzdata \
@@ -163,6 +164,7 @@ $(call built_of_normal_pkg,tpm): glibc_installed
 # Not each of the following packages may depend on coreutils however this
 # dependency lowers the complexity of the dependency graph and as this
 # Makefile is not parallel it is no performance issue.
+$(call built_of_normal_pkg,tslegacy-installer): coreutils_installed
 $(call built_of_normal_pkg,file): coreutils_installed zlib_installed
 $(call built_of_normal_pkg,gdbm): coreutils_installed
 $(call built_of_normal_pkg,libffi): coreutils_installed
@@ -247,11 +249,11 @@ $(patsubst %,%_installed,$(NORMAL_TO_INSTALL_PKGS) $(GCC_LIBS)): \
 gcc_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/gcc_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
 	if [ -L $(TPM_TARGET)/usr/lib/gcc ]; then rm $(TPM_TARGET)/usr/lib/gcc; fi && \
 	if $(TPM) --list-installed | grep -q "^gcc$$"; then \
-		$(TPM) --remove gcc; \
+		$(TPM) --remove --ignore-noncritical gcc; \
 	else \
 		rm -vf $(TPM_TARGET)/usr/lib/{libgcc_s.so{,.1},libstdc++.{a,so{,.6}}}; \
 	fi && \
-	$(TPM) --install gcc && \
+	$(TPM) --install --ignore-noncritical gcc && \
 	> $@
 
 # Special rule for installing coreutils since the preliminary runtime system
@@ -259,12 +261,12 @@ gcc_installed: $(COLLECTING_REPO)/$(PKG_ARCH)/gcc_$(PKG_ARCH).tpm.tar $(TPM_CONF
 coreutils_installed: \
 	$(COLLECTING_REPO)/$(PKG_ARCH)/coreutils_$(PKG_ARCH).tpm.tar $(TPM_CONF) | /tmp
 	if $(TPM) --list-installed | grep -q "^coreutils$$"; then \
-		$(TPM) --remove coreutils; \
+		$(TPM) --remove --ignore-noncritical coreutils; \
 	else \
 		rm -vf $(TPM_TARGET)/usr/bin/install && \
 		rm -vf $(TPM_TARGET)/bin/{cat,dd,echo,ln,pwd,rm,stty}; \
 	fi && \
-	$(TPM) --install coreutils && \
+	$(TPM) --install --ignore-noncritical coreutils && \
 	> $@
 
 $(patsubst %,$(COLLECTING_REPO)/$(PKG_ARCH)/%,$(notdir $(NORMAL_PACKED_PKGS))): \

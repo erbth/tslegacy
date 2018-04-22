@@ -94,7 +94,7 @@ $(ARTIFACTS): \
 	cd $(WORKING_DIR)/$(patsubst %/,%,$(dir $(@:$(WORKING_DIR)/%=%))) && \
 	$(TPM) --pack
 
-$(COMPONENTS:%=configure_%): \
+$(COMPONENTS:%=configuresh_%): \
 	$$(wildcard $(basename $(CONFIGURESH))_$$(patsubst configuresh_%,%,$$@)$(suffix $(CONFIGURESH))) \
 	| $(WORKING_DIR)/$$(patsubst postinstsh_%,%,$$@)/
 	if [ -n "$<" ]; \

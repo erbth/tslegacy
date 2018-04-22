@@ -1,0 +1,6 @@
+PKG_NAME version PKG_VERSION
+
+This is a meta package, which depends on all packages that are needed to
+install TSClient LEGACY in a runtime environment.
+
+8 April, 2018, Thomas Erbesdobler <t.erbesdobler@gmx.de>

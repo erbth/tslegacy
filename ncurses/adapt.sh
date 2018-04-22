@@ -23,7 +23,7 @@ for lib in ncurses form panel menu
 do
     rm -vf usr/lib/lib${lib}.so
     echo "INPUT(-l${lib}w)" > usr/lib/lib${lib}.so
-    ln -sfv ${lib}w.pc usr/lib/pkgconfig/${lib}.pc
+    ln -sfv ${lib}w.pc usr/share/pkgconfig/${lib}.pc
 done
 
 rm -vf usr/lib/libcursesw.so

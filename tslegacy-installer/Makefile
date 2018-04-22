@@ -1,4 +1,15 @@
 # Tab size: 4
+
+# For building the upstream package I adapted the process used in the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
+
+# For building the upstream package I adapted the process used in the book
+# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development Team.
+# At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/blfs.
+
 SHELL := bash
 TPM	?= tpm
 TAR ?= tar
@@ -13,24 +24,30 @@ endif
 
 # Package information:
 PKG_TYPE := sw
-PKG_NAME := mpc
+PKG_NAME := tslegacy-installer
 # The version must consist of exactly three parts
-PKG_VERSION := 1.1.0
+PKG_VERSION := 1.0.0
 
 ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
-PKG_RDEPS := glibc bash
-SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_RDEPS := \
+	tar gzip bash tpm coreutils libgcc libstdc++ tslegacy-sysconfig iana-etc \
+	util-linux eudev grub vim tslegacy-utils kmod iproute2 kbd less procps-ng \
+	shadow sysvinit tslegacy-bootscripts tzdata sed grep findutils e2fsprogs \
+	cifs-utils linux
+
+SOURCE_ARCHIVE := $(PKG_NAME)-$(PKG_VERSION).tar.xz
 
 # Automatically derived information - shall be adapted if required
 # This may need to be adapted
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.gz=%)
+export SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
 SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
 PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
 export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
 PACKED := $(PKG_NAME)_$(PKG_ARCH).tpm.tar
+export PACKAGING_RESOURCE_DIR := $(PWD)
 
 # config
 POSTINSTSH := postinst.sh
@@ -75,31 +92,16 @@ adapted: $(wildcard $(ADAPTSH)) installed
 	if [ "$<" == "$(ADAPTSH)" ]; then \
 	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
 
-installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-strip && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install-html && \
+installed: README desc_initial
+	cd $(WORKING_DIR)/$(DESTDIR) && \
+	install -dm755 usr/share/doc/tslegacy-installer && \
+	install -m644 $(PWD)/README usr/share/doc/tslegacy-installer/
 	> $(PWD)/$@
 
-built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	$(MAKE) && \
-	$(MAKE) html && \
-	> $(PWD)/built
-
-configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
-	./configure \
-		--prefix=/usr \
-		--disable-static && \
-	> $(PWD)/$@
-
-patched: $(wildcard $(PATCHSH)) source_ready
-	if [ "$<" == "$(PATCHSH)" ]; then \
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(PATCHSH); fi && > $(PWD)/$@
-
-source_ready: Makefile $(SOURCE_ARCHIVE) | $(WORKING_DIR)
-	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(WORKING_DIR) && > $(PWD)/$@
+README: README.in Makefile
+	sed -e 's/PKG_NAME/$(PKG_NAME)/g' \
+		-e 's/PKG_VERSION/$(PKG_VERSION)/g' \
+		$< > $@
 
 $(WORKING_DIR):
 	mkdir -p $@
@@ -107,4 +109,4 @@ $(WORKING_DIR):
 .PHONY: clean
 clean:
 	rm -rvf $(PKG_BUILD_LOCATION) source_ready patched configured built desc_initial \
-	installed adapted desc_final postinstsh prermsh preupdatesh
+	installed adapted desc_final postinstsh prermsh preupdatesh README
