@@ -14,7 +14,6 @@ $(BUILD_DIR)/configured:
 		--prefix=/usr \
 		--disable-static && \
 	> $@
-	> $@
 
 $(BUILD_DIR)/built:
 	cd $(BUILD_DIR)/$(SRC_DIR) && $(MAKE) && > $@

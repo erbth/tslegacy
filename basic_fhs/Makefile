@@ -1,9 +1,16 @@
 # Tab size: 4
 
-PKG_NAME := basic_fhs
+SRC_NAME := basic_fhs
 
 .PHONY: no_target
 no_target:
 
 include description.mk
 include ../common/basic.mk
+
+$(BUILD_DIR)/configured:
+	> $@
+
+$(BUILD_DIR)/built:
+	cd $(BUILD_DIR)/$(SRC_DIR) && $(MAKE) && > $@
+	> $@
