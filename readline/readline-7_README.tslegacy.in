@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This is the ABI versioned part of the GNU readline package. No non-ABI versioned
+part exists but a development package (readline-dev).
+
+GNU readline is distributed under the terms of the GNU General Public License,
+version 3. A copy can be found at /usr/share/doc/licenses/gpl-3.0 or be
+retrieved from https://www.gnu.org/licenses/gpl-3.0.html
+
+DATE_TODAY, Thomas Erbesdobler <t.erbesdobler@gmx.de> (maintainer)
