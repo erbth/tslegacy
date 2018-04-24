@@ -13,9 +13,8 @@ TAR ?= tar
 # Options to Make
 .SECONDEXPANSION:
 
-# Helper macros
-remove_trailing_slash = $(patsubst %/,%,$(1))
-date_today = "$(shell LANG=POSIX date +"%d %B, %Y")"
+# Makefile utilities
+include ../makefile_utilities.mk
 
 # Check the environment
 ifndef PACKAGING_BASE
