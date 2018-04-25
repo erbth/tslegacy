@@ -53,6 +53,8 @@ COLLECTING_DIR := $(COLLECTING_REPO)/$(PKG_ARCH)
 
 SOURCE_PACKAGES := \
 	basic_fhs \
+	licenses \
+	glibc \
 	readline
 
 include $(SOURCE_PACKAGES:%=%/description.mk)

@@ -1,6 +1,6 @@
 # Tab size: 4
 
-SRC_NAME := readline
+SRC_NAME := glibc
 
 .PHONY: no_target
 no_target:
