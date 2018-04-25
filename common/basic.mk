@@ -177,8 +177,6 @@ $(VERSIONS): FORCE | $$(PKG_DIR)
 	echo -n $$(date +%Y.%j).$$(( $$(date +%s) - \
 	$$(date -d 'today 00:00:00' +%s) )) > $@
 
-read_version = $(shell cat $(PACKAGING_LOCATION)/$(1)/version)
-
 
 $(INSTALL_DIR)/installed_split: \
 	$(BUILD_DIR)/built \

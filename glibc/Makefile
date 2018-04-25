@@ -1,97 +1,24 @@
 # Tab size: 4
-SHELL := bash
-TPM	?= tpm
-TAR ?= tar
 
-ifndef BUILD_LOCATION
-$(error BUILD_LOCATION not set)
-endif
+SRC_NAME := readline
 
-ifndef SOURCE_LOCATION
-$(error SOURCE_LOCATION not set)
-endif
+.PHONY: no_target
+no_target:
 
-# Package information:
-PKG_TYPE := sw
-PKG_NAME := glibc
-# The version must consist of exactly three parts
-PKG_VERSION := 2.27.0
+include description.mk
+include ../common/basic.mk
 
-ifndef PKG_ARCH
-$(error PKG_ARCH not set)
-endif
-
-PKG_RDEPS := basic_fhs bash coreutils
-SOURCE_ARCHIVE := $(PKG_NAME)-2.27.tar.xz
-
-# Automatically derived information - shall be adapted if required
-# This may need to be adapted
-SOURCE_DIR := $(SOURCE_ARCHIVE:%.tar.xz=%)
-SOURCE_ARCHIVE := $(SOURCE_LOCATION)/$(SOURCE_ARCHIVE)
-PKG_BUILD_LOCATION := $(BUILD_LOCATION)/$(PKG_NAME)
-export WORKING_DIR := $(PKG_BUILD_LOCATION)/$(PKG_ARCH)
-PACKED := $(PKG_NAME)_$(PKG_ARCH).tpm.tar
-
-# config
-POSTINSTSH := postinst.sh
-CONFIGURESH := configure.sh
-PRERMSH := prerm.sh
-PREUPDATESH := preupdate.sh
-ADAPTSH := adapt.sh
-PATCHSH := patch.sh
-DESCXML := desc.xml
-export DESTDIR = destdir
-
-$(WORKING_DIR)/$(PACKED): adapted desc_final postinstsh configuresh prermsh preupdatesh
-	cd $(WORKING_DIR) && $(TPM) --pack
-
-postinstsh: $(wildcard $(POSTINSTSH)) | $(WORKING_DIR)
-	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
-
-configuresh: $(wildcard $(CONFIGURESH)) | $(WORKING_DIR)
-	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
-
-prermsh: $(wildcard $(PRERMSH)) | $(WORKING_DIR)
-	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
-
-preupdatesh: $(wildcard $(PREUPDATESH)) | $(WORKING_DIR)
-	if [ -n "$<" ]; then cp "$<" $(WORKING_DIR); fi && > $@
-
-desc_final: desc_initial adapted
-	cd $(WORKING_DIR) && \
-	$(TPM) --set-name $(PKG_NAME) && \
-	$(TPM) --set-version $(PKG_VERSION) && \
-	$(TPM) --set-arch $(PKG_ARCH) && \
-	( for RDEP in $(PKG_RDEPS); do $(TPM) --add-rdependency $$RDEP || exit; done ) && \
-	$(TPM) --add-files && > $(PWD)/$@
-
-desc_initial: Makefile | $(WORKING_DIR)
-	cd $(WORKING_DIR) && \
-	if [ -e $(DESCXML) ]; then rm $(DESCXML); fi && \
-	if [ -e $(DESTDIR) ]; then rm -r $(DESTDIR); fi && \
-	$(TPM) --create-desc $(PKG_TYPE) && > $(PWD)/$@
-
-adapted: $(wildcard $(ADAPTSH)) installed
-	if [ "$<" == "$(ADAPTSH)" ]; then \
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(ADAPTSH); fi && > $(PWD)/$@
-
-installed: built desc_initial
-	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && \
-	install -dm755 etc && \
-	touch etc/ld.so.conf && \
-	sed '/test-installation/s@$$(PERL)@echo not running@' -i ../Makefile && \
-	$(MAKE) DESTDIR=$(WORKING_DIR)/$(DESTDIR) install && \
-	> $(PWD)/$@
-
-built: configured
-	cd $(WORKING_DIR)/$(SOURCE_DIR)/build && $(MAKE) && > $(PWD)/built
-
-configured: patched
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && \
+# The configure procedure has been adapted from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
+$(BUILD_DIR)/configured:
+	cd $(BUILD_DIR)/$(SRC_DIR) && \
 	mkdir -pv build && cd build && \
+	GCC_VERSION=$(gcc --version|head -1|rev|cut -d ' ' -f 2|rev) && \
 	case $$(uname -m) in \
-		i?86)   GCC_INCDIR=/usr/lib/gcc/$$(uname -m)-pc-linux-gnu/7.3.0/include;; \
-		x86_64) GCC_INCDIR=/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include;; \
+		i?86)   GCC_INCDIR=/usr/lib/gcc/$$(uname -m)-pc-linux-gnu/$(GCC_VERSION)/include;; \
+		x86_64) GCC_INCDIR=/usr/lib/gcc/x86_64-pc-linux-gnu/$(GCC_VERSION)/include;; \
 		*) false;; \
 	esac && \
 	CC="gcc -isystem $$GCC_INCDIR -isystem /usr/include" && \
@@ -100,20 +27,9 @@ configured: patched
 		--disable-werror \
 		--enable-kernel=3.2 \
 		--enable-stack-protector=strong \
-		libc_cv_slibdir=/lib && \
-		> $(PWD)/$@
+		libc_cv_slibdir=/lib
+	> $@
 
-patched: $(wildcard $(PATCHSH)) source_ready
-	if [ "$<" == "$(PATCHSH)" ]; then \
-	cd $(WORKING_DIR)/$(SOURCE_DIR) && $(PWD)/$(PATCHSH); fi && > $(PWD)/$@
-
-source_ready: Makefile $(SOURCE_ARCHIVE) | $(WORKING_DIR)
-	$(TAR) -xf $(SOURCE_ARCHIVE) -C $(WORKING_DIR) && > $(PWD)/$@
-
-$(WORKING_DIR):
-	mkdir -p $@
-
-.PHONY: clean
-clean:
-	rm -rvf $(PKG_BUILD_LOCATION) source_ready patched configured built desc_initial \
-	installed adapted desc_final postinstsh prermsh preupdatesh
+$(BUILD_DIR)/built:
+	cd $(BUILD_DIR)/$(SRC_DIR)/build && $(MAKE)
+	> $@

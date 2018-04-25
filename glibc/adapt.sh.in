@@ -1,36 +1,8 @@
-# No shebang here because I don't want to depend on bash being installed in a
-# specific location.
+SOURCE_DIR=${SOURCE_LOCATION}/${SRC_DIR}
+cd ${INSTALL_DIR}/target
 
-# Adapted from LFS 8.2
-
-set -e
-
-[ $UID -eq 0 ]
-
-SOURCE_DIR=${PWD}
-cd ${WORKING_DIR}/${DESTDIR}
-
-# Perform stripping (the procedure was adapted from LFS 8.2)
-if [ -d usr/lib ]
-then
-    find usr/lib -type f -name \*.a -exec strip -v --strip-debug {} ';'
-    find usr/lib -type f -name \*.so* -exec strip -v --strip-unneeded {} ';'
-
-    find usr/lib -name \*.la -delete
-fi
-
-if [ -d lib ]
-then
-    find lib -type f -name \*.so* -exec strip -v --strip-unneeded {} ';'
-fi
-
-for DIR in {bin,sbin} usr/{bin,sbin,libexec}
-do
-    if [ -d $DIR ]
-    then
-        find $DIR -type f -exec strip -v --strip-all {} ';'
-    fi
-done
+STRIP_SYMBOLS
+HANDLE_TEXINFO
 
 case $(uname -m) in
         i?86)
@@ -51,11 +23,8 @@ case $(uname -m) in
             ;;
 esac
 
-# Handle info pages
-rm -vf usr/share/info/dir
-
 # Config file and runtime directory for nscd
-# /etc was crated earlier in the Makefile
+# /etc was created earlier in the Makefile
 cp -v ${SOURCE_DIR}/nscd/nscd.conf etc/nscd.conf
 install -dm755 var/cache/nscd
 
@@ -84,11 +53,3 @@ include /etc/ld.so.conf.d/*.conf
 EOF
 
 install -dm755 etc/ld.so.conf.d
-
-# Finally, run ldconfig
-if [ -n "${TPM_TARGET}" ]
-then
-    ldconfig -r "${TPM_TARGET}"
-else
-    ldconfig
-fi

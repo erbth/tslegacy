@@ -283,6 +283,7 @@ dist:
 		create_tool_links.sh \
 		restore_toolchain.sh \
 		set_env.sample \
+		makefile_util.mk \
 		common \
 		$(SOURCE_PACKAGES) \
 		tslegacy_packaging-$(TSLPACK_VERSION)

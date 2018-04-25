@@ -1,0 +1,6 @@
+BASIC_PKG_INFO
+
+This package contains a symlink, which enables ABI versioned lsb compatibility,
+to Glibc's dynamic linker.
+
+ERBTH_FOOTER

@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This is a 'ABI-fake' package that allows to depend on a specific ABI version
+of the libraried contained in Glib easily. It depends on all packages that
+contain ABI versioned files of Glibc version PKG_UPSTREAM_VERSION.
+Licensing information can be found in the verious packages, on which this one
+depends.
+
+ERBTH_FOOTER
