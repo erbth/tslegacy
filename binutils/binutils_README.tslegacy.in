@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains GNU Binutils. There is only one package which contains all
+files since Binutils are usually only installed on a development system. Hence,
+'-dev' packages would not yield any additional advantage.
+
+TODO: add licenzing information
+
+ERBTH_FOOTER

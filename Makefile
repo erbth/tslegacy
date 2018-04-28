@@ -53,6 +53,7 @@ COLLECTING_DIR := $(COLLECTING_REPO)/$(PKG_ARCH)
 
 SOURCE_PACKAGES := \
 	basic_fhs \
+	binutils \
 	glibc \
 	licenses \
 	linux-headers \
