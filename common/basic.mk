@@ -94,6 +94,9 @@ pkg_dir_of_readme = $(patsubst %/$(DESTDIR)/usr/share/doc/,%,$(dir $(call remove
 README_TSLEGACY_M4 := ../common/README.tslegacy.m4
 
 # Rules
+.PHONY: no_target
+no_target:
+
 .PHONY: built
 built: $(PACKEDS)
 

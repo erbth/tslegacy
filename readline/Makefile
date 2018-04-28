@@ -2,9 +2,6 @@
 
 SRC_NAME := readline
 
-.PHONY: no_target
-no_target:
-
 include description.mk
 include ../common/basic.mk
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+# No shebang here as /bin/bash might not exist yet.
 
 set -e
 

@@ -2,9 +2,6 @@
 
 SRC_NAME := glibc
 
-.PHONY: no_target
-no_target:
-
 include description.mk
 include ../common/basic.mk
 

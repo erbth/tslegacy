@@ -2,7 +2,7 @@
 glibc_SRC_VERSION := 2.27
 glibc_SRC_ARCHIVE := glibc-$(glibc_SRC_VERSION).tar.xz
 glibc_SRC_DIR := glibc-$(glibc_SRC_VERSION)
-glibc_SRC_CDEPS := tool_links_created
+glibc_SRC_CDEPS := tool_links_created linux-headers-dev_installed
 
 # Information about the differrent packages that are built out of this source
 # package.
