@@ -56,7 +56,8 @@ SOURCE_PACKAGES := \
 	glibc \
 	licenses \
 	linux-headers \
-	readline
+	readline \
+	tzdata
 
 include $(SOURCE_PACKAGES:%=%/description.mk)
 
@@ -287,6 +288,7 @@ dist:
 		restore_toolchain.sh \
 		set_env.sample \
 		makefile_util.mk \
+		show_todos.sh \
 		common \
 		$(SOURCE_PACKAGES) \
 		tslegacy_packaging-$(TSLPACK_VERSION)

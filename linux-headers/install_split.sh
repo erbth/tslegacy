@@ -11,6 +11,10 @@ rm -rf ${PKG_DIR}/*
 rm -rf ${INSTALL_DIR}/target/*
 install -dm755 ${INSTALL_DIR}/target
 
+# The installation process of the header files was adapted from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
 cd ${BUILD_DIR}/${SRC_DIR}
 make INSTALL_HDR_PATH=${INSTALL_DIR}/target headers_install
 find ${INSTALL_DIR}/target/include \( -name .install -o -name ..install.cmd \) -delete
