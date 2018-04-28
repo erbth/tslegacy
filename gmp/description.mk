@@ -1,3 +1,6 @@
+include ../glibc/description.mk
+include ../gcc/description.mk
+
 gmp_SRC_VERSION := 6.1.2
 gmp_SRC_DIR := gmp-$(gmp_SRC_VERSION)
 gmp_SRC_ARCHIVE := $(gmp_SRC_DIR).tar.xz

@@ -55,8 +55,10 @@ SOURCE_PACKAGES := \
 	basic_fhs \
 	binutils \
 	glibc \
+	gmp \
 	licenses \
 	linux-headers \
+	mpfr \
 	readline \
 	tzdata \
 	zlib

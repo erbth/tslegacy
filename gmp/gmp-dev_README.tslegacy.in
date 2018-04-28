@@ -1,6 +1,8 @@
 BASIC_PKG_INFO
 
 This package contains the development files and the documentation of GNU GMP.
+It is a generally optimized build, which does not target a specific CPU
+architecture.
 
 TODO: addlicensing information
 
