@@ -192,8 +192,13 @@ $(INSTALL_DIR)/installed_split: \
 
 $(INSTALL_DIR)/adaptsh: $(wildcard $(ADAPT_SH_IN)) $(ADAPT_M4) $(MAKEFILE_LIST) | $(INSTALL_DIR)
 	if [ "$<" == "$(ADAPT_SH_IN)" ]; then \
-		$(M4) $(ADAPT_M4) $(ADAPT_SH_IN) \
-		> $(ADAPT_SH) && \
+		$(M4) \
+			-D PKG_NAME=$(PKG) \
+			-D PKG_VERSION=$(call read_version,$(PKG)) \
+			-D PKG_UPSTREAM_VERSION=$(SRC_VERSION) \
+			-D DATE_TODAY=$(call date_today) \
+			$(ADAPT_M4) $(ADAPT_SH_IN) \
+			> $(ADAPT_SH) && \
 		$(SED) '/./,$$!d' -i $(ADAPT_SH); \
 	fi
 	> $@
@@ -223,8 +228,13 @@ $(BUILD_DIR)/patched: $(BUILD_DIR)/patchsh $(BUILD_DIR)/source_ready | $(BUILD_D
 
 $(BUILD_DIR)/patchsh: $(wildcard $(PATCH_SH_IN)) $(PATCH_M4) $(MAKEFILE_LIST) | $(BUILD_DIR)
 	if [ "$<" == "$(PATCH_SH_IN)" ]; then \
-		$(M4) $(PATCH_M4) $(PATCH_SH_IN) \
-		> $(PATCH_SH) && \
+		$(M4) \
+			-D PKG_NAME=$(PKG) \
+			-D PKG_VERSION=$(call read_version,$(PKG)) \
+			-D PKG_UPSTREAM_VERSION=$(SRC_VERSION) \
+			-D DATE_TODAY=$(call date_today) \
+			$(PATCH_M4) $(PATCH_SH_IN) \
+			> $(PATCH_SH) && \
 		$(SED) '/./,$$!d' -i $(PATCH_SH); \
 	fi
 	> $@

@@ -152,7 +152,7 @@
 #
 # $(call built_of_normal_pkg,mpc): mpfr_installed
 # $(call built_of_normal_pkg,mpfr): gmp_installed
-# $(call built_of_normal_pkg,gmp): binutils_installed
+$(call built_of_normal_pkg,gmp): binutils_installed
 $(call built_of_normal_pkg,binutils): zlib_installed
 $(call built_of_normal_pkg,zlib): toolchain_adjusted
 
