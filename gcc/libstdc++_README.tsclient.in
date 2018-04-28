@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the ABI versioned stdc++ library, which is distributed
+with the GCC. However the GDB debug module is contained in the 'gcc' package.
+
+TODO: add licensing information
+
+ERBTH_FOOTER

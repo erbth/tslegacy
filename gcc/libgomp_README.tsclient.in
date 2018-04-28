@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the ABI versioned gomp library, which is distributed with
+the GCC.
+
+TODO: add licensing information
+
+ERBTH_FOOTER

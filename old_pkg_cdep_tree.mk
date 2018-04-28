@@ -146,11 +146,11 @@
 #
 # $(call built_of_normal_pkg,readline): gcc_installed
 #
-# $(PACKED_GCC_AND_LIBS): \
-# 	mpc_installed mpfr_installed gmp_installed \
-# 	binutils_installed zlib_installed
-#
-# $(call built_of_normal_pkg,mpc): mpfr_installed
+$(PACKED_GCC_AND_LIBS): \
+	mpc_installed mpfr_installed gmp_installed \
+	binutils_installed zlib_installed
+
+$(call built_of_normal_pkg,mpc): mpfr_installed
 $(call built_of_normal_pkg,mpfr): gmp_installed
 $(call built_of_normal_pkg,gmp): binutils_installed
 $(call built_of_normal_pkg,binutils): zlib_installed

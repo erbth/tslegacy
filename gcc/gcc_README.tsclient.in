@@ -1,0 +1,27 @@
+BASIC_PKG_INFO
+
+This package contains the C and C++ compilers of the GNU Compiler Collection and
+the development files and documentation of the following libraries shipped with
+GCC:
+
+    libasan
+    libatomic
+    libcc1
+    libcilkrts
+    libgcc
+    libgomp
+    libitm
+    liblsan
+    libmpx
+    libmpxwrappers
+    libquadmath
+    libssp
+    libstdc++
+    libtsan
+    libubsan
+
+A package exists for each of these that contains the ABI versioned library.
+
+TODO: add licensing information
+
+ERBTH_FOOTER
