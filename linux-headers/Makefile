@@ -5,10 +5,10 @@ include description.mk
 include ../common/basic.mk
 
 # Rules for configuring and building
-linux-headers_configured:
+$(BUILD_DIR)/configured:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
 	$(MAKE) mrproper
 	> $@
 
-linux-headers_built:
+$(BUILD_DIR)/built:
 	> $@

@@ -57,7 +57,8 @@ SOURCE_PACKAGES := \
 	licenses \
 	linux-headers \
 	readline \
-	tzdata
+	tzdata \
+	zlib
 
 include $(SOURCE_PACKAGES:%=%/description.mk)
 

@@ -5,8 +5,8 @@ include descrption.mk
 include ../basic.mk
 
 # Rules for configuring and compiling the package
-tzdata_configured:
+$(BUILD_DIR)/configured:
 	> $@
 
-tzdata_compiles:
+$(BUILD_DIR)/built:
 	> $@

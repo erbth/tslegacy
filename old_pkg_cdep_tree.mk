@@ -154,9 +154,9 @@
 # $(call built_of_normal_pkg,mpfr): gmp_installed
 # $(call built_of_normal_pkg,gmp): binutils_installed
 # $(call built_of_normal_pkg,binutils): zlib_installed
-# $(call built_of_normal_pkg,zlib): toolchain_adjusted
-#
-# $(call built_of_normal_pkg,tzdata): glibc_installed
+$(call built_of_normal_pkg,zlib): toolchain_adjusted
+
+$(call built_of_normal_pkg,tzdata): glibc_installed
 
 $(call built_of_normal_pkg,glibc): linux-headers_installed
 $(call built_of_normal_pkg,linux-headers): basic_fhs_installed
