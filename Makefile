@@ -58,6 +58,7 @@ SOURCE_PACKAGES := \
 	gmp \
 	licenses \
 	linux-headers \
+	mpc \
 	mpfr \
 	readline \
 	tzdata \
