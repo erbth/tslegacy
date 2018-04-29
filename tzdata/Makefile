@@ -1,5 +1,6 @@
 # The source package's name
 SRC_PKG := tzdata
+CREATE_SRC_DIR := 1
 
 include descrption.mk
 include ../basic.mk

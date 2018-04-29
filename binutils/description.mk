@@ -1,5 +1,8 @@
-include ../zlib/description.mk
-include ../glibc/description.mk
+ifndef binutils_description_included
+binutils_description_included := 1
+
+include $(PACKAGING_RESOURCE_DIR)/zlib/description.mk
+include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 
 binutils_SRC_VERSION := 2.30
 binutils_SRC_DIR := binutils-$(binutils_SRC_VERSION)
@@ -10,7 +13,10 @@ binutils_TSL_TYPE := sw
 binutils_TSL_RDEPS := \
 	$(call bigger_equal_dep,glibc) \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
-	$(call bigger_equal_dep,zlib-$(zlib_SRC_API_VERSION))
+	$(call bigger_equal_dep,zlib-$(zlib_SRC_API_VERSION)) \
+	$(call bigger_equal_dep,licenses)
 binutils_TSL_SRC_PKG := binutils
 
 binutils_TSL_PKGS := binutils
+
+endif

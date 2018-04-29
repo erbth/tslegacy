@@ -1,3 +1,6 @@
+ifndef basic_fhs_description_included
+basic_fhs_description_included := 1
+
 # Information about the source package itself
 basic_fhs_SRC_VERSION := 3.0
 basic_fhs_SRC_ARCHIVE := basic_fhs-$(basic_fhs_SRC_VERSION).tar.xz
@@ -16,3 +19,5 @@ basic_fhs-dev_TSL_SRC_PKG := basic_fhs
 
 # A list of all the packages that are built out of this source package
 basic_fhs_TSL_PKGS := basic_fhs basic_fhs-dev
+
+endif

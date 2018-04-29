@@ -1,3 +1,6 @@
+ifndef licenses_description_included
+licenses_description_included := 1
+
 # Information about the source package itself
 licenses_SRC_VERSION := 1.0
 licenses_SRC_ARCHIVE := licenses-$(licenses_SRC_VERSION).tar.gz
@@ -12,3 +15,5 @@ licenses_TSL_SRC_PKG := licenses
 
 # A list of all the packages that are built out of this source package
 licenses_TSL_PKGS := licenses
+
+endif

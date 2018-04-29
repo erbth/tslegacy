@@ -1,3 +1,6 @@
+ifndef glibc_description_included
+glibc_description_included := 1
+
 # Information about the source package itself
 glibc_SRC_VERSION := 2.27
 glibc_SRC_ARCHIVE := glibc-$(glibc_SRC_VERSION).tar.xz
@@ -239,3 +242,5 @@ readline_TSL_PKGS := \
 	libutil-1 \
 	sotruss-lib-o \
 	locales-dev
+
+endif

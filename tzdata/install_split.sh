@@ -29,3 +29,7 @@ zic -d $ZONEINFO -p America/New_York
 
 install -dm755 ${PKG_DIR}/etc
 ln -s /usr/share/zoneinfo/Europe/Berlin ${PKG_DIR}/etc/localtime
+
+# Copy the LCIENSE file
+install -dm755 ${PKG_DIR}/usr/share/doc/tzdata
+cp ${BUILD_DIR}/${SRC_DIR}/LICENSE ${PKG_DIR}/usr/share/doc/tzdata/

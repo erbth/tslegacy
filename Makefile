@@ -293,14 +293,14 @@ dist:
 		create_tool_links.sh \
 		restore_toolchain.sh \
 		set_env.sample \
-		makefile_util.mk \
+		makefile_utilities.mk \
 		show_todos.sh \
 		common \
 		$(SOURCE_PACKAGES) \
 		tslegacy_packaging-$(TSLPACK_VERSION)
 	install -dm755 tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	cp -a \
-		utils/{Makefile,remove_old_package_versions.ml,.gitignore} \
+		utils/{Makefile,remove_old_package_versions.ml,.gitignore,show_dynamic_dependencies.sh} \
 		tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz tslegacy_packaging-$(TSLPACK_VERSION)
 	rm -rf tslegacy_packaging-$(TSLPACK_VERSION)

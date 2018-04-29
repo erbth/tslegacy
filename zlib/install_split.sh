@@ -24,6 +24,10 @@ cd ${INSTALL_DIR}/target
 
 # ABI versioned
 mv ${INSTALL_DIR}/target/lib ${PKG_DIRS[1]}/
+install -dm755 ${PKG_DIRS[1]}/usr/share/doc/zlib-${zlib_ABI}
+cp ${BUILD_DIR}/${SRC_DIR}/README ${PKG_DIRS[1]}/usr/share/doc/zlib-${zlib_ABI}/
 
 # dev
 mv ${INSTALL_DIR}/target/usr ${PKG_DIRS[0]}/
+install -dm755 ${PKG_DIRS[0]}/usr/share/doc/zlib-dev
+cp ${BUILD_DIR}/${SRC_DIR}/README ${PKG_DIRS[0]}/usr/share/doc/zlib-dev/

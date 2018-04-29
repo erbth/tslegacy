@@ -22,6 +22,15 @@ GCC:
 
 A package exists for each of these that contains the ABI versioned library.
 
-TODO: add licensing information
+LICENSE_GPL2.0(GCC)
+
+Additionally, LICENSE_GPL3.0(GCC)
+
+Additionally, LICENSE_LGPL2.1(GCC)
+
+Additionally, LICENSE_LGPL3.0(GCC)
+
+The licensing exception for the GCC runtime library can be found in
+/usr/share/doc/PKG_NAME/COPYING.RUNTIME.
 
 ERBTH_FOOTER

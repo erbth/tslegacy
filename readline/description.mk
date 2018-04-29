@@ -1,3 +1,6 @@
+ifndef readline_description_included
+readline_description_included := 1
+
 # Information about the source package itself
 readline_SRC_VERSION := 7.0
 readline_SRC_ARCHIVE := readline-$(readline_SRC_VERSION).tar.gz
@@ -17,3 +20,5 @@ readline-dev_TSL_SRC_PKG := readline
 
 # A list of all the packages that are built out of this source package
 readline_TSL_PKGS := readline-$(readline_SRC_ABI) readline-dev
+
+endif

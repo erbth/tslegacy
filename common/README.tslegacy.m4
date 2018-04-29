@@ -14,14 +14,26 @@ retrieved from https://www.gnu.org/licenses/gpl-3.0.html.])
 define(
 [LICENSE_GPL2.0],
 [$1 is distributed under the terms of the GNU General Public License,
-version 3. A copy can be found at /usr/share/doc/licenses/gpl-2.0 or be
+version 2. A copy can be found at /usr/share/doc/licenses/gpl-2.0 or be
 retrieved from https://www.gnu.org/licenses/gpl-2.0.html.])
 
 define(
+[LICENSE_LGPL2.0],
+[$1 is distributed under the terms of the GNU Library General Public License,
+version 2. A copy can be found at /usr/share/doc/licenses/lgpl-2.0 or be
+retrieved from https://www.gnu.org/licenses/old-licenses/lgpl-2.0.html.])
+
+define(
 [LICENSE_LGPL2.1],
-[$1 is distributed under the terms of the GNU General Public License,
-version 3. A copy can be found at /usr/share/doc/licenses/lgpl-2.1 or be
+[$1 is distributed under the terms of the GNU Lesser General Public License,
+version 2.1. A copy can be found at /usr/share/doc/licenses/lgpl-2.1 or be
 retrieved from https://www.gnu.org/licenses/lgpl-2.1.html.])
+
+define(
+[LICENSE_LGPL3.0],
+[$1 is distributed under the terms of the GNU Lesser General Public License,
+version 3.0. A copy can be found at /usr/share/doc/licenses/lgpl-3.0 or be
+retrieved from https://www.gnu.org/licenses/lgpl-3.0.html.])
 
 define(
 [ERBTH_FOOTER],

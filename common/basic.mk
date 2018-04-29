@@ -240,7 +240,13 @@ $(BUILD_DIR)/patchsh: $(wildcard $(PATCH_SH_IN)) $(PATCH_M4) $(MAKEFILE_LIST) | 
 	> $@
 
 $(BUILD_DIR)/source_ready: $(MAKEFILE_LIST) $(SRC_ARCHIVE) | $(BUILD_DIR)
-	$(TAR) -xf $(SRC_ARCHIVE) -C $(BUILD_DIR)
+	if [ -n "$(CREATE_SRC_DIR)" ]; \
+	then \
+		install -dm755 $(BUILD_DIR)/$(SRC_DIR) && \
+		$(TAR) -xf $(SRC_ARCHIVE) -C $(BUILD_DIR)/$(SRC_DIR); \
+	else \
+		$(TAR) -xf $(SRC_ARCHIVE) -C $(BUILD_DIR); \
+	fi
 	> $@
 
 $(BUILD_DIR) $(INSTALL_DIR) $(TSL_PKGS:%=$(PACKAGING_LOCATION)/%):
@@ -249,8 +255,6 @@ $(BUILD_DIR) $(INSTALL_DIR) $(TSL_PKGS:%=$(PACKAGING_LOCATION)/%):
 .PHONY: clean
 clean:
 	rm -rf $(BUILD_DIR) $(INSTALL_DIR) $(TSL_PKGS:%=$(PACKAGING_LOCATION)/%)
-# 	rm -rvf $(PKG_BUILD_LOCATION) source_ready patched configured built desc_initial \
-# 	installed adapted desc_final postinstsh prermsh preupdatesh
 
 .PHONY: FORCE
 FORCE:

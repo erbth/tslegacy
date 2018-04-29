@@ -4,6 +4,14 @@ This package contains GNU Binutils. There is only one package which contains all
 files since Binutils are usually only installed on a development system. Hence,
 '-dev' packages would not yield any additional advantage.
 
-TODO: add licenzing information
+LICENSE_GPL2.0(GNU Binutils)
+
+Additionally, LICENSE_GPL3.0(GNU Binutils)
+
+Additionally, LICENSE_LGPL2.0(GNU Binutils)
+
+Additionally, LICENSE_LGPL2.1(GNU Binutils)
+
+Additionally, LICENSE_LGPL3.0(GNU Binutils)
 
 ERBTH_FOOTER

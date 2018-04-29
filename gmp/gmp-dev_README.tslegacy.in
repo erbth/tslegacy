@@ -4,6 +4,10 @@ This package contains the development files and the documentation of GNU GMP.
 It is a generally optimized build, which does not target a specific CPU
 architecture.
 
-TODO: addlicensing information
+LICENSE_GPL2.0(GNU GMP)
+
+Additionally, LICENSE_GPL3.0(GNU GMP)
+
+Additionally, LICENSE_LGPL3.0(GNU GMP)
 
 ERBTH_FOOTER

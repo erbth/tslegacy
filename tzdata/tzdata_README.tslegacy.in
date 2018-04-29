@@ -3,6 +3,6 @@ BASIC_PKG_INFO
 This package includes the compiled timezone database. The source files are
 available from https://www.iana.org/time-zones.
 
-TODO: Add licensing information
+Licensing information can be found in /usr/share/doc/PKG_NAME/LICENSE
 
 ERBTH_FOOTER

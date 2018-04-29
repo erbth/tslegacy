@@ -1,0 +1,14 @@
+BASIC_PKG_INFO
+
+This package contains the ABI versioned atomic library, which is distributed
+with the GCC.
+
+LICENSE_GPL2.0(GCC)
+
+Additionally, LICENSE_GPL3.0(GCC)
+
+Additionally, LICENSE_LGPL2.1(GCC)
+
+Additionally, LICENSE_LGPL3.0(GCC)
+
+ERBTH_FOOTER

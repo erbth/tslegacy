@@ -2,6 +2,9 @@ BASIC_PKG_INFO
 
 This package contains the development files and the documentation of GNU MPFR.
 
-TODO: add licensing information
+LICENSE_LGPL3.0(GNU MPFR)
+
+However the GNU General Public License version 3.0 is also included in the
+upstream sources. A copy can be found in /usr/share/doc/licenses/gpl-3.0.
 
 ERBTH_FOOTER

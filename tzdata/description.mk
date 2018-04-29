@@ -1,3 +1,6 @@
+ifndef tzdata_description_included
+tzdata_description_included := 1
+
 # Information about the source apckage itself
 tzdata_SRC_VERSION := 2018d
 tzdata_SRC_DIR := tzdata2018d
@@ -11,3 +14,5 @@ tzdata_TSL_SRC_PKG := tzdata
 
 # A list of a all TSL packages that are created out of this source package
 tzdata_TSL_PKG := tzdata
+
+endif

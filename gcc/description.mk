@@ -1,5 +1,12 @@
+ifndef gcc_description_included
+gcc_description_included = 1
+
 # Include required dependency information
-include ../glibc/description.mk
+include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
+include $(PACKAGING_RESOURCE_DIR)/zlib/description.mk
+include $(PACKAGING_RESOURCE_DIR)/mpc/description.mk
+include $(PACKAGING_RESOURCE_DIR)/mpfr/description.mk
+include $(PACKAGING_RESOURCE_DIR)/gmp/description.mk
 
 # Information about the source package itself
 gcc_SRC_VERSION := 7.3.0
@@ -46,7 +53,8 @@ gcc_TSL_RDEPS := \
 	$(call bigger_equal_dep,gmp-$(gmp_ABI)) \
 	$(call bigger_equal_dep,mpc-$(mpc_ABI)) \
 	$(call bigger_equal_dep,mpfr-$(mpfr_ABI)) \
-	$(call bigger_equal_dep,zlib-$(zlib_ABI))
+	$(call bigger_equal_dep,zlib-$(zlib_ABI)) \
+	$(call bigger_equal_dep,licenses)
 gcc_TSL_SRC_PKG := gcc
 
 
@@ -55,68 +63,80 @@ libasan-$(libasan_ABI)_TSL_TYPE := sw
 libasan-$(libasan_ABI)_TSL_RDEPS := \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
 	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
-	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI))
+	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI)) \
+	$(call bigger_equal_dep,licenses)
 libasan-$(libasan_ABI)_TSL_SRC_PKG := gcc
 
 
 libatomic-$(libatomic_ABI)_TSL_TYPE := sw
 libatomic-$(libatomic_ABI)_TSL_RDEPS := \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION))
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,licenses)
 libatomic-$(libatomic_ABI)_TSL_SRC_PKG := gcc
 
 libcc1-$(libcc1_ABI)_TSL_TYPE := sw
 libcc1-$(libcc1_ABI)_TSL_RDEPS := \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
-	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI))
+	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI)) \
+	$(call bigger_equal_dep,licenses)
 libcc1-$(libcc1_ABI)_TSL_SRC_PKG := gcc
 
 libcilkrts-$(libcilkrts_ABI)_TSL_TYPE := sw
 libcilkrts-$(libcilkrts_ABI)_TSL_RDEPS := \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
-	$(call bigger_equal_dep,libgcc-$(libgcc_ABI))
+	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
+	$(call bigger_equal_dep,licenses)
 libcilkrts-$(libcilkrts_ABI)_TSL_SRC_PKG := gcc
 
 libgcc-$(libgcc_ABI)_TSL_TYPE := sw
 libgcc-$(libgcc_ABI)_TSL_RDEPS := \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION))
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,licenses)
 libgcc-$(libgcc_ABI)_TSL_SRC_PKG := gcc
 
 libgomp-$(libgomp_ABI)_TSL_TYPE := sw
 libgomp-$(libgomp_ABI)_TSL_RDEPS := \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
-	$(call bigger_equal_dep,libgcc-$(libgcc_ABI))
+	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
+	$(call bigger_equal_dep,licenses)
 libgomp-$(libgomp_ABI)_TSL_SRC_PKG := gcc
 
 libitm-$(libitm_ABI)_TSL_TYPE := sw
 libitm-$(libitm_ABI)_TSL_RDEPS := \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION))
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,licenses)
 libitm-$(libitm_ABI)_TSL_SRC_PKG := gcc
 
 liblsan-$(liblsan_ABI)_TSL_TYPE := sw
 liblsan-$(liblsan_ABI)_TSL_RDEPS := \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
 	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
-	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI))
+	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI)) \
+	$(call bigger_equal_dep,licenses)
 liblsan-$(liblsan_ABI)_TSL_SRC_PKG := gcc
 
 libmpx-$(libmpx_ABI)_TSL_TYPE := sw
 libmpx-$(libmpx_ABI)_TSL_RDEPS := \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION))
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,licenses)
 libmpx-$(libmpx_ABI)_TSL_SRC_PKG := gcc
 
 libmpxwrappers-$(libmpxwrappers_ABI)_TSL_TYPE := sw
 libmpxwrappers-$(libmpxwrappers_ABI)_TSL_RDEPS := \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION))
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,licenses)
 libmpxwrappers-$(libmpxwrappers_ABI)_TSL_SRC_PKG := gcc
 
 libquadmath-$(libquadmath_ABI)_TSL_TYPE := sw
 libquadmath-$(libquadmath_ABI)_TSL_RDEPS := \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION))
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,licenses)
 libquadmath-$(libquadmath_ABI)_TSL_SRC_PKG := gcc
 
 libssp-$(libssp_ABI)_TSL_TYPE := sw
 libssp-$(libssp_ABI)_TSL_RDEPS := \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION))
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,licenses)
 libssp-$(libssp_ABI)_TSL_SRC_PKG := gcc
 
 libstdc++-$(libstdc++_ABI)_TSL_TYPE := sw
@@ -129,14 +149,16 @@ libtsan-$(libtsan_ABI)_TSL_TYPE := sw
 libtsan-$(libtsan_ABI)_TSL_RDEPS := \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
 	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
-	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI))
+	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI)) \
+	$(call bigger_equal_dep,licenses)
 libtsan-$(libtsan_ABI)_TSL_SRC_PKG := gcc
 
 libubsan-$(libubsan_ABI)_TSL_TYPE := sw
 libubsan-$(libubsan_ABI)_TSL_RDEPS := \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
 	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
-	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI))
+	$(call bigger_equal_dep,libstdc++-$(libstdc++_ABI)) \
+	$(call bigger_equal_dep,licenses)
 libubsan-$(libubsan_ABI)_TSL_SRC_PKG := gcc
 
 
@@ -158,3 +180,5 @@ export gcc_TSL_PKGS := \
 	libtsan-$(libtsan_ABI) \
 	libubsan-$(libubsan_ABI) \
 	gcc
+
+endif
