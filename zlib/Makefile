@@ -1,5 +1,5 @@
 # The source package's name
-SRC_PKG := zlib
+SRC_NAME := zlib
 
 include description.mk
 include ../common/basic.mk
@@ -14,4 +14,3 @@ $(BUILD_DIR)/built:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
 	$(MAKE)
 	> $@
-	

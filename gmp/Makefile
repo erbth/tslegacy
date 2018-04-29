@@ -1,4 +1,4 @@
-SRC_PKG := gmp
+SRC_NAME := gmp
 
 include description.mk
 include ../common/basic.mk

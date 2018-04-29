@@ -1,4 +1,4 @@
-SRC_PKG := binutils
+SRC_NAME := binutils
 
 include description.mk
 include ../common/basic.mk

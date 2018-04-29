@@ -1,4 +1,4 @@
-SRC_PKG := mpc
+SRC_NAME := mpc
 
 include description.mk
 include ../common/basic.mk

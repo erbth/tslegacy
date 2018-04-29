@@ -1,9 +1,9 @@
 # The source package's name
-SRC_PKG := tzdata
+SRC_NAME := tzdata
 CREATE_SRC_DIR := 1
 
-include descrption.mk
-include ../basic.mk
+include description.mk
+include ../common/basic.mk
 
 # Rules for configuring and compiling the package
 $(BUILD_DIR)/configured:

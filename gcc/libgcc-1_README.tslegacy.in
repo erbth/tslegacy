@@ -1,14 +1,14 @@
 BASIC_PKG_INFO
 
-This package contains the ABI versioned runtime library of GCC (libgcc_s.so).
+This package contains the ABI versioned runtime library of GCC ([libgcc_s.so]).
 
-LICENSE_GPL2.0(GCC)
+LICENSE_GPL2.0([GCC])
 
-Additionally, LICENSE_GPL3.0(GCC)
+Additionally, LICENSE_GPL3.0([GCC])
 
-Additionally, LICENSE_LGPL2.1(GCC)
+Additionally, LICENSE_LGPL2.1([GCC])
 
-Additionally, LICENSE_LGPL3.0(GCC)
+Additionally, LICENSE_LGPL3.0([GCC])
 
 The licensing exception for the GCC runtime library can be found in
 /usr/share/doc/PKG_NAME/COPYING.RUNTIME.

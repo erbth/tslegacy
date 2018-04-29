@@ -115,7 +115,8 @@ $(PACKEDS): \
 	$(TPM) --set-version $(call read_version,$(PKG)) && \
 	$(TPM) --set-arch $(PKG_ARCH) && \
 	$(TPM) --remove-dependencies && \
-	( for RDEP in $($(PKG)_TSL_RDEPS); do $(TPM) --add-dependency $$RDEP || exit; done ) && \
+	( for RDEP in $(foreach RDEP,$($(PKG)_TSL_RDEPS),"$(RDEP)"); do \
+	$(TPM) --add-dependency "$$RDEP" || exit; done ) && \
 	rm -f *.tpm.tar && \
 	$(TPM) --add-files && \
 	$(TPM) --pack

@@ -1,4 +1,4 @@
-SRC_PKG := gcc
+SRC_NAME := gcc
 
 include description.mk
 include ../common/basic.mk

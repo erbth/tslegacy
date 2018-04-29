@@ -14,6 +14,7 @@ done
 rm -rf ${INSTALL_DIR}/target/*
 install -dm755 ${INSTALL_DIR}/target
 
+cd ${BUILD_DIR}/${SRC_DIR}
 make DESTDIR=${INSTALL_DIR}/target install-strip
 make DESTDIR=${INSTALL_DIR}/target install-html
 

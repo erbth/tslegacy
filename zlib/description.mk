@@ -1,6 +1,8 @@
 ifndef zlib_description_included
 zlib_description_included := 1
 
+include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
+
 include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 
 # Information about the source package itself
@@ -14,7 +16,7 @@ export zlib_ABI := $(zlib_SRC_ABI_VERSION)
 
 # Information about the TSL packages that are crated out of this source package
 zlib-dev_TSL_TYPE := sw
-zlib-dev_TSL_RDEPS := \
+zlib-dev_TSL_RDEPS = \
 	$(call equal_dep,zlib-$(zlib_SRC_ABI_VERSION)) \
 	$(call bigger_equal_dep,licenses)
 zlib-dev_TSL_SRC_PKG := zlib

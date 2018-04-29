@@ -2,9 +2,9 @@ BASIC_PKG_INFO
 
 This is the ABI versioned libm of Glibc version PKG_UPSTREAM_VERSION.
 
-One part of LICENSE_GPL2.0(Glibc)
+One part of LICENSE_GPL2.0([Glibc])
 
-Another part of LICENSE_GPL2.1(Glibc)
+Another part of LICENSE_LGPL2.1([Glibc])
 
 Additionally, some parts of Glibc are subject to different licenses that are
 required to be included in binary distributions. These be found in

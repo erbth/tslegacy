@@ -1,6 +1,6 @@
 BASIC_PKG_INFO
 
-This is the ABI versioned libnss_files of Glibc version PKG_UPSTREAM_VERSION.
+These are the locale definitions shipped with Glibc.
 
 One part of LICENSE_GPL2.0([Glibc])
 

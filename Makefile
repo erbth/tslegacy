@@ -19,7 +19,7 @@ include makefile_utilities.mk
 TSLPACK_VERSION := 1.0.3
 
 # Basic automatically derived information
-PACKAGING_RESOURCE_DIR := $(call remove_trailing_slash,$(PWD)/$(dir $(THIS_MAKEFILE)))
+export PACKAGING_RESOURCE_DIR := $(call remove_trailing_slash,$(PWD)/$(dir $(THIS_MAKEFILE)))
 
 # Configuration
 UTILS := $(PACKAGING_RESOURCE_DIR)/utils
@@ -49,7 +49,7 @@ endif
 PACKAGING_LOCATION := $(PACKAGING_BASE)/packaging_location
 
 STATE_DIR := $(PACKAGING_BASE)/state
-COLLECTING_DIR := $(COLLECTING_REPO)/$(PKG_ARCH)
+export COLLECTING_DIR := $(COLLECTING_REPO)/$(PKG_ARCH)
 
 SOURCE_PACKAGES := \
 	basic_fhs \
@@ -119,6 +119,8 @@ $(STATE_DIR)/gcc_installed: $(STATE_DIR)/gcc_symlinks_removed
 
 $(STATE_DIR)/gcc_symlinks_removed: $(STATE_DIR)/gcc_collected $(STATE_DIR)/tool_links_created
 	if test -L $(TPM_TARGET)/usr/lib/gcc; then rm $(TPM_TARGET)/usr/lib/gcc; fi
+	rm -vf $(TPM_TARGET)/usr/lib/libstdc++.{a,so{,.$(libstdcxx_ABI)}} \
+	rm -vf $(TPM_TARGET)/usr/lib/libgcc_s.so{,.$(libgcc_ABI)} \
 	> $@
 
 # Special rule for installing coreutils since the preliminary runtime system
@@ -143,28 +145,6 @@ $(STATE_DIR)/bash_symlinks_removed: \
 	if ! test -f $(STATE_DIR)/bash_installed; then rm $(TPM_TARGET)/bin/bash; fi
 	> $@
 
-# Special rule for installing libgcc since symlinks need to be removed first
-$(STATE_DIR)/libgcc-$(libgcc_SRC_ABI_VERSION)_installed: \
-	$(STATE_DIR)/libgcc-$(libgcc_SRC_ABI_VERSION)_symlinks_removed
-
-$(STATE_DIR)/libgcc-$(libgcc_SRC_ABI_VERSION)_symlinks: \
-	$(STATE_DIR)/libgcc-$(libgcc_SRC_ABI_VERSION)_collected \
-	$(STATE_DIR)/tool_links_created
-	if ! test -f $(STATE_DIR)/libgcc-$(libgcc_SRC_ABI_VERSION)_installed; then \
-		rm -vf $(TPM_TARGET)/usr/lib/libgcc_s.so{,.$(libgcc_SRC_ABI_VERSION)} \
-	fi
-
-# Special rule for installing libstdc++ since symlinks need to be removed first
-$(STATE_DIR)/libstdc++-$(libstdc++_SRC_ABI_VERSION)_installed: \
-	$(STATE_DIR)/libstdc++-$(libstdc++_SRC_ABI_VERSION)_symlinks_removed
-
-$(STATE_DIR)/libstdc++-$(libstdc++_SRC_ABI_VERSION)_symlinks: \
-	$(STATE_DIR)/libstdc++-$(libstdc++_SRC_ABI_VERSION)_collected \
-	$(STATE_DIR)/tool_links_created
-	if ! test -f $(STATE_DIR)/libstdc++-$(libstdc++_SRC_ABI_VERSION)_installed; then \
-		rm -vf $(TPM_TARGET)/usr/lib/libstdc++.{a,so{,.$(libstdc++_SRC_ABI_VERSION)}} \
-	fi
-
 
 # Other rules
 $(STATE_DIR)/toolchain_adjusted: adjust_toolchain.sh $(STATE_DIR)/glibc-dev_installed
@@ -172,7 +152,7 @@ $(STATE_DIR)/toolchain_adjusted: adjust_toolchain.sh $(STATE_DIR)/glibc-dev_inst
 	$(PACKAGING_RESOURCE_DIR)/adjust_toolchain.sh && \
 	> $@
 
-$(STATE_DIR)/tool_links_created: create_tool_links.sh $(STATE_DIR)/basic_fhs-dev_installed
+$(STATE_DIR)/tool_links_created: create_tool_links.sh
 	cd $(TPM_TARGET) \
 	&& $(PACKAGING_RESOURCE_DIR)/create_tool_links.sh && \
 	> $@
@@ -185,6 +165,10 @@ $(TPM_CONF): $(MAKEFILE_LIST)
 	    <repo type=\"dir\">$(COLLECTING_REPO)</repo>\n\
 	    <arch>$(PKG_ARCH)</arch>\n\
 	</tpm>" || kill $$$$) $@
+
+$(STATE_DIR)/dummy_pkgs_created: create_dummy_pkgs.sh
+	bash $<
+	> $@
 
 
 # Creating directories
@@ -270,7 +254,8 @@ clean_toolchain_confirmation:
 .PHONY: clean_compiletime_system
 clean_compiletime_system: clean_compiletime_system_confirmation
 	rm -rvf $(TPM_TARGET)/{bin,boot,etc,home,lib,lib64,media,mnt,opt,root,sbin,srv,tmp,usr,var}
-	rm -vf $(STATE_DIR)/*_installed $(STATE_DIR)/*_symlinks_removed
+	rm -vf $(STATE_DIR)/*_installed $(STATE_DIR)/*_symlinks_removed \
+		$(STATE_DIR)/tool_links_created $(STATE_DIR)/dummy_pkgs_created
 
 .PHONY: clean_compiletime_system_confirmation
 clean_compiletime_system_confirmation:
@@ -290,12 +275,14 @@ dist:
 	cp -a \
 		Makefile \
 		adjust_toolchain.sh \
+		create_dummy_pkgs.sh \
 		create_tool_links.sh \
 		restore_toolchain.sh \
 		set_env.sample \
 		makefile_utilities.mk \
 		show_todos.sh \
 		common \
+		skel \
 		$(SOURCE_PACKAGES) \
 		tslegacy_packaging-$(TSLPACK_VERSION)
 	install -dm755 tslegacy_packaging-$(TSLPACK_VERSION)/utils

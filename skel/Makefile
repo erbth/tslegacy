@@ -1,4 +1,4 @@
-SRC_NAME := mpfr
+SRC_NAME := skel
 
 include description.mk
 include ../common/basic.mk
@@ -10,13 +10,10 @@ include ../common/basic.mk
 $(BUILD_DIR)/configured:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
 	./configure \
-		--prefix=/usr \
-		--disable-static \
-		--enable-thread-safe
+		--prefix=/usr
 	> $@
 
 $(BUILD_DIR)/built:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
-	$(MAKE) && \
-	$(MAKE) html
+	$(MAKE)
 	> $@

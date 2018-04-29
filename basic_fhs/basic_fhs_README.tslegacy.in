@@ -4,4 +4,4 @@ This package installs a basic directory tree that follows the File System
 Hierarchy standard version PKG_UPSTREAM_VERSION. The package PKG_NAME-dev contains some
 additional documentation about this package.
 
-DATE_TODAY, Thomas Erbesdobler <t.erbesdobler@gmx.de> (maintainer)
+DATE_TODAY, Thomas Erbesdobler <t.erbesdobler@gmx.de> ([maintainer])

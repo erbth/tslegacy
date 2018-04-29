@@ -1,5 +1,5 @@
 # Historical location of the c preprocessor (required by the FHS)
-if ! [ -d lib ]
+if ! test -d lib
 then
     install -dm755 lib
 fi
@@ -10,8 +10,9 @@ ln -sfv ../usr/bin/cpp lib
 ln -sfv gcc usr/bin/cc
 
 # Compatibility symlink for compiling programs with LTO
+# TODO: check if version dir is created
 install -dm755 usr/lib/bfd-plugins
-ln -sfv ../../libexec/gcc/$(usr/bin/gcc -dumpmachine)/${PKG_VERSION_gcc}/liblto_plugin.so \
+ln -sfv ../../libexec/gcc/$(usr/bin/gcc -dumpmachine)/${gcc_SRC_VERSION}/liblto_plugin.so \
     usr/lib/bfd-plugins
 
 HANDLE_TEXINFO
