@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the non ABI versioned runtime files of kmod
+version PKG_UPSTREAM_VERSION.
+The documentation and the development files are contained in kmod-dev, and the
+ABI versioned files in kmod-<ABI version>.
+
+LICENSE_LGPL21([kmod])
+
+ERBTH_FOOTER

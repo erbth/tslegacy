@@ -2,12 +2,14 @@ ifndef readline_description_included
 readline_description_included := 1
 
 include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
+include ${PACKAGING_RESOURCE_DIR}/glibc/description.mk
+include ${PACKAGING_RESOURCE_DIR}/ncurses/description.mk
 
 # Information about the source package itself
 readline_SRC_VERSION := 7.0
 readline_SRC_ARCHIVE := readline-$(readline_SRC_VERSION).tar.gz
 readline_SRC_DIR := readline-$(readline_SRC_VERSION)
-readline_SRC_CDEPS := gcc_installed
+readline_SRC_CDEPS := gcc_installed ncurses-dev_installed pkg-config-dev_installed
 
 export readline_SRC_ABI := 7
 export readline_ABI := $(readline_SRC_ABI)

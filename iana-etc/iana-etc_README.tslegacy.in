@@ -1,0 +1,15 @@
+BASIC_PKG_INFO
+
+This package contains iana-etc version PKG_UPSTREAM_VERSION.
+
+The iana etc source package is part of Linux From Scratch, a projects that
+describes how a Linux system can be constructed from the sources of various
+software packages. Its homepage is located at www.linuxfromscratch.org/lfs.
+
+This version, which is distributed with TSClient legacy, is unmodified however
+the package's COPYING, CREDITS, NEWS, README, and VERSION files are installed to
+/usr/share/doc/iana-etc while these would not be distributed with the generated
+config files in the upstream package. Additionally, this file (README.tslegacy)
+was added.
+
+ERBTH_FOOTER

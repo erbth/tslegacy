@@ -1,0 +1,12 @@
+# The book `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing
+# Editor Bruce Dubbs suggests to move the library to a non shared location. At
+# the time I initially wrote this file, the book was available from
+# www.linuxfromscratch.org/lfs.
+
+if ! [ -d lib ]
+then
+    install -dm755 lib
+fi
+
+mv -v usr/lib/libprocps.so.* lib && \
+ln -sfv ../../lib/$(readlink usr/lib/libprocps.so) usr/lib/libprocps.so || true

@@ -10,7 +10,6 @@ ln -sfv ../usr/bin/cpp lib
 ln -sfv gcc usr/bin/cc
 
 # Compatibility symlink for compiling programs with LTO
-# TODO: check if version dir is created
 install -dm755 usr/lib/bfd-plugins
 ln -sfv ../../libexec/gcc/$(usr/bin/gcc -dumpmachine)/${gcc_SRC_VERSION}/liblto_plugin.so \
     usr/lib/bfd-plugins

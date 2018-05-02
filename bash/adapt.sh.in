@@ -1,0 +1,11 @@
+if ! test -d bin
+then
+    install -dm755 bin
+fi
+
+mv -v usr/bin/bash bin || true
+
+# Which shell may be used for /bin/sh shall be decided at runtime.
+rm -rf bin/sh
+
+HANDLE_TEXINFO

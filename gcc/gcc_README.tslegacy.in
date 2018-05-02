@@ -22,13 +22,13 @@ GCC:
 
 A package exists for each of these that contains the ABI versioned library.
 
-LICENSE_GPL2.0([GCC])
+LICENSE_GPL20([GCC])
 
-Additionally, LICENSE_GPL3.0([GCC])
+Additionally, LICENSE_GPL30([GCC])
 
-Additionally, LICENSE_LGPL2.1([GCC])
+Additionally, LICENSE_LGPL21([GCC])
 
-Additionally, LICENSE_LGPL3.0([GCC])
+Additionally, LICENSE_LGPL30([GCC])
 
 The licensing exception for the GCC runtime library can be found in
 /usr/share/doc/PKG_NAME/COPYING.RUNTIME.

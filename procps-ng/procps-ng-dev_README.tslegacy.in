@@ -1,0 +1,11 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of procps-ng
+version PKG_UPSTREAM_VERSION. The ABI versioned library is contained in
+procps-ng-<ABI>, and the non ABI versioned runtime files in procps-ng.
+
+LICENSE_GPL20([procps-ng])
+
+Additionally, LICENSE_LGPL20([procps-ng])
+
+ERBTH_FOOTER

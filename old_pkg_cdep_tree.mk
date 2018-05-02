@@ -125,27 +125,28 @@
 # $(call built_of_normal_pkg,grub): coreutils_installed
 #
 # # Same thing here however with ncurses
-# $(call built_of_normal_pkg,coreutils): ncurses_installed
-# $(call built_of_normal_pkg,procps-ng): ncurses_installed
-# $(call built_of_normal_pkg,openssl): ncurses_installed
-# $(call built_of_normal_pkg,kmod): ncurses_installed
-# $(call built_of_normal_pkg,bash): ncurses_installed readline_installed
-# $(call built_of_normal_pkg,iana-etc): ncurses_installed
-# $(call built_of_normal_pkg,shadow): ncurses_installed \
-# 	tslegacy-sysconfig_installed sed_installed
-#
-# $(call built_of_normal_pkg,tslegacy-sysconfig): basic_fhs_installed
-#
-# $(call built_of_normal_pkg,pkg-config): gcc_installed
-# $(call built_of_normal_pkg,iproute2): gcc_installed
-# $(call built_of_normal_pkg,bc): readline_installed ncurses_installed
+# # Dependency on shadow according to LFS.
+$(call built_of_normal_pkg,coreutils): ncurses_installed shadow_installed
+$(call built_of_normal_pkg,procps-ng): ncurses_installed
+$(call built_of_normal_pkg,openssl): ncurses_installed
+$(call built_of_normal_pkg,kmod): ncurses_installed
+$(call built_of_normal_pkg,bash): ncurses_installed readline_installed
+$(call built_of_normal_pkg,iana-etc): ncurses_installed
+$(call built_of_normal_pkg,shadow): ncurses_installed \
+	tslegacy-sysconfig_installed ( sed_installed ?? )
+
+$(call built_of_normal_pkg,tslegacy-sysconfig): basic_fhs_installed
+
+$(call built_of_normal_pkg,iproute2): gcc_installed
+$(call built_of_normal_pkg,bc): readline_installed ncurses_installed
 # $(call built_of_normal_pkg,amhello): gcc_installed
 #
-# $(call built_of_normal_pkg,ncurses): gcc_installed \
-# 	pkg-config_installed
-#
-# $(call built_of_normal_pkg,readline): gcc_installed
-#
+$(call built_of_normal_pkg,ncurses): gcc_installed \
+ 	pkg-config_installed
+
+$(call built_of_normal_pkg,pkg-config): gcc_installed
+$(call built_of_normal_pkg,readline): gcc_installed
+
 $(PACKED_GCC_AND_LIBS): \
 	mpc_installed mpfr_installed gmp_installed \
 	binutils_installed zlib_installed

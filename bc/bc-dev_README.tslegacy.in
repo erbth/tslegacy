@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the documentation of GNU bc.
+
+LICENSE_GPL30([GNU bc])
+
+However, some files of the upstream source
+LICENSE_LGPL30([are])
+
+ERBTH_FOOTER

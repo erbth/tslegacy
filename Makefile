@@ -52,18 +52,32 @@ STATE_DIR := $(PACKAGING_BASE)/state
 export COLLECTING_DIR := $(COLLECTING_REPO)/$(PKG_ARCH)
 
 SOURCE_PACKAGES := \
+	bash \
 	basic_fhs \
+	bc \
 	binutils \
+	coreutils \
 	gcc \
 	glibc \
 	gmp \
+	iana-etc \
+	iproute2 \
+	kmod \
 	licenses \
 	linux-headers \
 	mpc \
 	mpfr \
+	ncurses \
+	openssl \
+	pkg-config \
+	procps-ng \
 	readline \
+	shadow \
+	tslegacy-sysconfig \
 	tzdata \
 	zlib
+
+# TODO: coreutils bash dependencies for packaging scripts
 
 include $(SOURCE_PACKAGES:%=%/description.mk)
 

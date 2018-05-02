@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the non ABI versioned executables and other runtime files
+of ncurses. The documentation and development files are contained in the
+TSLegacy package ncurses-dev.
+
+Licensing information can be found in /usr/share/doc/PKG_NAME/COPYING.
+
+ERBTH_FOOTER

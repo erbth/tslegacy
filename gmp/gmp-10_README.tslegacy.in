@@ -3,10 +3,10 @@ BASIC_PKG_INFO
 This package contains the gmp library of GNU GMP. It is a generally optimized
 build, which does not target a specific CPU architecture.
 
-LICENSE_GPL2.0([GNU GMP])
+LICENSE_GPL20([GNU GMP])
 
-Additionally, LICENSE_GPL3.0([GNU GMP])
+Additionally, LICENSE_GPL30([GNU GMP])
 
-Additionally, LICENSE_LGPL3.0([GNU GMP])
+Additionally, LICENSE_LGPL30([GNU GMP])
 
 ERBTH_FOOTER

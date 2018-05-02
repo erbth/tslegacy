@@ -1,0 +1,10 @@
+# The book `Linux From Scratch', `Version 8.2' by Gerard Beekmans and
+# Managing Editor Bruce Dubbs says this would be a good idea. At the time I
+# initially wrote this file, the book was available from
+# www.linuxfromscratch.org/lfs.
+if ! [ -d bin ]
+then
+    install -dm755 bin
+fi
+
+mv -v usr/bin/passwd bin || true

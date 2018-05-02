@@ -3,12 +3,12 @@ BASIC_PKG_INFO
 This package contains the ABI versioned ubsan library, which is distributed with
 the GCC.
 
-LICENSE_GPL2.0([GCC])
+LICENSE_GPL20([GCC])
 
-Additionally, LICENSE_GPL3.0([GCC])
+Additionally, LICENSE_GPL30([GCC])
 
-Additionally, LICENSE_LGPL2.1([GCC])
+Additionally, LICENSE_LGPL21([GCC])
 
-Additionally, LICENSE_LGPL3.0([GCC])
+Additionally, LICENSE_LGPL30([GCC])
 
 ERBTH_FOOTER

@@ -6,7 +6,12 @@ rm -rf ${PACKAGING_LOCATION}/readline{-dev,-${readline_SRC_ABI}}/${DESTDIR}/*
 
 install -dm755 ${INSTALL_DIR}/target
 cd ${BUILD_DIR}/${SRC_DIR}
-make DESTDIR=${INSTALL_DIR}/target install
+
+# The install procedures was adapted from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
+make DESTDIR=${INSTALL_DIR}/target SHLIB_LIBS="$(pkg-config ncursesw --libs)" install
 
 # Adapt the installed files
 . ${INSTALL_DIR}/adapt.sh

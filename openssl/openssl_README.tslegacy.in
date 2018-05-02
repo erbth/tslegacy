@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the non ABI versioned runtime files of OpenSSL
+version PKG_UPSTREAM_VERSION. The ABI versioned runtime libraries can be found
+in openssl-<ABI>, the development files and the documentation in openssl-dev.
+
+Licensing information can be found in /usr/share/doc/PKG_NAME/LICENSE.
+
+ERBTH_FOOTER

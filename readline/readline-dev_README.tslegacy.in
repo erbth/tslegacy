@@ -4,6 +4,6 @@ This package contains the development files and the documentation of the GNU
 readline package, version PKG_UPSTREAM_VERSION. No non-ABI part exists but an ABI versioned
 package ([readline-<version>, for the specific name consult the package manager]).
 
-LICENSE_GPL3.0([GNU Readline])
+LICENSE_GPL30([GNU Readline])
 
 DATE_TODAY, Thomas Erbesdobler <t.erbesdobler@gmx.de> ([maintainer])

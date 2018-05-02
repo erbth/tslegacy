@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains all files of GNU Bash version PKG_UPSTREAM_VERSION except
+its development files and documentation. For these, see the bash-dev package.
+
+LICENSE_GPL30([GNU Bash])
+
+ERBTH_FOOTER

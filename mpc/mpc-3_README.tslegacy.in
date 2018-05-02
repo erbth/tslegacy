@@ -2,6 +2,6 @@ BASIC_PKG_INFO
 
 This package contains the ABI versioned library of GNU MPC.
 
-LICENSE_LGPL3.0([GNU MPC])
+LICENSE_LGPL30([GNU MPC])
 
 ERBTH_FOOTER

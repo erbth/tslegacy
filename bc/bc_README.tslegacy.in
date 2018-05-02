@@ -1,0 +1,11 @@
+BASIC_PKG_INFO
+
+This package contains the executables of GNU bc. The documentation is contained
+in the TSLegacy package bc-dev.
+
+LICENSE_GPL30([GNU bc])
+
+However, some files of the upstream source
+LICENSE_LGPL30([are])
+
+ERBTH_FOOTER

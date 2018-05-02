@@ -1,0 +1,5 @@
+# If there is no /bin/sh, use this bash for it (required shell by the FHS)
+if ! test -L /bin/sh && ! test -e /bin/sh
+then
+    ln -s bash /bin/sh
+fi

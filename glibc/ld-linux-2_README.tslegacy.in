@@ -2,9 +2,9 @@ BASIC_PKG_INFO
 
 This contains the ABI versioned dynamic linker of Glibc version PKG_UPSTREAM_VERSION.
 
-One part of LICENSE_GPL2.0([Glibc])
+One part of LICENSE_GPL20([Glibc])
 
-Another part of LICENSE_LGPL2.1([Glibc])
+Another part of LICENSE_LGPL21([Glibc])
 
 Additionally, some parts of Glibc are subject to different licenses that are
 required to be included in binary distributions. These be found in

@@ -1,0 +1,3 @@
+# Disable shadow passwords
+pwunconv -R .
+grpunconv -R .

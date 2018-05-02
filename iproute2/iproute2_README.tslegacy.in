@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains iproute2 without its documentation and development files.
+The documentation and the development files are contained in iproute2-dev
+
+LICENSE_GPL20([iproute2])
+
+ERBTH_FOOTER

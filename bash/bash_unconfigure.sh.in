@@ -1,0 +1,5 @@
+# If /bin/sh was provided by this bash, remove it.
+if test "$(readlink /bin/sh)" == "bash"
+then
+    rm /bin/sh
+fi

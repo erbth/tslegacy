@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package contains the documentation and man pages of pkg-config.
+
+LICENSE_GPL20([pkg-config])
+
+ERBTH_FOOTER

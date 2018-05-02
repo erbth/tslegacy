@@ -3,6 +3,6 @@ BASIC_PKG_INFO
 This is the ABI versioned part of the GNU readline package, version PKG_UPSTREAM_VERSION.
 No non-ABI versioned part exists but a development package ([readline-dev]).
 
-LICENSE_GPL3.0([GNU Readline])
+LICENSE_GPL30([GNU Readline])
 
 DATE_TODAY, Thomas Erbesdobler <t.erbesdobler@gmx.de> ([maintainer])

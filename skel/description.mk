@@ -18,7 +18,7 @@ export skel_ABI := 10
 skel-$(skel_ABI)_TSL_TYPE := sw
 skel-$(skel_ABI)_TSL_RDEPS = \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
-	$(call bigger_equal_dep,libgcc-$(libgcc_ABI))s \
+	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
 	$(call bigger_equal_dep,licenses)
 skel-$(skel_ABI)_TSL_SRC_PKG := skel
 

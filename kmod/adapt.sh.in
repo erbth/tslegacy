@@ -1,0 +1,15 @@
+if ! [ -d sbin ]
+then
+    install -dm755 sbin
+fi
+
+# This was adapted from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs, p. 161. At the time I initially wrote this file, the book was
+# available from www.linuxfromscratch.org/lfs.
+for target in depmod insmod lsmod modinfo modprobe rmmod
+do
+    ln -sfv ../bin/kmod sbin/$target
+done
+
+ln -sfv kmod bin/lsmod
