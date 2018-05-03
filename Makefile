@@ -60,6 +60,7 @@ SOURCE_PACKAGES := \
 	gcc \
 	glibc \
 	gmp \
+	grub \
 	iana-etc \
 	iproute2 \
 	kmod \

@@ -122,10 +122,10 @@
 #
 # $(call built_of_normal_pkg,kbd): coreutils_installed
 # $(call built_of_normal_pkg,less): coreutils_installed
-# $(call built_of_normal_pkg,grub): coreutils_installed
-#
+$(call built_of_normal_pkg,grub): coreutils_installed
+
 # # Same thing here however with ncurses
-# # Dependency on shadow according to LFS.
+# # Dependency on shadow according to LFS, dropped now.
 $(call built_of_normal_pkg,coreutils): ncurses_installed shadow_installed
 $(call built_of_normal_pkg,procps-ng): ncurses_installed
 $(call built_of_normal_pkg,openssl): ncurses_installed
