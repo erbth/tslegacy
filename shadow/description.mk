@@ -10,11 +10,13 @@ shadow_SRC_DIR := shadow-$(shadow_SRC_VERSION)
 shadow_SRC_ARCHIVE := $(shadow_SRC_DIR).tar.gz
 shadow_SRC_CDEPS := \
 	gcc_installed \
-	glibc-dev_installed
+	glibc-dev_installed \
+	tslegacy-sysconfig_installed
 
 shadow_TSL_TYPE := sw
 shadow_TSL_RDEPS = \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION))
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,tslegacy-sysconfig)
 shadow_TSL_SRC_PKG := shadow
 
 shadow-dev_TSL_TYPE := sw

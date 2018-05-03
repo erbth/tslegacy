@@ -140,6 +140,7 @@ $(STATE_DIR)/gcc_symlinks_removed: $(STATE_DIR)/gcc_collected $(STATE_DIR)/tool_
 # Special rule for installing coreutils since the preliminary runtime system
 # has some temporary symlinks which need to be removed no
 $(STATE_DIR)/coreutils_installed: $(STATE_DIR)/coreutils_symlinks_removed
+$(STATE_DIR)/coreutils-dev_installed: $(STATE_DIR)/coreutils_symlinks_removed
 
 $(STATE_DIR)/coreutils_symlinks_removed: \
 	$(STATE_DIR)/coreutils_collected \
@@ -152,6 +153,7 @@ $(STATE_DIR)/coreutils_symlinks_removed: \
 
 # Special rule for installing bash since a symlink needs to be removed first
 $(STATE_DIR)/bash_installed: $(STATE_DIR)/bash_symlinks_removed
+$(STATE_DIR)/bash-dev_installed: $(STATE_DIR)/bash_symlinks_removed
 
 $(STATE_DIR)/bash_symlinks_removed: \
 	$(STATE_DIR)/bash_collected \
