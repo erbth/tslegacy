@@ -64,6 +64,7 @@ SOURCE_PACKAGES := \
 	iana-etc \
 	iproute2 \
 	kmod \
+	less \
 	licenses \
 	linux-headers \
 	mpc \

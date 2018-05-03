@@ -11,7 +11,8 @@ skel_SRC_DIR := skel-$(skel_SRC_VERSION)
 skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.xz
 skel_SRC_CDEPS := \
 	licenses_installed \
-	gcc_installed
+	gcc_installed \
+	glibc-dev_installed
 
 export skel_ABI := 10
 

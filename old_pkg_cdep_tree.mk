@@ -121,7 +121,7 @@
 # 	tslegacy-sysconfig_installed
 #
 # $(call built_of_normal_pkg,kbd): coreutils_installed
-# $(call built_of_normal_pkg,less): coreutils_installed
+$(call built_of_normal_pkg,less): coreutils_installed
 $(call built_of_normal_pkg,grub): coreutils_installed
 
 # # Same thing here however with ncurses

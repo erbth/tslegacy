@@ -1,0 +1,13 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of GNU less version PKG_UPSTREAM_VERSION.
+The documentation is contained in less-dev.
+
+LICENSE_GPL30([GNU less])
+
+The upstream sources may alternatively be redistributed under the terms of the
+`less license file'. I decided to redistribute less under the terms of
+the GPL. For completeness however the `less license file' and the README file
+of less are included in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER
