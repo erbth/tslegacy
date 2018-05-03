@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package the runtime files of kbd version PKG_UPSTREAM_VERSION.
+The documentation is contained in kbd-dev.
+
+LICENSE_GPL20([Kbd])
+
+ERBTH_FOOTER

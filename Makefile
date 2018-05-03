@@ -63,6 +63,7 @@ SOURCE_PACKAGES := \
 	grub \
 	iana-etc \
 	iproute2 \
+	kbd \
 	kmod \
 	less \
 	licenses \

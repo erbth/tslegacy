@@ -1,0 +1,7 @@
+# The book `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing
+# Editor Bruce Dubbs suggests to not install resizecons since it required
+# svgalib, which would, according to the authors, not work properly. At the time
+# I initially wrote this file, the book was available from
+# www.linuxfromscratch.org/lfs.
+sed -i 's/\(RESIZECONS_PROGS=\)yes/\1no/g' configure
+sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in
