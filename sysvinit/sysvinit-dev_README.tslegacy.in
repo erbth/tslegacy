@@ -1,0 +1,12 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentaion of SysVinit
+version PKG_UPSTREAM_VERSION. The runtime files are located in sysvinit-dev.
+
+One thing I would like to mention here is Debian's discussion about SysVinit as
+an init system, which can be found at
+https://wiki.debian.org/Debate/initsystem/sysvinit (as of 3 May, 2018).
+
+LICENSE_GPL20([SysVinit])
+
+ERBTH_FOOTER

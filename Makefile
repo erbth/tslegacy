@@ -76,6 +76,7 @@ SOURCE_PACKAGES := \
 	procps-ng \
 	readline \
 	shadow \
+	sysvinit \
 	tslegacy-sysconfig \
 	tzdata \
 	zlib
