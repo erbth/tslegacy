@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package containes the ABI versioned libbz2 library, which is part of bzip2
+version PKG_UPSTREAM_VERSION.
+Licensing information can be found in /usr/share/doc/PKG_NAME/LICENSE.
+Additionally the upstream package's README file is distributed in
+/usr/share/doc/PKG_NAME, too.
+
+ERBTH_FOOTER

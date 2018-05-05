@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of bzip2
+version PKG_UPSTREAM_VERSION and the corresponding libbz2 shared library.
+Licensing information can be found in /usr/share/doc/PKG_NAME/LICENSE.
+Additionally the upstream package's README file is distributed in
+/usr/share/doc/PKG_NAME, too.
+
+ERBTH_FOOTER

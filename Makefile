@@ -56,6 +56,7 @@ SOURCE_PACKAGES := \
 	basic_fhs \
 	bc \
 	binutils \
+	bzip2 \
 	coreutils \
 	eudev \
 	gcc \
