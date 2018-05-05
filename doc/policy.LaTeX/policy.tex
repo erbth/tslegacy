@@ -1,3 +1,4 @@
+% !TeX spellcheck = en_US
 \documentclass[a4paper]{article}
 
 \title{TSClient LEGACY Packaging Policy}
@@ -16,4 +17,8 @@
 	\subsection{util-linux}
 	
 	I decided to build util-linux without support for udev for now. I do not want to work around this cyclic dependency yet. We will see what will come.
+	
+	\subsection{elfutils}
+	
+	I decided to build elfutils without support for lzma. The two compression packages, zlib and bzip2, may suffice. However I am not sure about this yet, it is just trying.
 \end{document}

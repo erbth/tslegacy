@@ -1,0 +1,11 @@
+BASIC_PKG_INFO
+
+This package contains the development files of elfutils version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL30([elfutils])
+
+Additionally, LICENSE_GPL20([elfutils])
+
+Additionally, LICENSE_LGPL30([elfutils])
+
+ERBTH_FOOTER
