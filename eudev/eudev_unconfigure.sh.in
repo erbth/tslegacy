@@ -1,0 +1,2 @@
+# Remove the hardware database if it was created
+rm -vf etc/udev/hwdb.bin

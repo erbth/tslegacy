@@ -57,6 +57,7 @@ SOURCE_PACKAGES := \
 	bc \
 	binutils \
 	coreutils \
+	eudev \
 	gcc \
 	glibc \
 	gmp \
@@ -79,6 +80,7 @@ SOURCE_PACKAGES := \
 	sysvinit \
 	tslegacy-sysconfig \
 	tzdata \
+	util-linux \
 	zlib
 
 # TODO: coreutils bash dependencies for packaging scripts

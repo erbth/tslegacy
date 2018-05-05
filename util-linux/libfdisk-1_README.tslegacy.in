@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the ABI versioned binaries of libfdisk, which is part of
+util-linux version PKG_UPSTREAM_VERSION.
+
+LICENSE_LGPL21([libfdisk])
+
+ERBTH_FOOTER

@@ -1,0 +1,5 @@
+# Create the directory to store the hw clock's state
+if ! [ -d var/lib/hwclock ]
+then
+    install -dm755 var/lib/hwclock
+fi

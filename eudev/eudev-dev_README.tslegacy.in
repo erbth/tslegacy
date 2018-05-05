@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of eudev
+version PKG_UPSTREAM_VERSION.
+The ABI versioned libudev is contained in eudev-<ABI>, and the non ABI versioned
+runtime files are contained in eudev.
+
+LICENSE_GPL20([Eudev])
+
+ERBTH_FOOTER

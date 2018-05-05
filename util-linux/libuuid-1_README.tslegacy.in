@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the ABI versioned binaries of libuuid, which is part of
+util-linux version PKG_UPSTREAM_VERSION.
+
+libuuid is distributed under the terms of a modified BSD license; a copy of
+which can be found in /usr/share/doc/PKG_NAME/COPYING.BSD-3.
+
+ERBTH_FOOTER

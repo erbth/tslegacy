@@ -1,0 +1,28 @@
+BASIC_PKG_INFO
+
+This package contains the non ABI versioned files of util-linux version PKG_UPSTREAM_VERSION.
+
+util-linux is distributed under the terms of the following licenses:
+
+   * The GNU General Public License version 2, or newer
+     Copies of these can be found in /usr/share/doc/licenses
+
+   * The GNU Library General Public License version 2,
+     The GNU Lesser General Public License version 2.1, or newer versions of
+     this license
+     Copies of these can be found in /usr/share/doc/licenses
+
+   * A BSD like license; A copy can be found in
+     /usr/share/doc/PKG_NAME/COPYING.BSD-3
+
+   * Two more licenses, copies of which can be found in
+     /usr/share/doc/PKG_NAME/COPYING.ISC and /usr/share/doc/PKG_NAME/COPYING.UCB
+
+   * Some code may also be dedicated to the public domain.
+
+Each source file of the upstream source package is protected by a designated
+license. For more details please refer to the upstream source, which may be
+retrieved from https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/.
+
+
+ERBTH_FOOTER

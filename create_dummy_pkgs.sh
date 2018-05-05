@@ -12,7 +12,10 @@ cd dummy_pkgs
 
 # Create the packages
 declare -a PKGS
-for PKG in libstdc++-${libstdcxx_ABI} libgcc-${libgcc_ABI}
+for PKG in \
+    libstdc++-${libstdcxx_ABI} \
+    libgcc-${libgcc_ABI} \
+    libblkid-${libblkid_ABI}
 do
     tpm --create-desc sw
     tpm --set-name $PKG

@@ -1,0 +1,6 @@
+# LaTeX artifacts
+*.toc
+*.out
+*.pdf
+*.synctex.gz
+*.log

@@ -1,0 +1,7 @@
+# Create the hardware database if util-linux is installed.
+# If it is not installed, eudev will be reconfigured when it is installed.
+# Then the hwdb will be created.
+if test -f /lib/libblkid.so.?
+then
+    udevadm hwdb --update
+fi

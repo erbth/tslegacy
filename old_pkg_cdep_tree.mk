@@ -113,9 +113,9 @@
 # $(call built_of_normal_pkg,gzip): coreutils_installed
 # $(call built_of_normal_pkg,tslegacy-bootscripts): coreutils_installed
 # $(call built_of_normal_pkg,elfutils): coreutils_installed
-# $(call built_of_normal_pkg,util-linux): eudev_installed ncurses_installed
-# $(call built_of_normal_pkg,eudev): coreutils_installed \
-# 	tslegacy-sysconfig_installed
+$(call built_of_normal_pkg,util-linux): eudev_installed ncurses_installed
+$(call built_of_normal_pkg,eudev): coreutils_installed \
+	tslegacy-sysconfig_installed
 
 $(call built_of_normal_pkg,sysvinit): coreutils_installed \
 	tslegacy-sysconfig_installed
