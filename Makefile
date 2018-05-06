@@ -61,6 +61,7 @@ SOURCE_PACKAGES := \
 	elfutils \
 	eudev \
 	expat \
+	file \
 	findutils \
 	gcc \
 	gdbm \

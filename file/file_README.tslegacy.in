@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the non ABI versioned runtime files of file
+version PKG_UPSTREAM_VERSION.
+
+The upstream package's license file (COPYING) is distributed together with the
+upstream packages README file in the  directory /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER
