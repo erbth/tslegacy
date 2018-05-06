@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of expat
+version PKG_UPSTREAM_VERSION. Specifically, the development files for libexpat
+are included.
+
+Licensing information can be found in /usr/share/doc/PKG_NAME/COPYING.
+
+ERBTH_FOOTER

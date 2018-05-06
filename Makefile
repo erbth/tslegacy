@@ -60,6 +60,7 @@ SOURCE_PACKAGES := \
 	coreutils \
 	elfutils \
 	eudev \
+	expat \
 	findutils \
 	gcc \
 	glibc \

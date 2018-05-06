@@ -76,13 +76,15 @@
 # 				libquadmath
 #
 # # Dependencies between package builds, and other targets.
-# $(call built_of_normal_pkg,linux): gcc_installed \
-# 	bc_installed openssl_installed elfutils_installed
-#
 # # The packages below depend on util linux to simplify the dependency graph.
 # $(call built_of_normal_pkg,alsa-utils): alsa-lib_installed
 # $(call built_of_normal_pkg,alsa-lib): util-linux_installed
 # $(call built_of_normal_pkg,ntfs-3g): util-linux_installed
+
+# $(call built_of_normal_pkg,tslegacy-installer): coreutils_installed
+# $(call built_of_normal_pkg,linux): gcc_installed \
+# 	bc_installed openssl_installed elfutils_installed
+#
 # $(call built_of_normal_pkg,isc-dhcp-client): util-linux_installed file_installed
 #
 # $(call built_of_normal_pkg,cifs-utils): talloc_installed
@@ -101,11 +103,10 @@
 # # Not each of the following packages may depend on coreutils however this
 # # dependency lowers the complexity of the dependency graph and as this
 # # Makefile is not parallel it is no performance issue.
-# $(call built_of_normal_pkg,tslegacy-installer): coreutils_installed
 # $(call built_of_normal_pkg,file): coreutils_installed zlib_installed
 # $(call built_of_normal_pkg,gdbm): coreutils_installed
 # $(call built_of_normal_pkg,libffi): coreutils_installed
-# $(call built_of_normal_pkg,expat): coreutils_installed
+$(call built_of_normal_pkg,expat): coreutils_installed
 $(call built_of_normal_pkg,tslegacy-bootscripts): coreutils_installed \
 	sed_installed grep_installed findutils_installed bash_installed
 $(call built_of_normal_pkg,findutils): coreutils_installed
