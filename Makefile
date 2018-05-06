@@ -92,6 +92,7 @@ SOURCE_PACKAGES := \
 	tpm \
 	tslegacy-bootscripts \
 	tslegacy-sysconfig \
+	tslegacy-utils \
 	tzdata \
 	util-linux \
 	vim \
