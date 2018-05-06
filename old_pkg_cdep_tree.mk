@@ -94,8 +94,8 @@
 #
 # $(call built_of_normal_pkg,python): libffi_installed expat_installed \
 # 	gdbm_installed ncurses_installed
-#
-# $(call built_of_normal_pkg,e2fsprogs): util-linux_installed
+
+$(call built_of_normal_pkg,e2fsprogs): util-linux_installed
 $(call built_of_normal_pkg,tslegacy-utils): util-linux_installed
 $(call built_of_normal_pkg,vim): ncurses_installed
 $(call built_of_normal_pkg,tpm): glibc_installed

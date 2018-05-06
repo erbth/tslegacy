@@ -1,0 +1,26 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of the EXT2
+filesystem utilities version PKG_UPSTREAM_VERSION and their libraries
+libcom_err, libe2p, libext2fs and libss.
+
+Most parts of the EXT2 filesystem utilities are distributed under the terms of
+the GNU General Public license version 2. However, libe2p and libext2fs are
+protected by the GNU Library General Public License version 2. libss and
+libcom_err (also known as et) are covered by the following license:
+
+Permission to use, copy, modify, and distribute this software and
+its documentation for any purpose is hereby granted, provided that
+the names of M.I.T. and the M.I.T. S.I.P.B. not be used in
+advertising or publicity pertaining to distribution of the software
+without specific, written prior permission.  M.I.T. and the
+M.I.T. S.I.P.B. make no representations about the suitability of
+this software for any purpose.  It is provided "as is" without
+express or implied warranty.
+
+Copies of the GPL version 2.0 and the LGPL version 2.0 can be found in
+/usr/share/doc/licenses, or may be retrieved from
+https://www.gnu.org/licenses/gpl-2.0.html and
+https://www.gnu.org/licenses/old-licenses/lgpl-2.0.html.
+
+ERBTH_FOOTER

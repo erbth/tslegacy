@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the ABI versioned runtime files of libext2fs, which is
+part of e2fs utils version PKG_UPSTREAM_VERSION.
+The development files and the documentation is located in e2fsprogs-dev.
+
+LICENSE_LGPL20([libext2fs])
+
+ERBTH_FOOTER

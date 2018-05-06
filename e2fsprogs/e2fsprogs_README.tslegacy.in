@@ -1,0 +1,11 @@
+BASIC_PKG_INFO
+
+This package contains the non ABI versioned runtime files of e2fs utils
+version PKG_UPSTREAM_VERSION.
+The documentation is located in e2fsprogs-dev.
+
+This part of e2fs utils is distributed under the terms of the GNU General
+Public License version2. A copy is located in /usr/share/doc/licenses/ or
+may be retrieved from https://www.gnu.org/licenses/gpl-2.0.html.
+
+ERBTH_FOOTER

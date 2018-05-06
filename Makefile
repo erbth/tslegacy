@@ -58,6 +58,7 @@ SOURCE_PACKAGES := \
 	binutils \
 	bzip2 \
 	coreutils \
+	e2fsprogs \
 	elfutils \
 	eudev \
 	expat \
