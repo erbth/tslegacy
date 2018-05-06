@@ -85,6 +85,7 @@ SOURCE_PACKAGES := \
 	openssl \
 	pkg-config \
 	procps-ng \
+	python \
 	readline \
 	sed \
 	shadow \

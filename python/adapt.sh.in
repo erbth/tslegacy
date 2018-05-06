@@ -1,0 +1,11 @@
+STRIP_SYMBOLS
+
+# The book `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
+# Team suggests to add write access for root to python's libraries to be
+# consistent across all libraries.
+# At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/blfs.
+chmod -v 755 usr/lib/libpython2.7.so.1.0
+
+# The tool `2to3' is installed with python3
+rm -f usr/bin/2to3
