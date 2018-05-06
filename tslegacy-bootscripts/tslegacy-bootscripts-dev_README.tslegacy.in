@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the documentation of tslegacy-bootscripts version PKG_UPSTREAM_VERSION.
+tslegacy-bootscripts is a collection of SysVinit boot scripts that drive a
+TSClient LEGACY system.
+
+The source package's README file, which contains licensing information, can be
+found at /usr/share/doc/PKG_NAME/README.
+
+ERBTH_FOOTER

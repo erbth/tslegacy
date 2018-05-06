@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of GNU Grep version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL30([GNU Grep])
+
+ERBTH_FOOTER

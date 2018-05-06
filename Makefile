@@ -60,9 +60,11 @@ SOURCE_PACKAGES := \
 	coreutils \
 	elfutils \
 	eudev \
+	findutils \
 	gcc \
 	glibc \
 	gmp \
+	grep \
 	grub \
 	gzip \
 	iana-etc \
@@ -83,6 +85,7 @@ SOURCE_PACKAGES := \
 	shadow \
 	sysvinit \
 	tar \
+	tslegacy-bootscripts \
 	tslegacy-sysconfig \
 	tzdata \
 	util-linux \
