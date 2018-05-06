@@ -34,7 +34,7 @@ install_license ${PKG_DIRS[0]} bzip2
 
 # libbz2-<ABI>
 install -dm755 ${PKG_DIRS[1]}/usr/lib
-cp ${BUILD_DIR}/${SRC_DIR}/libbz2.so.* ${PKG_DIRS[1]}/usr/lib/
+cp -d ${BUILD_DIR}/${SRC_DIR}/libbz2.so.* ${PKG_DIRS[1]}/usr/lib/
 
 install_license ${PKG_DIRS[1]} libbz2-${libbz2_ABI}
 
