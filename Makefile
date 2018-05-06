@@ -64,6 +64,7 @@ SOURCE_PACKAGES := \
 	glibc \
 	gmp \
 	grub \
+	gzip \
 	iana-etc \
 	iproute2 \
 	kbd \
