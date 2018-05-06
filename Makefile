@@ -81,6 +81,7 @@ SOURCE_PACKAGES := \
 	readline \
 	shadow \
 	sysvinit \
+	tar \
 	tslegacy-sysconfig \
 	tzdata \
 	util-linux \

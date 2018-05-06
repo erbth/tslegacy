@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package contains the documentation of GNU Tar version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL30([GNU Tar])
+
+ERBTH_FOOTER

@@ -111,7 +111,7 @@
 # $(call built_of_normal_pkg,findutils): coreutils_installed
 # $(call built_of_normal_pkg,grep): coreutils_installed
 # $(call built_of_normal_pkg,sed): coreutils_installed
-# $(call built_of_normal_pkg,tar): coreutils_installed
+$(call built_of_normal_pkg,tar): coreutils_installed
 $(call built_of_normal_pkg,gzip): coreutils_installed
 $(call built_of_normal_pkg,elfutils): coreutils_installed
 $(call built_of_normal_pkg,util-linux): eudev_installed ncurses_installed
