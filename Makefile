@@ -89,6 +89,7 @@ SOURCE_PACKAGES := \
 	shadow \
 	sysvinit \
 	tar \
+	tpm \
 	tslegacy-bootscripts \
 	tslegacy-sysconfig \
 	tzdata \
