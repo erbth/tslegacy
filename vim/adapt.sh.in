@@ -1,0 +1,40 @@
+set -x
+
+# The documentation symlink below might not work if it is not a 8.0 release
+test "${vim_SRC_VERSION%.*}" == "8.0"
+
+STRIP_SYMBOLS
+
+# The following procedures have been adapted from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
+
+# Create symlink vi (adapted from LFS 8.2, p.219)
+ln -sfv vim usr/bin/vi
+for L in usr/share/man/{,*/}man1/vim.1
+do
+    ln -sfv vim.1 $(dirname $L)/vi.1
+done
+
+# Create a basic vimrc
+if ! test -d etc
+then
+    install -dm755 etc
+fi
+
+cat > etc/vimrc << "EOF"
+" This vimrc has ben inspired by and parts of it were copied from the suggested
+" default vimrc in the book `Linux From Scratch', `Version 8.2', p.220 by
+" Gerard Beekmans and Managing Editor Bruce Dubbs. At the time I initially wrote
+" this file, the book was available from www.linuxfromscratch.org/lfs.
+
+source $VIMRUNTIME/defaults.vim
+let skip_defaults_vim=1
+
+set nocompatible
+set backspace=2
+set mouse=a
+syntax on
+
+EOF

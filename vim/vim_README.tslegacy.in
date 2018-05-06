@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of Vim version PKG_UPSTREAM_VERSION along
+with its documentation. However the man pages are contained in the vim-dev
+package.
+
+Licensing information can be found in /usr/share/doc/PKG_NAME/uganda.txt
+
+ERBTH_FOOTER

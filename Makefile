@@ -94,6 +94,7 @@ SOURCE_PACKAGES := \
 	tslegacy-sysconfig \
 	tzdata \
 	util-linux \
+	vim \
 	zlib
 
 # TODO: coreutils bash dependencies for packaging scripts
