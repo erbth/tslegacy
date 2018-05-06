@@ -79,6 +79,7 @@ SOURCE_PACKAGES := \
 	pkg-config \
 	procps-ng \
 	readline \
+	sed \
 	shadow \
 	sysvinit \
 	tar \
