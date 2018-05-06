@@ -1,1 +1,11 @@
 STRIP_SYMBOLS
+
+# This was taken from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
+for BINARY in bunzip2 bzcat
+do
+    rm usr/bin/$BINARY
+    ln -s bzip2 usr/bin/$BINARY
+done
