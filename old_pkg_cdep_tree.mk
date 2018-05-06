@@ -104,7 +104,7 @@
 # # dependency lowers the complexity of the dependency graph and as this
 # # Makefile is not parallel it is no performance issue.
 # $(call built_of_normal_pkg,file): coreutils_installed zlib_installed
-# $(call built_of_normal_pkg,gdbm): coreutils_installed
+$(call built_of_normal_pkg,gdbm): coreutils_installed
 $(call built_of_normal_pkg,libffi): coreutils_installed
 $(call built_of_normal_pkg,expat): coreutils_installed
 $(call built_of_normal_pkg,tslegacy-bootscripts): coreutils_installed \

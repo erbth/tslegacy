@@ -63,6 +63,7 @@ SOURCE_PACKAGES := \
 	expat \
 	findutils \
 	gcc \
+	gdbm \
 	glibc \
 	gmp \
 	grep \

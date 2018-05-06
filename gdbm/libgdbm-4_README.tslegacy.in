@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package contains the ABI versioned libgdbm of the GNU dbm version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL30([GNU dbm])
+
+ERBTH_FOOTER
