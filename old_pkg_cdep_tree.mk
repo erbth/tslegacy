@@ -89,8 +89,8 @@
 #
 # $(call built_of_normal_pkg,cifs-utils): talloc_installed
 # $(call built_of_normal_pkg,talloc): python_installed
-# $(call built_of_normal_pkg,python3): libffi_installed expat_installed \
-# 	gdbm_installed ncurses_installed
+$(call built_of_normal_pkg,python3): libffi_installed expat_installed \
+	gdbm_installed ncurses_installed
 
 $(call built_of_normal_pkg,python): libffi_installed expat_installed \
 	gdbm_installed ncurses_installed

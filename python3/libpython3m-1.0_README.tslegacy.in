@@ -1,0 +1,6 @@
+BASIC_PKG_INFO
+
+This package contains the ABI versioned libpython3m of Python version PKG_UPSTREAM_VERSION.
+Licensing information can be found in /usr/share/doc/PKG_NAME/LICENSE.
+
+ERBTH_FOOTER

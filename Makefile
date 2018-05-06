@@ -86,6 +86,7 @@ SOURCE_PACKAGES := \
 	pkg-config \
 	procps-ng \
 	python \
+	python3 \
 	readline \
 	sed \
 	shadow \
