@@ -73,6 +73,7 @@ SOURCE_PACKAGES := \
 	kbd \
 	kmod \
 	less \
+	libffi \
 	licenses \
 	linux-headers \
 	mpc \

@@ -1,0 +1,12 @@
+# This file was created by Thomas Erbesdobler <t.erbesdobler@gmx.de>
+
+# I took this patch from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs, page 166. At the time I initially wrote this file, the book was
+# available from www.linuxfromscratch.org/lfs.
+sed -e '/^includesdir/ s/$(libdir).*$/$(includedir)/' \
+    -i include/Makefile.in
+
+sed -e '/^includedir/ s/=.*$/=@includedir@/' \
+    -e 's/^Cflags: -I${includedir}/Cflags:/' \
+    -i libffi.pc.in
