@@ -1,0 +1,15 @@
+# The basic dhclient.conf and installation of the state directory was adapted
+# from the book `Beyond Linux From Scratch', `Version 8.2' by the BLFS
+# Development Team. At the time I initially wrote this file, the book was
+# available from www.linuxfromscratch.org/blfs.
+# I changed the dhclient.conf to my needs.
+#
+# "Create a basic /etc/dhcp/dhclient.conf " (BLFS 8.2)
+cat > etc/dhcp/dhclient.conf << "EOF"
+request subnet-mask, broadcast-address, time-offset, routers, domain-name,
+        domain-name-servers, domain-search, netbios-name-servers, netbios-scope,
+        interface-mtu, ntp-servers;
+require subnet-mask;
+EOF
+
+install -v -dm755 var/lib/dhclient

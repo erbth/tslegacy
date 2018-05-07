@@ -74,6 +74,7 @@ SOURCE_PACKAGES := \
 	gzip \
 	iana-etc \
 	iproute2 \
+	isc-dhcp \
 	kbd \
 	kmod \
 	less \

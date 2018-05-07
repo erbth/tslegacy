@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the documentation of ISC DHCP version PKG_UPSTREAM_VERSION.
+
+Licensing information can be found in /usr/share/doc/PKG_NAME/LICENSE. This
+license does also apply to the source code, which was used to build this
+package. The upstream source package can be retrieved from
+https://www.isc.org/downloads/dhcp/.
+
+ERBTH_FOOTER
