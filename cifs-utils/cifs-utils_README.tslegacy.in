@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of cifs-utils version PKG_UPSTREAM_VERSION.
+Specifically, only mount.cifs is included to minimize the dependencies of the
+TSLegacy package.
+
+LICENSE_GPL30([cifs-utils])
+
+ERBTH_FOOTER

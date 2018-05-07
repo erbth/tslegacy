@@ -57,6 +57,7 @@ SOURCE_PACKAGES := \
 	bc \
 	binutils \
 	bzip2 \
+	cifs-utils \
 	coreutils \
 	e2fsprogs \
 	elfutils \
