@@ -1,0 +1,12 @@
+BASIC_PKG_INFO
+
+This package contains the the ABI versioned libtalloc of talloc version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL30([talloc])
+
+Additionally, LICENSE_LGPL30(talloc])
+
+However it was difficult to tell since talloc has no LICENSE, README, NOTICE,
+COPYING or similar file. Hence this information might be wrong.
+
+ERBTH_FOOTER

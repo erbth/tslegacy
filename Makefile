@@ -91,6 +91,7 @@ SOURCE_PACKAGES := \
 	sed \
 	shadow \
 	sysvinit \
+	talloc \
 	tar \
 	tpm \
 	tslegacy-bootscripts \
