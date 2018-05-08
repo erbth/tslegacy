@@ -1,3 +1,0 @@
-# For some reason it seems to be necessary to call ldconfig in order to enable
-# linking to the library installed in /usr/lib64.
-ldconfig

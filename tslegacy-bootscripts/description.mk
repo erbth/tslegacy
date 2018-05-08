@@ -19,6 +19,7 @@ tslegacy-bootscripts_TSL_RDEPS = \
 	$(call bigger_equal_dep,findutils) \
 	$(call bigger_equal_dep,bash) \
 	$(call bigger_equal_dep,iproute2) \
+	$(call bigger_equal_dep,isc-dhcp-client) \
 	$(call bigger_equal_dep,basic_fhs)
 tslegacy-bootscripts_TSL_SRC_PKG := tslegacy-bootscripts
 

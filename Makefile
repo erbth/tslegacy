@@ -101,6 +101,7 @@ SOURCE_PACKAGES := \
 	talloc \
 	tar \
 	tpm \
+	tslegacy \
 	tslegacy-bootscripts \
 	tslegacy-installer \
 	tslegacy-sysconfig \
