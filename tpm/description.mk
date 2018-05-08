@@ -13,12 +13,17 @@ tpm_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed
 
+# TODO: Remove dependency on bash and add it to the packages which depend on it
+# for executing their packaging scripts. Currently the TSL package tpm ensures
+# that bash and coreutils are installed.
+
 tpm_TSL_TYPE := sw
 tpm_TSL_RDEPS = \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
 	$(call bigger_equal_dep,coreutils) \
 	$(call bigger_equal_dep,gzip) \
 	$(call bigger_equal_dep,tar) \
+	$(call bigger_equal_dep,bash) \
 	$(call bigger_equal_dep,licenses)
 tpm_TSL_SRC_PKG := tpm
 

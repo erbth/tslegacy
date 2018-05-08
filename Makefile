@@ -110,8 +110,6 @@ SOURCE_PACKAGES := \
 	vim \
 	zlib
 
-# TODO: coreutils bash dependencies for packaging scripts
-
 include $(SOURCE_PACKAGES:%=%/description.mk)
 
 ALL_TSL_PACKAGES := $(foreach SRC,$(SOURCE_PACKAGES),$($(SRC)_TSL_PKGS))
