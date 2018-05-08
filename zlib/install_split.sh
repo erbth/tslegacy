@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 declare -a PKG_DIRS
 
 for DIR in ${PACKAGING_LOCATION}/{zlib-dev,zlib-${zlib_SRC_ABI_VERSION}}/${DESTDIR}
@@ -21,7 +23,7 @@ cd ${BUILD_DIR}/${SRC_DIR}
 make DESTDIR=${INSTALL_DIR}/target/ install
 
 cd ${INSTALL_DIR}/target
-../adapt.sh
+bash ../adapt.sh
 
 # ABI versioned
 mv ${INSTALL_DIR}/target/lib ${PKG_DIRS[1]}/

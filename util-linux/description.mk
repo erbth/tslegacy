@@ -19,6 +19,7 @@ util-linux_SRC_CDEPS := \
 	ncurses-dev_installed \
 	readline-dev_installed \
 	zlib-dev_installed \
+	tslegacy-sysconfig_installed \
 #	eudev-dev_installed
 
 export libblkid_ABI := 1

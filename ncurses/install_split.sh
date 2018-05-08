@@ -44,5 +44,6 @@ install_licensing_info ${PKG_DIRS[1]} ncurses-${ncurses_ABI}
 
 # ncurses-dev
 mv ${INSTALL_DIR}/target/usr ${PKG_DIRS[2]}/
+mv ${PKG_DIRS[2]}/usr/share/doc/ncurses{,-dev}
 
 install_licensing_info ${PKG_DIRS[2]} ncurses-dev

@@ -11,12 +11,14 @@ gzip_SRC_ARCHIVE := $(gzip_SRC_DIR).tar.xz
 gzip_SRC_CDEPS := \
 	licenses_installed \
 	gcc_installed \
-	glibc-dev_installed
+	glibc-dev_installed \
+	less-dev_installed
 
 gzip_TSL_TYPE := sw
 gzip_TSL_RDEPS = \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
 	$(call bigger_equal_dep,bash) \
+	$(call bigger_equal_dep,less) \
 	$(call bigger_equal_dep,licenses)
 gzip_TSL_SRC_PKG := gzip
 

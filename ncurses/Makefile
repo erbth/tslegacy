@@ -14,6 +14,7 @@ $(BUILD_DIR)/configured:
 		--without-debug \
 		--without-normal \
 		--enable-pc-files \
+		--with-pkg-config-libdir=/usr/lib/pkgconfig \
 		--enable-widec
 	> $@
 

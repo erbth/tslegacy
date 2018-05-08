@@ -177,7 +177,8 @@ $(STATE_DIR)/coreutils-dev_installed: $(STATE_DIR)/coreutils_symlinks_removed
 $(STATE_DIR)/coreutils_symlinks_removed: \
 	$(STATE_DIR)/coreutils_collected \
 	$(STATE_DIR)/tool_links_created
-	if ! test -f $(STATE_DIR)/coreutils_installed; then \
+	if ! test -f $(STATE_DIR)/coreutils_installed && \
+	! test -f $(STATE_DIR)/coreutils_installed; then \
 		rm -vf $(TPM_TARGET)/usr/bin/install && \
 		rm -vf $(TPM_TARGET)/bin/{cat,dd,echo,ln,pwd,rm,stty}; \
 	fi
@@ -190,7 +191,10 @@ $(STATE_DIR)/bash-dev_installed: $(STATE_DIR)/bash_symlinks_removed
 $(STATE_DIR)/bash_symlinks_removed: \
 	$(STATE_DIR)/bash_collected \
 	$(STATE_DIR)/tool_links_created
-	if ! test -f $(STATE_DIR)/bash_installed; then rm $(TPM_TARGET)/bin/bash; fi
+	if ! test -f $(STATE_DIR)/bash_installed && \
+	! test -f $(STATE_DIR)/bash-dev_installed; then \
+		rm $(TPM_TARGET)/bin/bash; \
+	fi
 	> $@
 
 
