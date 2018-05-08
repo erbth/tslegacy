@@ -51,8 +51,8 @@ e2fsprogs_TSL_RDEPS = \
 	$(call bigger_equal_dep,libuuid-$(libuuid_ABI)) \
 	$(call bigger_equal_dep,libcom_err-$(libcom_err_ABI)) \
 	$(call bigger_equal_dep,libe2p-$(libe2p_ABI)) \
-	$(call bugger_equal_dep,libext2fs-$(libext2fs_ABI)) \
-	$(call bugger_equal_dep,libss-$(libss_ABI)) \
+	$(call bigger_equal_dep,libext2fs-$(libext2fs_ABI)) \
+	$(call bigger_equal_dep,libss-$(libss_ABI)) \
 	$(call bigger_equal_dep,licenses)
 e2fsprogs_TSL_SRC_PKG := e2fsprogs
 
