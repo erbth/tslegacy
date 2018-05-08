@@ -82,8 +82,8 @@
 # $(call built_of_normal_pkg,ntfs-3g): util-linux_installed
 
 # $(call built_of_normal_pkg,tslegacy-installer): coreutils_installed
-# $(call built_of_normal_pkg,linux): gcc_installed \
-# 	bc_installed openssl_installed elfutils_installed
+$(call built_of_normal_pkg,linux): gcc_installed \
+	bc_installed openssl_installed elfutils_installed
 
 $(call built_of_normal_pkg,isc-dhcp-client): util-linux_installed file_installed
 

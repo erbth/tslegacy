@@ -45,6 +45,10 @@ ifndef PKG_ARCH
 $(error PKG_ARCH not set)
 endif
 
+ifndef SOURCE_LOCATION
+$(error SOURCE_LOCATION not set)
+endif
+
 # Automatically derived and retrieved information
 PACKAGING_LOCATION := $(PACKAGING_BASE)/packaging_location
 
@@ -80,6 +84,7 @@ SOURCE_PACKAGES := \
 	less \
 	libffi \
 	licenses \
+	linux \
 	linux-headers \
 	mpc \
 	mpfr \
@@ -213,6 +218,10 @@ $(STATE_DIR)/dummy_pkgs_created: create_dummy_pkgs.sh
 	bash $<
 	> $@
 
+$(STATE_DIR)/dummy_src_pkg_created: create_dummy_src_pkg.sh
+	bash $<
+	> $@
+
 
 # Creating directories
 $(STATE_DIR):
@@ -319,6 +328,7 @@ dist:
 		Makefile \
 		adjust_toolchain.sh \
 		create_dummy_pkgs.sh \
+		create_dummy_src_pkg.sh \
 		create_tool_links.sh \
 		restore_toolchain.sh \
 		set_env.sample \

@@ -1,0 +1,33 @@
+set -x
+
+# Various techniques used in this file have been adapted from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
+
+SOURCE_DIR=${BUILD_DIR}/${SRC_DIR}
+
+# Install the kernel's boot image (adapted from LFS 8.2, p.256)
+if ! test -d boot
+then
+    install -dm755 boot
+fi
+
+install -m644 ${SOURCE_DIR}/arch/x86/boot/bzImage boot/vmlinuz-PKG_UPSTREAM_VERSION
+install -m644 ${SOURCE_DIR}/System.map boot/System.map-PKG_UPSTREAM_VERSION
+install -m644 ${SOURCE_DIR}/.config boot/config-PKG_UPSTREAM_VERSION
+
+# Install the documentation (adapted from LFS 8.2, p.256)
+DOCDIR=usr/share/doc/linux
+
+if ! test -d ${DOCDIR}
+then
+    install -dm755 ${DOCDIR}
+fi
+
+cp -r ${SOURCE_DIR}/Documentation/* ${DOCDIR}
+chown -R 0:0 ${DOCDIR}
+chmod -R 0755 ${DOCDIR}
+
+# Pre-generate modules.dep and similar files
+depmod -b ${PWD} -a PKG_UPSTREAM_VERSION

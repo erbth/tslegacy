@@ -1,0 +1,13 @@
+BASIC_PKG_INFO
+
+This package contains the documentation of the Linux kernel version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL20([Linux])
+
+The kernel's configuration is based on a configuration from the Debian package
+linux-image-4.9.0-6-amd64. Starting from there, I have made some adaptions and
+followed the suggestions given in the book `Linux From Scratch', `Version 8.2'
+by Gerard Beekmans and Managing Editor Bruce Dubbs. At the time I initially
+wrote this file, the book was available from www.linuxfromscratch.org/lfs.
+
+ERBTH_FOOTER
