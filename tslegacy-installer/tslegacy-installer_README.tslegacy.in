@@ -1,0 +1,6 @@
+BASIC_PKG_INFO
+
+This is a meta package, which depends on all packages that are needed to
+install a TSClient LEGACY system in a runtime environment.
+
+ERBTH_FOOTER

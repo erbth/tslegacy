@@ -102,6 +102,7 @@ SOURCE_PACKAGES := \
 	tar \
 	tpm \
 	tslegacy-bootscripts \
+	tslegacy-installer \
 	tslegacy-sysconfig \
 	tslegacy-utils \
 	tzdata \
@@ -218,9 +219,8 @@ $(STATE_DIR)/dummy_pkgs_created: create_dummy_pkgs.sh
 	bash $<
 	> $@
 
-$(STATE_DIR)/dummy_src_pkg_created: create_dummy_src_pkg.sh
+$(SOURCE_LOCATION)/dummy_src_pkg.tar.gz: create_dummy_src_pkg.sh
 	bash $<
-	> $@
 
 
 # Creating directories

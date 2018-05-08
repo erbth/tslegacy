@@ -79,7 +79,7 @@
 # # The packages below depend on util linux to simplify the dependency graph.
 # $(call built_of_normal_pkg,alsa-utils): alsa-lib_installed
 # $(call built_of_normal_pkg,alsa-lib): util-linux_installed
-# $(call built_of_normal_pkg,ntfs-3g): util-linux_installed
+$(call built_of_normal_pkg,ntfs-3g): util-linux_installed
 
 # $(call built_of_normal_pkg,tslegacy-installer): coreutils_installed
 $(call built_of_normal_pkg,linux): gcc_installed \
