@@ -3,7 +3,7 @@ tslegacy-sysconfig_description_included := 1
 
 include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
-tslegacy-sysconfig_SRC_VERSION := 1.0.0
+tslegacy-sysconfig_SRC_VERSION := 1.0.1
 tslegacy-sysconfig_SRC_DIR := tslegacy-sysconfig-$(tslegacy-sysconfig_SRC_VERSION)
 tslegacy-sysconfig_SRC_ARCHIVE := $(tslegacy-sysconfig_SRC_DIR).tar.xz
 tslegacy-sysconfig_SRC_CDEPS := \
