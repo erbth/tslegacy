@@ -17,6 +17,7 @@ tslegacy_TSL_RDEPS = \
 	$(call bigger_equal_dep,glibc) \
 	$(call bigger_equal_dep,grub) \
 	$(call bigger_equal_dep,iana-etc) \
+	$(call bigger_equal_dep,inetutils) \
 	$(call bigger_equal_dep,kbd) \
 	$(call bigger_equal_dep,kmod) \
 	$(call bigger_equal_dep,linux) \

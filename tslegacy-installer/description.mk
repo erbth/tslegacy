@@ -21,6 +21,7 @@ tslegacy-installer_TSL_RDEPS = \
 	$(call bigger_equal_dep,grub) \
 	$(call bigger_equal_dep,gzip) \
 	$(call bigger_equal_dep,iana-etc) \
+	$(call bigger_equal_dep,inetutils) \
 	$(call bigger_equal_dep,iproute2) \
 	$(call bigger_equal_dep,isc-dhcp-client) \
 	$(call bigger_equal_dep,kbd) \

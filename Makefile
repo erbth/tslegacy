@@ -77,6 +77,7 @@ SOURCE_PACKAGES := \
 	grub \
 	gzip \
 	iana-etc \
+	inetutils \
 	iproute2 \
 	isc-dhcp \
 	kbd \
