@@ -17,7 +17,8 @@ eudev_SRC_CDEPS := \
 	dummy_pkgs_created \
 	bash-dev_installed \
 	coreutils-dev_installed \
-	util-linux-dev_installed
+	util-linux-dev_installed \
+	kmod-dev_installed
 
 export eudev_ABI := 1
 
@@ -34,6 +35,7 @@ eudev_TSL_RDEPS = \
 	$(call bigger_equal_dep,eudev-$(eudev_ABI)) \
 	$(call bigger_equal_dep,bash) \
 	$(call bigger_equal_dep,coreutils) \
+	$(call bigger_equal_dep,kmod) \
 	$(call bigger_equal_dep,licenses)
 eudev_TSL_SRC_PKG := eudev
 
