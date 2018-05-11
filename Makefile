@@ -57,6 +57,7 @@ export COLLECTING_DIR := $(COLLECTING_REPO)/$(PKG_ARCH)
 
 SOURCE_PACKAGES := \
 	alsa-lib \
+	alsa-utils \
 	bash \
 	basic_fhs \
 	bc \

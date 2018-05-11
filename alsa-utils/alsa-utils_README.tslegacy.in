@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the ALSA utils version PKG_UPSTREAM_VERSION except their
+documentation. This is placed in alsa-utils-dev.
+
+LICENSE_GPL20([alsa-utils])
+
+ERBTH_FOOTER

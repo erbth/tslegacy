@@ -8,6 +8,7 @@ tslegacy_SRC_DIR := dummy_src_pkg
 tslegacy_SRC_ARCHIVE := dummy_src_pkg.tar.gz
 tslegacy_SRC_CDEPS := \
 	alsa-lib_collected \
+	alsa-utils_collected \
 	bash_collected \
 	cifs-utils_collected \
 	coreutils_collected \
