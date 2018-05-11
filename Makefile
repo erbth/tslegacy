@@ -56,6 +56,7 @@ STATE_DIR := $(PACKAGING_BASE)/state
 export COLLECTING_DIR := $(COLLECTING_REPO)/$(PKG_ARCH)
 
 SOURCE_PACKAGES := \
+	alsa-lib \
 	bash \
 	basic_fhs \
 	bc \

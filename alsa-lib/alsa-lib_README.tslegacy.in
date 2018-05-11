@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files and some config files in /usr/share/alsa
+of alsa-lib version PKG_UPSTREAM_VERSION.
+
+LICENSE_LGPL21([alsa-lib])
+
+ERBTH_FOOTER
