@@ -1,0 +1,13 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of ntfs-3g
+version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL20([ntfs-3g])
+
+However libfuse-lite is distributed with ntfs-3g and the programs distributed in
+the TSL package 'ntfs-3g' are statically linked against it.
+
+LICENSE_LGPL20([libfuse-lite])
+
+ERBTH_FOOTER

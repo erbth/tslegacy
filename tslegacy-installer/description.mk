@@ -29,6 +29,7 @@ tslegacy-installer_TSL_RDEPS = \
 	$(call bigger_equal_dep,less) \
 	$(call bigger_equal_dep,linux) \
 	$(call bigger_equal_dep,ncurses) \
+	$(call bigger_equal_dep,ntfs-3g) \
 	$(call bigger_equal_dep,procps-ng) \
 	$(call bigger_equal_dep,sed) \
 	$(call bigger_equal_dep,shadow) \

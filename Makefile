@@ -90,6 +90,7 @@ SOURCE_PACKAGES := \
 	mpc \
 	mpfr \
 	ncurses \
+	ntfs-3g \
 	openssl \
 	pkg-config \
 	procps-ng \

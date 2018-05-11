@@ -22,6 +22,7 @@ tslegacy_TSL_RDEPS = \
 	$(call bigger_equal_dep,kmod) \
 	$(call bigger_equal_dep,linux) \
 	$(call bigger_equal_dep,ncurses) \
+	$(call bigger_equal_dep,ntfs-3g) \
 	$(call bigger_equal_dep,procps-ng) \
 	$(call bigger_equal_dep,shadow) \
 	$(call bigger_equal_dep,sysvinit) \
