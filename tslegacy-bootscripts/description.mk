@@ -5,7 +5,7 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
 include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 
-tslegacy-bootscripts_SRC_VERSION := 1.0.0
+tslegacy-bootscripts_SRC_VERSION := 1.0.1
 tslegacy-bootscripts_SRC_DIR := tslegacy-bootscripts-$(tslegacy-bootscripts_SRC_VERSION)
 tslegacy-bootscripts_SRC_ARCHIVE := $(tslegacy-bootscripts_SRC_DIR).tar.xz
 tslegacy-bootscripts_SRC_CDEPS := \

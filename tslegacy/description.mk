@@ -11,6 +11,7 @@ tslegacy_SRC_CDEPS := \
 	bash_collected \
 	cifs-utils_collected \
 	coreutils_collected \
+	e2fsprogs_collected \
 	eudev_collected \
 	glibc_collected \
 	grub_collected \
