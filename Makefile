@@ -91,6 +91,7 @@ SOURCE_PACKAGES := \
 	licenses \
 	linux \
 	linux-headers \
+	m4 \
 	mpc \
 	mpfr \
 	ncurses \
