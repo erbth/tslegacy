@@ -67,6 +67,7 @@ SOURCE_PACKAGES := \
 	cifs-utils \
 	coreutils \
 	dejagnu \
+	diffutils \
 	e2fsprogs \
 	elfutils \
 	eudev \
