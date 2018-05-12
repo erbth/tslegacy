@@ -125,6 +125,7 @@ SOURCE_PACKAGES := \
 	tzdata \
 	util-linux \
 	vim \
+	xz \
 	zlib
 
 include $(SOURCE_PACKAGES:%=%/description.mk)

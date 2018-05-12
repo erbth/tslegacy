@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of XZ
+version PKG_UPSTREAM_VERSION, including its liblzma.
+
+Most parts of XZ are in the public domain however some parts are distributed
+under the terms of the GNU General Public License version 2 or newer. Copies
+can be found in /usr/share/doc/licenses.
+
+ERBTH_FOOTER

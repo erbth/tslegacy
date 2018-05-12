@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the non ABI versioned runtime files of XZ version PKG_UPSTREAM_VERSION.
+
+Most parts of XZ are in the public domain however some parts are distributed
+under the terms of the GNU General Public License version 2 or newer. Copies
+can be found in /usr/share/doc/licenses.
+
+ERBTH_FOOTER

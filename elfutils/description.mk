@@ -18,6 +18,8 @@ elfutils_SRC_CDEPS := \
 	zlib-dev_installed \
 	bzip2-dev_installed
 
+# TODO: recompile with liblzma, change Makefile first ...
+
 export libasm_ABI := 1
 export libdw_ABI := 1
 export libelf_ABI := 1
