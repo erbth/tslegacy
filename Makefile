@@ -115,6 +115,7 @@ SOURCE_PACKAGES := \
 	talloc \
 	tar \
 	tcl-core \
+	texinfo \
 	tpm \
 	tslegacy \
 	tslegacy-bootscripts \

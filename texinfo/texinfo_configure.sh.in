@@ -1,0 +1,11 @@
+# This was inspired by the book `Linux From Scratch', `Version 8.2' by
+# Gerard Beekmans and Managing Editor Bruce Dubbs, page 217. At the time I
+# initially wrote this file, the book was available from
+# www.linuxfromscratch.org/lfs.
+
+cd /usr/share/info
+rm -f dir
+for FILE in *
+do
+    install-info $FILE dir 2>/dev/null
+done
