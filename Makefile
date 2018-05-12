@@ -78,6 +78,7 @@ SOURCE_PACKAGES := \
 	gawk \
 	gcc \
 	gdbm \
+	gettext \
 	glibc \
 	gmp \
 	grep \
