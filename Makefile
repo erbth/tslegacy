@@ -75,6 +75,7 @@ SOURCE_PACKAGES := \
 	expect \
 	file \
 	findutils \
+	gawk \
 	gcc \
 	gdbm \
 	glibc \

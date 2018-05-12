@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package contains GNU Awk version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL30([GNU Awk])
+
+ERBTH_FOOTER
