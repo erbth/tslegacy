@@ -69,6 +69,7 @@ SOURCE_PACKAGES := \
 	elfutils \
 	eudev \
 	expat \
+	expect \
 	file \
 	findutils \
 	gcc \

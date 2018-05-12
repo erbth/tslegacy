@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains expect by Don Libes at NIST, version PKG_UPSTREAM_VERSION.
+
+Don Libes dedicated expect to the public domain, however a written attestation
+of that can be found in /usr/share/doc/PKG_NAME/license.terms. This file is
+included in the upstream source package.
+
+ERBTH_FOOTER
