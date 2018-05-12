@@ -102,6 +102,8 @@ SOURCE_PACKAGES := \
 	ncurses \
 	ntfs-3g \
 	openssl \
+	patch \
+	perl \
 	pkg-config \
 	procps-ng \
 	python \
