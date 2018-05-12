@@ -104,6 +104,7 @@ SOURCE_PACKAGES := \
 	sysvinit \
 	talloc \
 	tar \
+	tcl-core \
 	tpm \
 	tslegacy \
 	tslegacy-bootscripts \

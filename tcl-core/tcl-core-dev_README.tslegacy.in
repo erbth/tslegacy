@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package contains tcl-core version PKG_UPSTREAM_VERSION and its private header files.
+
+Licensing information can be found in /usr/share/doc/PKG_NAME/license.terms
+
+ERBTH_FOOTER
