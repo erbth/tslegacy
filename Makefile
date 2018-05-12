@@ -65,6 +65,7 @@ SOURCE_PACKAGES := \
 	bzip2 \
 	cifs-utils \
 	coreutils \
+	dejagnu \
 	e2fsprogs \
 	elfutils \
 	eudev \

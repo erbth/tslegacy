@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package contains DejaGNU version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL30([DejaGNU])
+
+ERBTH_FOOTER
