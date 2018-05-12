@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains documentation and the development files of GNU Make
+version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL30([GNU Make])
+
+ERBTH_FOOTER
