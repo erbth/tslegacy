@@ -1,0 +1,16 @@
+BASIC_PKG_INFO
+
+This package contains the versioned runtime files and libraries of Perl
+version PKG_UPSTREAM_VERSION.
+
+The author of Perl decided that it may be distributed under the terms of the
+GNU General Public License version 1 or any later version, or under the terms
+of the Artistic license.
+
+I choose to distribute it subject to the GPL version 2, however for completeness
+I included the Artistic license, which is distributed with the source package,
+and the original README file, which states this matter, in
+/usr/share/doc/PKG_NAME.
+A copy of the GPL version 2 can be found in /usr/share/doc/licenses.
+
+ERBTH_FOOTER

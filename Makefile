@@ -212,6 +212,19 @@ $(STATE_DIR)/bash_symlinks_removed: \
 	fi
 	> $@
 
+# Special rule for installing perl since a symlink needs to be removed first
+$(STATE_DIR)/perl_installed: $(STATE_DIR)/perl_symlinks_removed
+$(STATE_DIR)/perl-dev_installed: $(STATE_DIR)/perl_symlinks_removed
+
+$(STATE_DIR)/perl_symlinks_removed: \
+	$(STATE_DIR)/perl_collected \
+	$(STATE_DIR)/tool_links_created
+	if ! test -f $(STATE_DIR)/perl_installed && \
+	! test -f $(STATE_DIR)/perl-dev_installed; then \
+		rm $(TPM_TARGET)/usr/bin/perl; \
+	fi
+	> $@
+
 
 # Other rules
 $(STATE_DIR)/toolchain_adjusted: adjust_toolchain.sh $(STATE_DIR)/glibc-dev_installed
