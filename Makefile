@@ -62,6 +62,7 @@ SOURCE_PACKAGES := \
 	basic_fhs \
 	bc \
 	binutils \
+	bison \
 	bzip2 \
 	cifs-utils \
 	coreutils \
