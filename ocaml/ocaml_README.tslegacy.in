@@ -1,0 +1,11 @@
+BASIC_PKG_INFO
+
+This package contains the interactive OCaml interpreter belonging to OCaml
+version PKG_UPSTREAM_VERSION.
+
+OCaml is distributed under the terms of the GNU Lesser General Public License
+version 2.1 with an additional exception that allows to link programs with the
+OCaml core system. A copy of the upstream source package's LICENSE file can be
+found in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER

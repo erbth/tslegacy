@@ -101,6 +101,7 @@ SOURCE_PACKAGES := \
 	mpfr \
 	ncurses \
 	ntfs-3g \
+	ocaml \
 	openssl \
 	patch \
 	perl \
