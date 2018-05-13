@@ -34,7 +34,7 @@ install_license ${PKG_DIRS[0]} ocaml
 # ocaml-runtime
 install -dm755 ${PKG_DIRS[1]}/usr/{bin,lib/ocaml}
 mv ${INSTALL_DIR}/target/usr/bin/ocamlrun ${PKG_DIRS[1]}/usr/bin/
-mv ${INSTALL_DIR}/target/usr/lib/ocaml/{*.so,*.cmx} ${PKG_DIRS[1]}/usr/lib/ocaml/
+mv ${INSTALL_DIR}/target/usr/lib/ocaml/{*.so,*.cma} ${PKG_DIRS[1]}/usr/lib/ocaml/
 install_license ${PKG_DIRS[1]} ocaml-runtime
 
 # ocaml-dev

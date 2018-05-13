@@ -2,7 +2,7 @@ BASIC_PKG_INFO
 
 This package contains the runtime of the OCaml bytecode compiler ('ocamlrun')
 and the non ABI versioned libraries ocaml/libasmrun_shared.so and
-ocaml/libcamlrun_shared.so, and all cmx files from /usr/lib/ocaml belonging to
+ocaml/libcamlrun_shared.so, and all cma files from /usr/lib/ocaml belonging to
 OCaml version PKG_UPSTREAM_VERSION.
 
 OCaml is distributed under the terms of the GNU Lesser General Public License
