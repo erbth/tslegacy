@@ -1,0 +1,6 @@
+BASIC_PKG_INFO
+
+This is a meta package, which depends on all packages that are part of the basic
+toolchain that is required for building the entire set of packages.
+
+ERBTH_FOOTER

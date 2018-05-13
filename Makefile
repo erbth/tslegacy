@@ -119,6 +119,7 @@ SOURCE_PACKAGES := \
 	tar \
 	tcl-core \
 	texinfo \
+	toolchain \
 	tpm \
 	tslegacy \
 	tslegacy-bootscripts \
