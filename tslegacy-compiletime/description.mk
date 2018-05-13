@@ -7,9 +7,9 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 # `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
 # Bruce Dubbs. At the time I initially wrote this file, the book was available
 # from www.linuxfromscratch.org/lfs.
-tslegacy-compiletime_SRC_VERSION := 0.0.0
-tslegacy-compiletime_SRC_DIR := dummy_src_pkg
-tslegacy-compiletime_SRC_ARCHIVE := dummy_src_pkg.tar.gz
+tslegacy-compiletime_SRC_VERSION := 1.0.0
+tslegacy-compiletime_SRC_DIR := tslegacy-compiletime-$(tslegacy-compiletime_SRC_VERSION)
+tslegacy-compiletime_SRC_ARCHIVE := $(tslegacy-compiletime_SRC_DIR).tar.xz
 tslegacy-compiletime_SRC_CDEPS := \
 	bash_collected \
 	cifs-utils_collected \

@@ -2,4 +2,14 @@
 
 set -e
 
-exit 0
+# Clean the packaging target
+declare -a PKG_DIRS
+for DIR in ${PACKAGING_LOCATION}/tslegacy-compiletime/${DESTDIR}
+do
+    PKG_DIRS+=($DIR)
+    rm -rf ${DIR}/*
+done
+
+# Install and adapt the package
+cd ${BUILD_DIR}/${SRC_DIR}
+make ROOT=${PKG_DIRS[0]} install

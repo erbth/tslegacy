@@ -1,6 +1,8 @@
 BASIC_PKG_INFO
 
-This is a meta package, which depends on all packages that are needed in a
-TSClient LEGACY compiletime system.
+This package contains tslegacy-compiletime version PKG_UPSTREAM_VERSION, which
+is a collection of config files, scripts, programs and other utilities useful
+in a TSClient LEGACY compiletime system. Moreover it depends on all packages
+that are needed in a TSClient LEGACY compiletime system.
 
 ERBTH_FOOTER
