@@ -74,6 +74,7 @@ SOURCE_PACKAGES := \
 	expat \
 	expect \
 	file \
+	findlib \
 	findutils \
 	gawk \
 	gcc \
