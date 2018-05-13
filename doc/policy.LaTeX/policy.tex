@@ -1,6 +1,8 @@
 % !TeX spellcheck = en_US
 \documentclass[a4paper]{article}
 
+\usepackage{tabularx}
+
 \title{TSClient LEGACY Packaging Policy}
 \author{Thomas Erbesdobler <t.erbesdobler@gmx.de>}
 
@@ -21,4 +23,12 @@
 	\subsection{elfutils}
 	
 	I decided to build elfutils without support for lzma. The two compression packages, zlib and bzip2, may suffice. However I am not sure about this yet, it is just trying.
+	
+	\section{Various packages}
+	
+	\begin{tabularx}{\textwidth}{l|X}
+		Name & Description \\
+		\hline
+		tslegacy-compiletime & A bootable compiletime system. \\
+	\end{tabularx}
 \end{document}

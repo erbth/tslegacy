@@ -123,6 +123,7 @@ SOURCE_PACKAGES := \
 	tpm \
 	tslegacy \
 	tslegacy-bootscripts \
+	tslegacy-compiletime \
 	tslegacy-installer \
 	tslegacy-sysconfig \
 	tslegacy-utils \
