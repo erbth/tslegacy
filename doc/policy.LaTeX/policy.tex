@@ -4,7 +4,7 @@
 \usepackage{tabularx}
 
 \title{TSClient LEGACY Packaging Policy}
-\author{Thomas Erbesdobler <t.erbesdobler@gmx.de>}
+\author{Thomas Erbesdobler \textless t.erbesdobler@gmx.de\textgreater}
 
 \begin{document}
 	\maketitle
@@ -30,5 +30,10 @@
 		Name & Description \\
 		\hline
 		tslegacy-compiletime & A bootable compiletime system. \\
+		tslegacy-config & Configuration of less system-near services \\
+		tslegacy-sysconfig & Basic system configuration \\
 	\end{tabularx}
+
+	\subsection{tslegacy-config vs. tslegacy-sysconfig}
+	'tslegacy-sysconfig' contains system near configuration files like /etc/group or /etc/inittab. Therefore, many packages like perl or util-linux depend on it which makes changes expensive, since they trigger rebuild of the dependent packages according to the current package build model. 'tslegacy-config' tries to mitigate this by included less system near config files like /etc/profile, which are not essential for a system to provide basic operating system level services, but required for the whole system to work or for users' convenience. Hence, only the 'toplevel meta packages' like tslegacy shall depend on these.
 \end{document}

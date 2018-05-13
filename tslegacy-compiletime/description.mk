@@ -30,6 +30,7 @@ tslegacy-compiletime_SRC_CDEPS := \
 	toolchain_collected \
 	tpm_collected \
 	tslegacy-bootscripts_collected \
+	tslegacy-config_collected \
 	tslegacy-sysconfig_collected \
 	tslegacy-utils_collected \
 	tzdata_collected \

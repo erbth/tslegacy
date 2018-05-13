@@ -124,6 +124,7 @@ SOURCE_PACKAGES := \
 	tslegacy \
 	tslegacy-bootscripts \
 	tslegacy-compiletime \
+	tslegacy-config \
 	tslegacy-installer \
 	tslegacy-sysconfig \
 	tslegacy-utils \
@@ -355,6 +356,13 @@ clean_compiletime_system_confirmation:
 	@ echo
 	@ echo Shall we proceed ? [y/N]
 	@ read -n1 -s && test "$$REPLY" == "y"
+
+
+# Useful targets
+.PHONY: now
+now:
+	@echo $$(date --utc +%Y.%j).$$(( $$(date --utc +%s) - \
+	$$(date --utc -d 'today 00:00:00' +%s) ))
 
 
 # Distributing the packaging files

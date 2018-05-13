@@ -178,8 +178,8 @@ $(README_TSLEGACYS): $$(README_IN) $(README_TSLEGACY_M4) \
 
 $(VERSIONS): override PKG_DIR = $(call remove_trailing_slash,$(dir $@))
 $(VERSIONS): FORCE | $$(PKG_DIR)
-	echo -n $$(date +%Y.%j).$$(( $$(date +%s) - \
-	$$(date -d 'today 00:00:00' +%s) )) > $@
+	echo -n $$(date --utc +%Y.%j).$$(( $$(date --utc +%s) - \
+	$$(date --utc -d 'today 00:00:00' +%s) )) > $@
 
 
 $(INSTALL_DIR)/installed_split: \

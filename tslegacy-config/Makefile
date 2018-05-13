@@ -1,4 +1,4 @@
-SRC_NAME := tslegacy-sysconfig
+SRC_NAME := tslegacy-config
 
 include description.mk
 include ../common/basic.mk

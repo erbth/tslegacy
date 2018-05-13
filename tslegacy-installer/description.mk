@@ -34,6 +34,7 @@ tslegacy-installer_SRC_CDEPS := \
 	tar_collected \
 	tpm_collected \
 	tslegacy-bootscripts_collected \
+	tslegacy-config_collected \
 	tslegacy-sysconfig_collected \
 	tslegacy-utils_collected \
 	tzdata_collected \
