@@ -103,6 +103,7 @@ SOURCE_PACKAGES := \
 	ncurses \
 	ntfs-3g \
 	ocaml \
+	ocamlbuild \
 	openssl \
 	patch \
 	perl \

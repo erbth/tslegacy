@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the documentation of OCamlbuild version PKG_UPSTREAM_VERSION.
+
+OCamlbuild is subject to the GNU General Public License version 2 with an
+exception that generated code may contain parts of OCamlbuild and does not have
+to be licensed under the GPL version 2. A copy of the source package's LICENSE
+file, which explains this matter, can be found in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER
