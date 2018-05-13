@@ -10,8 +10,10 @@ tpm_SRC_DIR := tpm-$(tpm_SRC_VERSION)
 tpm_SRC_ARCHIVE := $(tpm_SRC_DIR).tar.xz
 tpm_SRC_CDEPS := \
 	licenses_installed \
-	gcc_installed \
-	glibc-dev_installed
+	glibc-dev_installed \
+	ocaml-dev_installed \
+	ocamlbuild-dev_installed \
+	xml-light_installed
 
 # TODO: Remove dependency on bash and add it to the packages which depend on it
 # for executing their packaging scripts. Currently the TSL package tpm ensures

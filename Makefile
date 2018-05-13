@@ -128,6 +128,7 @@ SOURCE_PACKAGES := \
 	tzdata \
 	util-linux \
 	vim \
+	xml-light \
 	xz \
 	zlib
 

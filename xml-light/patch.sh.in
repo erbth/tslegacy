@@ -1,0 +1,2 @@
+sed 's/\$(OCAMLFIND) install/& -destdir \$(DESTDIR)\/"$(shell ocamlfind -printconf destdir)"/
+    /INSTALLDIR=/a DESTDIR=/' -i Makefile
