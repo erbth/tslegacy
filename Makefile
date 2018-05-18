@@ -135,6 +135,9 @@ SOURCE_PACKAGES := \
 	xz \
 	zlib
 
+# Add the source packages of automatically generated packages
+include generators/xorg/xorg-protocols.mk
+
 include $(SOURCE_PACKAGES:%=%/description.mk)
 
 ALL_TSL_PACKAGES := $(foreach SRC,$(SOURCE_PACKAGES),$($(SRC)_TSL_PKGS))
