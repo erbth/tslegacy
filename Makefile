@@ -391,7 +391,7 @@ dist:
 		tslegacy_packaging-$(TSLPACK_VERSION)
 	install -dm755 tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	cp -a \
-		utils/{Makefile,remove_old_package_versions.ml,.gitignore,show_dynamic_dependencies.sh,xorg,bash_utils.sh} \
+		utils/{Makefile,remove_old_package_versions.ml,.gitignore,compute_rdeps.sh,update_pkgdb.sh,xorg,bash_utils.sh} \
 		tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz tslegacy_packaging-$(TSLPACK_VERSION)
 	rm -rf tslegacy_packaging-$(TSLPACK_VERSION)
