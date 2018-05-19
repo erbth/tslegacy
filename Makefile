@@ -136,7 +136,7 @@ SOURCE_PACKAGES := \
 	zlib
 
 # Add the source packages of automatically generated packages
-include generators/xorg/xorg-protocols.mk
+include generators/xorg/protocols/xorg-protocols.mk
 
 include $(SOURCE_PACKAGES:%=%/description.mk)
 
@@ -386,11 +386,12 @@ dist:
 		show_todos.sh \
 		common \
 		skel \
+		generators \
 		$(SOURCE_PACKAGES) \
 		tslegacy_packaging-$(TSLPACK_VERSION)
 	install -dm755 tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	cp -a \
-		utils/{Makefile,remove_old_package_versions.ml,.gitignore,show_dynamic_dependencies.sh} \
+		utils/{Makefile,remove_old_package_versions.ml,.gitignore,show_dynamic_dependencies.sh,xorg,bash_utils.sh} \
 		tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz tslegacy_packaging-$(TSLPACK_VERSION)
 	rm -rf tslegacy_packaging-$(TSLPACK_VERSION)

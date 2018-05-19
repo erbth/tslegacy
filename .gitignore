@@ -21,6 +21,7 @@ renderproto
 resourceproto
 scrnsaverproto
 videoproto
+x-proto-headers-dev
 xcmiscproto
 xextproto
 xf86bigfontproto
