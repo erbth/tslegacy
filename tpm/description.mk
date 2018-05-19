@@ -5,7 +5,7 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
 include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 
-tpm_SRC_VERSION := 1.0.5
+tpm_SRC_VERSION := 1.0.6
 tpm_SRC_DIR := tpm-$(tpm_SRC_VERSION)
 tpm_SRC_ARCHIVE := $(tpm_SRC_DIR).tar.xz
 tpm_SRC_CDEPS := \
