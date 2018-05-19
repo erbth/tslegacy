@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of util-macros version PKG_UPSTREAM_VERSION.
+
+Licensins information, if provided by the source package in an easily readable
+way, can be found in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER

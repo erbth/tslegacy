@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{util-macros,util-macros-dev}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -36,7 +36,7 @@ make DESTDIR=${INSTALL_DIR}/target install-strip
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# skel-dev
+# util-macros-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,8 +66,8 @@ do
     fi
 done
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+install_readme_files "${PKG_DIRS[1]}" util-macros-dev
 
-# skel
+# util-macros
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" util-macros
