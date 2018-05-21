@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{icu,icu-dev,icu-libs}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -30,13 +30,13 @@ done
 rm -rf ${INSTALL_DIR}/target/*
 install -dm755 ${INSTALL_DIR}/target
 
-cd ${BUILD_DIR}/${SRC_DIR}
-make DESTDIR=${INSTALL_DIR}/target install-strip
+cd ${BUILD_DIR}/${SRC_DIR}/source
+make DESTDIR=${INSTALL_DIR}/target install
 
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# skel-dev
+# icu-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,13 +66,40 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/icu" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/icu"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+install_readme_files "${PKG_DIRS[1]}" icu-dev
 
-# skel
+# icu-lib
+cd ${INSTALL_DIR}/target
+
+while IFS='' read -r FILE
+do
+    DIR="$(dirname $FILE)"
+
+    if ! [ -d "${PKG_DIRS[2]}/$DIR" ]
+    then
+        install -dm755 "${PKG_DIRS[2]}/$DIR"
+    fi
+
+    mv "$FILE" "${PKG_DIRS[2]}/$DIR/"
+done < <(find \( -iname \*.so -o -iregex .\*\\.so\\.[0-9.]\* \) -a \( -type f -o -type l \))
+
+if [ -d usr/share/locale ]
+then
+    if ! [ -d "${PKG_DIRS[2]}/usr/share" ]
+    then
+        install -dm755 "${PKG_DIRS[2]}/usr/share"
+    fi
+
+    mv usr/share/locale "${PKG_DIRS[2]}/usr/share/"
+fi
+
+install_readme_files "${PKG_DIRS[2]}" icu-libs
+
+# icu
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" icu

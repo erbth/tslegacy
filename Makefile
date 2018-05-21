@@ -93,6 +93,7 @@ SOURCE_PACKAGES := \
 	grub \
 	gzip \
 	iana-etc \
+	icu \
 	inetutils \
 	intltool \
 	iproute2 \
