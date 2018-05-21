@@ -1,0 +1,13 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of
+GNU Autoconf version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL20([GNU Autoconf])
+
+Additionally, LICENSE_GPL30([GNU Autoconf])
+
+Autoconf comes with an exception to the code of autoconf that is licensed under
+the GPL version 3.0. A copy is included in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER

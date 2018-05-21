@@ -60,6 +60,7 @@ export PKGDB := $(STATE_DIR)/pkgdb.xml
 SOURCE_PACKAGES := \
 	alsa-lib \
 	alsa-utils \
+	autoconf \
 	bash \
 	basic_fhs \
 	bc \
