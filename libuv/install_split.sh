@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{libuv-${libuv_ABI},libuv-dev}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -36,7 +36,7 @@ make DESTDIR=${INSTALL_DIR}/target install-strip
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# skel-dev
+# libuv-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,13 +66,13 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/libuv" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/libuv"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+install_readme_files "${PKG_DIRS[1]}" libuv-dev
 
-# skel
+# libuv-<ABI>
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" libuv-${libuv_ABI}

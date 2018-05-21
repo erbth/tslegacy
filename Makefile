@@ -100,6 +100,7 @@ SOURCE_PACKAGES := \
 	less \
 	libffi \
 	libtool \
+	libuv \
 	libXau \
 	libxcb \
 	libXdmcp \
