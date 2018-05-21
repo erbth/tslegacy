@@ -1,0 +1,11 @@
+
+# This file was created by Thomas Erbesdobler <t.erbesdobler@gmx.de>
+
+# I took this information from the book
+# `Linux From Scratch', `Version 8.2' (LFS) by Gerard Beekmans and Managing
+# Editor Bruce Dubbs, p. 155. At the time I initially wrote this file, the book
+# was available from www.linuxfromscratch.org/lfs.
+
+# "First fix a warning that is caused by perl-5.22 and later:"
+# (LFS, p. 155)
+sed -i 's:\\\${:\\\$\\{:' intltool-update.in

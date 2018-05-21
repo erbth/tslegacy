@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of XML::Parser version PKG_UPSTREAM_VERSION.
+
+I could not find prominent licensing information however I included the source
+package's README file in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER

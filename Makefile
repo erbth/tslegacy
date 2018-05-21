@@ -90,6 +90,7 @@ SOURCE_PACKAGES := \
 	gzip \
 	iana-etc \
 	inetutils \
+	intltool \
 	iproute2 \
 	isc-dhcp \
 	kbd \
@@ -142,6 +143,7 @@ SOURCE_PACKAGES := \
 	vim \
 	xcb-proto \
 	xml-light \
+	xml-parser \
 	xz \
 	zlib
 
