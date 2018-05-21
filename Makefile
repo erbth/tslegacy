@@ -16,7 +16,7 @@ TPM ?= tpm
 include makefile_utilities.mk
 
 # The version of the packaging scripts
-TSLPACK_VERSION := 1.0.3
+TSLPACK_VERSION := 1.0.4
 
 # Basic automatically derived information
 export PACKAGING_RESOURCE_DIR := $(call remove_trailing_slash,$(PWD)/$(dir $(THIS_MAKEFILE)))
