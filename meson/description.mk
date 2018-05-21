@@ -9,8 +9,8 @@ meson_SRC_ARCHIVE := $(meson_SRC_DIR).tar.gz
 meson_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
-	python3-dev_installeds \
-	ninja-installed
+	python3-dev_installed \
+	ninja_installed
 
 meson_TSL_TYPE := sw
 meson_TSL_RDEPS = \

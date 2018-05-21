@@ -1,7 +1,7 @@
 BASIC_PKG_INFO
 
-This package contains the development files and the documentation of the
-Meson build system version PKG_UPSTREAM_VERSION.
+This package contains the documentation of the Meson build system
+version PKG_UPSTREAM_VERSION.
 
 Meson is distributed under the terms of the Apache License version 2.0, a copy
 of which can be found in /usr/share/doc/PKG_NAME/COPYING.

@@ -35,14 +35,14 @@ install -dm755 ${INSTALL_DIR}/target
 # Bruce Dubbs. At the time I initially wrote this file, the book was available
 # from www.linuxfromscratch.org/lfs.
 cd ${BUILD_DIR}/${SRC_DIR}
-python3 setup.by install --root "${INSTALL_DIR}/target"
+python3 setup.py install --root "${INSTALL_DIR}/target"
 
 # meson-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
 do
-    DIR="$(dirname \"$FILE\")"
+    DIR="$(dirname $FILE)"
 
     if ! [ -d "${PKG_DIRS[1]}/$DIR" ]
     then
@@ -52,11 +52,11 @@ do
     mv "$FILE" "${PKG_DIRS[1]}/$DIR/"
 done < <(find \( -iname \*.a -o -iname \*.la \) -a -type f)
 
-for DIR in {usr/}include usr/share/{man,doc,info} usr/{share,lib}/pkgconfig
+for DIR in {,usr/}include usr/share/{man,doc,info} usr/{share,lib}/pkgconfig
 do
     if [ -d "$DIR" ]
     then
-        PARENT="$(dirname \"$DIR\")"
+        PARENT="$(dirname $DIR)"
 
         if ! [ -d "${PKG_DIRS[1]}/$PARENT" ]
         then
@@ -66,6 +66,11 @@ do
         mv "$DIR" "${PKG_DIRS[1]}/$PARENT/"
     fi
 done
+
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/meson" ]
+then
+    mv "${PKG_DIRS[1]}/usr/share/doc/meson"{,-dev}
+fi
 
 install_readme_files "${PKG_DIRS[1]}" meson-dev
 

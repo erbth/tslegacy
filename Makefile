@@ -110,6 +110,7 @@ SOURCE_PACKAGES := \
 	linux-headers \
 	m4 \
 	make \
+	meson \
 	mpc \
 	mpfr \
 	ncurses \
