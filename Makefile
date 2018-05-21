@@ -139,7 +139,7 @@ SOURCE_PACKAGES := \
 	zlib
 
 # Add the source packages of automatically generated packages
-# include generators/xorg/protocols/xorg-protocols.mk
+include generators/xorg/protocols/xorg-protocols.mk
 # include generators/xorg/xorg_libraries/xorg_libraries.mk
 
 include $(SOURCE_PACKAGES:%=%/description.mk)

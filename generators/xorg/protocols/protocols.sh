@@ -211,6 +211,8 @@ function generate_build_system
             -e "s/skel/$PKG/g" \
             "${GENERATOR_DIR}/install_split.sh.in" > "$PKG_DIR/install_split.sh"
 
+        chmod +x "$PKG_DIR/install_split.sh"
+
         cp "${GENERATOR_DIR}"/skel-dev_configure.sh.in "$PKG_DIR"/"$PKG"-dev_configure.sh.in
 
         sed -e "s/skel_version/$VERSION/g" \
