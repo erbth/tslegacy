@@ -55,6 +55,8 @@ PACKAGING_LOCATION := $(PACKAGING_BASE)/packaging_location
 STATE_DIR := $(PACKAGING_BASE)/state
 export COLLECTING_DIR := $(COLLECTING_REPO)/$(PKG_ARCH)
 
+export PKGDB := $(STATE_DIR)/pkgdb.xml
+
 SOURCE_PACKAGES := \
 	alsa-lib \
 	alsa-utils \
@@ -136,7 +138,8 @@ SOURCE_PACKAGES := \
 	zlib
 
 # Add the source packages of automatically generated packages
-include generators/xorg/protocols/xorg-protocols.mk
+# include generators/xorg/protocols/xorg-protocols.mk
+# include generators/xorg/xorg_libraries/xorg_libraries.mk
 
 include $(SOURCE_PACKAGES:%=%/description.mk)
 
@@ -150,9 +153,14 @@ ALL_COLLECTED := $(ALL_TSL_PACKAGES:%=$(STATE_DIR)/%_collected)
 all_packages_collected: $(ALL_COLLECTED)
 
 # Building the packages
+# Update the package database if tpmdb is available
 $(ALL_COLLECTED): override PKG = $(patsubst $(STATE_DIR)/%_collected,%,$@)
 $(ALL_COLLECTED): override SRC = $($(PKG)_TSL_SRC_PKG)
 $(ALL_COLLECTED): $(STATE_DIR)/$$(SRC)_built
+	if type tpmdb > /dev/zero 2>&1; \
+	then \
+		tpmdb --db $(PKGDB) --create-from-directory $(COLLECTING_DIR); \
+	fi
 	> $@
 
 $(SOURCE_PACKAGES:%=$(STATE_DIR)/%_built): override SRC = $(patsubst %_built,%,$(notdir $@))

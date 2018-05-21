@@ -1,0 +1,12 @@
+BASIC_PKG_INFO
+
+This package contains the shared libraries of PCRE version PKG_UPSTREAM_VERSION.
+ABI versioning is not respected.
+
+LICENSE_GPL20([GNU GMP])
+
+Additionally, LICENSE_GPL30([GNU GMP])
+
+Additionally, LICENSE_LGPL30([GNU GMP])
+
+ERBTH_FOOTER
