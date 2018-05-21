@@ -117,6 +117,7 @@ $(PACKEDS): \
 	$(TPM) --remove-dependencies && \
 	( for RDEP in $(foreach RDEP,$($(PKG)_TSL_RDEPS),"$(RDEP)"); do \
 	$(TPM) --add-dependency "$$RDEP" || exit; done ) && \
+	$(PACKAGING_RESOURCE_DIR)/common/auto_add_dependencies.sh $(PKG) && \
 	rm -f *.tpm.tar && \
 	$(TPM) --add-files && \
 	$(TPM) --pack

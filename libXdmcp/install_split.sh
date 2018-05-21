@@ -41,7 +41,7 @@ cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
 do
-    DIR="$(dirname \"$FILE\")"
+    DIR="$(dirname $FILE)"
 
     if ! [ -d "${PKG_DIRS[1]}/$DIR" ]
     then
@@ -51,11 +51,11 @@ do
     mv "$FILE" "${PKG_DIRS[1]}/$DIR/"
 done < <(find \( -iname \*.a -o -iname \*.la \) -a -type f)
 
-for DIR in {usr/}include usr/share/{man,doc,info}
+for DIR in {,usr/}include usr/share/{man,doc,info}  usr/{share,lib}/pkgconfig
 do
     if [ -d "$DIR" ]
     then
-        PARENT="$(dirname \"$DIR\")"
+        PARENT="$(dirname $DIR)"
 
         if ! [ -d "${PKG_DIRS[1]}/$PARENT" ]
         then

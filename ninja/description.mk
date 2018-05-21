@@ -1,35 +1,30 @@
-ifndef skel_description_included
-skel_description_included := 1
+ifndef ninja_description_included
+ninja_description_included := 1
 
 include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
 include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 include $(PACKAGING_RESOURCE_DIR)/gcc/description.mk
 
-skel_SRC_VERSION := 0.0.0
-skel_SRC_DIR := skel-$(skel_SRC_VERSION)
-skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.xz
-skel_SRC_CDEPS := \
-	licenses_installed \
+ninja_SRC_VERSION := 0.0.0
+ninja_SRC_DIR := ninja-$(ninja_SRC_VERSION)
+ninja_SRC_ARCHIVE := $(ninja_SRC_DIR).tar.xz
+ninja_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
 	python3_installed
 
-export skel_ABI := 10
-
-skel-$(skel_ABI)_TSL_TYPE := sw
-skel-$(skel_ABI)_TSL_RDEPS = \
+ninja_TSL_TYPE := sw
+ninja_TSL_RDEPS = \
 	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
-	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
-	$(call bigger_equal_dep,licenses)
-skel-$(skel_ABI)_TSL_SRC_PKG := skel
+	$(call bigger_equal_dep,libgcc-$(libgcc_ABI))
+ninja_TSL_SRC_PKG := ninja
 
-skel-dev_TSL_TYPE := sw
-skel-dev_TSL_RDEPS = \
-	$(call equal_dep,skel-$(skel_ABI)) \
-	$(call bigger_equal_dep,licenses)
-skel-dev_TSL_SRC_PKG := skel
+ninja-dev_TSL_TYPE := sw
+ninja-dev_TSL_RDEPS = \
+	$(call equal_dep,ninja)
+ninja-dev_TSL_SRC_PKG := ninja
 
-skel_TSL_PKGS := skel-dev skel-$(skel_ABI)
+ninja_TSL_PKGS := ninja-dev ninja
 
 endif

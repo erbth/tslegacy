@@ -55,7 +55,7 @@ for DIR in {usr/}include usr/share/{man,doc,info} usr/{share,lib}/pkgconfig
 do
     if [ -d "$DIR" ]
     then
-        PARENT="$(dirname \"$DIR\")"
+        PARENT="$(dirname $DIR)"
 
         if ! [ -d "${PKG_DIRS[1]}/$PARENT" ]
         then

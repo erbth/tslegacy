@@ -95,6 +95,8 @@ SOURCE_PACKAGES := \
 	kmod \
 	less \
 	libffi \
+	libXau \
+	libXdmcp \
 	licenses \
 	linux \
 	linux-headers \

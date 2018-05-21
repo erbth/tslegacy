@@ -34,8 +34,7 @@ find -exec ldd {} ';' 2> /dev/zero | grep -e '.*\.so.*' | sed 's/^[ \t]*//' | \
         --db "$PACKAGING_BASE/state/pkgdb.xml" \
         --find-files \
         --arch "$PKG_ARCH" \
-        --print-only-names \
-    | sort | sed 's/^/\$(call bigger_equal_dep,/' | sed 's/$/)/' | \
-    sed '$!s/$/ \\/'
+        --only-in-latest-version \
+    | sort | sed 's/=/>=/' | sed 's/@.*$//'
 
 exit 0

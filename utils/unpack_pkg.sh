@@ -2,7 +2,7 @@
 
 set -e
 
-DIR="$(basename \"$1\")"
+DIR="$(basename $1)"
 DIR="${DIR%-*}"
 
 mkdir "$DIR"
