@@ -66,6 +66,11 @@ do
     fi
 done
 
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
+then
+    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
+fi
+
 install_readme_files "${PKG_DIRS[1]}" skel-dev
 
 # skel

@@ -111,6 +111,7 @@ SOURCE_PACKAGES := \
 	ocamlbuild \
 	openssl \
 	patch \
+	pcre \
 	perl \
 	pkg-config \
 	procps-ng \

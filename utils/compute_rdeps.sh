@@ -28,8 +28,13 @@ find -exec objdump -p {} ';' 2> /dev/zero | grep NEEDED | awk '{print $2}' &&
 find -exec ldd {} ';' 2> /dev/zero | grep -e '.*\.so.*' | sed 's/^[ \t]*//' | \
     sed -e 's/[ ]*=>.*$//' -e 's/[ ]*(.*$//'
 
+# It is important to escape characters that are treated specially by the regular
+# expression compiler of OCaml's Str module.
 } | sort | uniq | sed -e '/linux-vdso/ d' | tee >(cat >&2) | \
+    sed -e's/[]$^\.*+?[]/\\&/g' | \
     sed 's/^/.*/' | \
+    sed 's/$/$/' | \
+    sed -e's/[]$^\.*+?[]/\\&/g' | \
     xargs tpmdb \
         --db "$PACKAGING_BASE/state/pkgdb.xml" \
         --find-files \

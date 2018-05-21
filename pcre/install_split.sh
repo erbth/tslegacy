@@ -41,7 +41,7 @@ cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
 do
-    DIR="$(dirname \"$FILE\")"
+    DIR="$(dirname $FILE)"
 
     if ! [ -d "${PKG_DIRS[1]}/$DIR" ]
     then
@@ -51,11 +51,11 @@ do
     mv "$FILE" "${PKG_DIRS[1]}/$DIR/"
 done < <(find \( -iname \*.a -o -iname \*.la \) -a -type f)
 
-for DIR in {usr/}include usr/share/{man,doc,info}
+for DIR in {,usr/}include usr/share/{man,doc,info} usr/{lib,share}/pkgconfig
 do
     if [ -d "$DIR" ]
     then
-        PARENT="$(dirname \"$DIR\")"
+        PARENT="$(dirname $DIR)"
 
         if ! [ -d "${PKG_DIRS[1]}/$PARENT" ]
         then
@@ -66,6 +66,11 @@ do
     fi
 done
 
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/pcre" ]
+then
+    mv "${PKG_DIRS[1]}/usr/share/doc/pcre"{,-dev}
+fi
+
 install_readme_files "${PKG_DIRS[1]}" pcre-dev
 
 # pcre-libs
@@ -73,7 +78,7 @@ cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
 do
-    DIR="$(dirname \"$FILE\")"
+    DIR="$(dirname $FILE)"
 
     if ! [ -d "${PKG_DIRS[2]}/$DIR" ]
     then
@@ -81,9 +86,9 @@ do
     fi
 
     mv "$FILE" "${PKG_DIRS[2]}/$DIR/"
-done < <(find \( -iname \*.so -a -type f)
+done < <(find \( -iname \*.so -o -iname \*.so.\* \) -a \( -type f -o -type l \))
 
-install_readme_files "${PKG_DIRS[1]}" pcre-libs
+install_readme_files "${PKG_DIRS[2]}" pcre-libs
 
 # pcre
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/

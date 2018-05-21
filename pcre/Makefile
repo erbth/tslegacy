@@ -14,7 +14,7 @@ $(BUILD_DIR)/configured:
 		--enable-unicode-properties \
 		--enable-pcre16 \
 		--enable-pcre32 \
-		--enable-pcgrep-libz \
+		--enable-pcregrep-libz \
 		--enable-pcregrep-libbz2 \
 		--enable-pcretest-libreadline \
 		--disable-static \
