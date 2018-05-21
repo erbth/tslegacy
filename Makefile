@@ -84,6 +84,7 @@ SOURCE_PACKAGES := \
 	gettext \
 	glibc \
 	gmp \
+	gperf \
 	grep \
 	grub \
 	gzip \
@@ -163,10 +164,6 @@ all_packages_collected: $(ALL_COLLECTED)
 $(ALL_COLLECTED): override PKG = $(patsubst $(STATE_DIR)/%_collected,%,$@)
 $(ALL_COLLECTED): override SRC = $($(PKG)_TSL_SRC_PKG)
 $(ALL_COLLECTED): $(STATE_DIR)/$$(SRC)_built
-	if type tpmdb > /dev/zero 2>&1; \
-	then \
-		tpmdb --db $(PKGDB) --create-from-directory $(COLLECTING_DIR); \
-	fi
 	> $@
 
 $(SOURCE_PACKAGES:%=$(STATE_DIR)/%_built): override SRC = $(patsubst %_built,%,$(notdir $@))
@@ -178,6 +175,10 @@ $(SOURCE_PACKAGES:%=$(STATE_DIR)/%_built): \
 	for PKG in $($(SRC)_TSL_PKGS); do \
 		cp $(PACKAGING_LOCATION)/$${PKG}/*.tpm.tar $(COLLECTING_DIR)/; \
 	done
+	if type tpmdb > /dev/zero 2>&1; \
+	then \
+		tpmdb --db $(PKGDB) --create-from-directory $(COLLECTING_DIR); \
+	fi
 	> $@
 
 $(SOURCE_PACKAGES:%=$(STATE_DIR)/%_clean_to_build): override SRC = $(patsubst %_clean_to_build,%,$(notdir $@))
