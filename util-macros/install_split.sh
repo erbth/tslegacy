@@ -51,7 +51,7 @@ do
     mv "$FILE" "${PKG_DIRS[1]}/$DIR/"
 done < <(find \( -iname \*.a -o -iname \*.la \) -a -type f)
 
-for DIR in {usr/}include usr/share/{man,doc,info}
+for DIR in {usr/}include usr/share/{man,doc,info} usr/{share,lib}/pkgconfig
 do
     if [ -d "$DIR" ]
     then

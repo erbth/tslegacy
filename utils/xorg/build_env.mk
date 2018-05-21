@@ -8,10 +8,10 @@ ifndef utils_xorg_build_env_included
 utils_xorg_build_env_included := 1
 
 export XORG_PREFIX := /usr
-export XORG_CONFIG := " \
+export XORG_CONFIG := \
 	--prefix=$(XORG_PREFIX) \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
-	--disable-static"
+	--disable-static
 
 endif

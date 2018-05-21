@@ -132,6 +132,7 @@ SOURCE_PACKAGES := \
 	tslegacy-utils \
 	tzdata \
 	util-linux \
+	util-macros \
 	vim \
 	xml-light \
 	xz \
@@ -400,6 +401,7 @@ dist:
 	install -dm755 tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	cp -a \
 		utils/{Makefile,remove_old_package_versions.ml,.gitignore,compute_rdeps.sh,update_pkgdb.sh,xorg,bash_utils.sh} \
+		utils/unpack_pkg.sh \
 		tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz tslegacy_packaging-$(TSLPACK_VERSION)
 	rm -rf tslegacy_packaging-$(TSLPACK_VERSION)
