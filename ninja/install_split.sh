@@ -32,10 +32,10 @@ rm -rf "$PKG_DIR"/*
 cd ${BUILD_DIR}/${SRC_DIR}
 install -vdm755 "${PKG_DIR}/usr/bin"
 install -vm755 ninja "${PKG_DIR}/usr/bin"
-install -vDm644 misc/bash-completion /usr/share/bash-completion/completions/ninja
-install -vDm644 misc/zsh-completion /usr/share/zsh/site-functions/_ninja
+install -vDm644 misc/bash-completion "${PKG_DIR}/usr/share/bash-completion/completions/ninja"
+install -vDm644 misc/zsh-completion "${PKG_DIR}/usr/share/zsh/site-functions/_ninja"
 
 cd "${PKG_DIR}"
-bash ../adapt.sh
+bash "${INSTALL_DIR}/adapt.sh"
 
 install_readme_files "$PKG_DIR" ninja

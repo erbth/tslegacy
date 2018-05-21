@@ -113,6 +113,7 @@ SOURCE_PACKAGES := \
 	mpc \
 	mpfr \
 	ncurses \
+	ninja \
 	ntfs-3g \
 	ocaml \
 	ocamlbuild \
