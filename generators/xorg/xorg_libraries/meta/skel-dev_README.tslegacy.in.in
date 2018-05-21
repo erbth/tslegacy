@@ -1,0 +1,6 @@
+BASIC_PKG_INFO
+
+This is a meta package depends on the development packages of all packaged
+Xorg libraries.
+
+ERBTH_FOOTER

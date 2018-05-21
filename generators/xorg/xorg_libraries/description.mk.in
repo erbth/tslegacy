@@ -1,0 +1,32 @@
+ifndef skel_description_included
+skel_description_included := 1
+
+include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
+
+include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
+include $(PACKAGING_RESOURCE_DIR)/gcc/description.mk
+
+skel_SRC_VERSION := skel_version
+skel_SRC_DIR := skel-$(skel_SRC_VERSION)
+skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.skel_compression
+skel_SRC_CDEPS := \
+	licenses_installed \
+	gcc_installed \
+	glibc-dev_installed \
+	libxcb-dev_installed \
+	fontconfig-dev_installed
+
+skel_TSL_TYPE := sw
+skel_TSL_RDEPS = \
+	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
+	$(call bigger_equal_dep,libgcc-$(libgcc_ABI))
+skel_TSL_SRC_PKG := skel
+
+skel-dev_TSL_TYPE := sw
+skel-dev_TSL_RDEPS = \
+	$(call equal_dep,skel)
+skel-dev_TSL_SRC_PKG := skel
+
+skel_TSL_PKGS := skel-dev skel-$(skel_ABI)
+
+endif

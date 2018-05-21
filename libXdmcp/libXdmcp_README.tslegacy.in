@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the non ABI versioned dynamic libraries and other runtime
+files of libXdmcp version PKG_UPSTREAM_VERSION.
+
+Licensing information (if provided by the source package in an easily readable
+way) can be found in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER
