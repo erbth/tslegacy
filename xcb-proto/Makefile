@@ -1,4 +1,4 @@
-SRC_NAME := xcb-proto-dev
+SRC_NAME := xcb-proto
 
 include description.mk
 include ../common/basic.mk

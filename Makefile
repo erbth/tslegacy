@@ -136,6 +136,7 @@ SOURCE_PACKAGES := \
 	util-linux \
 	util-macros \
 	vim \
+	xcb-proto \
 	xml-light \
 	xz \
 	zlib
