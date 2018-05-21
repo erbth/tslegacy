@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of the GNU Automake version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL20([GNU Automake])
+
+ERBTH_FOOTER

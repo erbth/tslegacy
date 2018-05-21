@@ -61,6 +61,7 @@ SOURCE_PACKAGES := \
 	alsa-lib \
 	alsa-utils \
 	autoconf \
+	automake \
 	bash \
 	basic_fhs \
 	bc \
