@@ -96,6 +96,7 @@ SOURCE_PACKAGES := \
 	less \
 	libffi \
 	libXau \
+	libxcb \
 	libXdmcp \
 	licenses \
 	linux \
