@@ -108,6 +108,7 @@ SOURCE_PACKAGES := \
 	libXau \
 	libxcb \
 	libXdmcp \
+	libxml2 \
 	licenses \
 	linux \
 	linux-headers \

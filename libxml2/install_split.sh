@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev,skel-libs}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{libxml2,libxml2-dev,libxml2-libs}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -36,7 +36,7 @@ make DESTDIR=${INSTALL_DIR}/target install-strip
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# skel-dev
+# libxml2-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,14 +66,22 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/libxml2" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/libxml2"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+# Move a file
+if ! [ -d "${PKG_DIRS[1]}/usr/lib" ]
+then
+    install -dm755 "${PKG_DIRS[1]}/usr/lib"
+fi
 
-# skel-lib
+mv usr/lib/xml2Conf.sh "${PKG_DIRS[1]}/usr/lib/"
+
+install_readme_files "${PKG_DIRS[1]}" libxml2-dev
+
+# libxml2-lib
 cd ${INSTALL_DIR}/target
 
 for DIR in usr/share/locale usr/lib/python*
@@ -103,8 +111,8 @@ do
     mv "$FILE" "${PKG_DIRS[2]}/$DIR/"
 done < <(find \( -iname \*.so -o -iregex .\*\\.so\\.[0-9.]\* \) -a \( -type f -o -type l \))
 
-install_readme_files "${PKG_DIRS[2]}" skel-libs
+install_readme_files "${PKG_DIRS[2]}" libxml2-libs
 
-# skel
+# libxml2
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" libxml2

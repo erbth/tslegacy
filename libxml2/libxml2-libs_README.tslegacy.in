@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the libraries of libxml2 version PKG_UPSTREAM_VERSION.
+Their ABI version is not respected that is not ABI versioned packages exist.
+
+Licensing information can be found in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER
