@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of GNU Libtool
+version PKG_UPSTREAM_VERSION.
+
+LICENSE_GPL20([GNU Libtool])
+
+ERBTH_FOOTER

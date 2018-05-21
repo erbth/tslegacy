@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files and the library of GNU Libtool
+version PKG_UPSTREAM_VERSION. I think the library is only used by libtool
+itself, hence I included it here.
+
+LICENSE_GPL20([GNU Libtool])
+
+ERBTH_FOOTER

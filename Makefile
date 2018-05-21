@@ -96,6 +96,7 @@ SOURCE_PACKAGES := \
 	kmod \
 	less \
 	libffi \
+	libtool \
 	libXau \
 	libxcb \
 	libXdmcp \

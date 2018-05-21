@@ -4,7 +4,7 @@ set -e
 
 function install_readme_files
 {
-    for FILE in "${BUILD_DIR}/${SRC_DIR}"/{README,COPYING*,NOTICE,NOTES,THANKS,AUTHORS}
+    for FILE in "${BUILD_DIR}/${SRC_DIR}"/{README,NOTICE,NOTES,THANKS,AUTHORS}
     do
         if [ -r "$FILE" ]
         then
@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{libtool,libtool-dev}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -31,12 +31,12 @@ rm -rf ${INSTALL_DIR}/target/*
 install -dm755 ${INSTALL_DIR}/target
 
 cd ${BUILD_DIR}/${SRC_DIR}
-make DESTDIR=${INSTALL_DIR}/target install-strip
+make DESTDIR=${INSTALL_DIR}/target install
 
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# skel-dev
+# libtool-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,13 +66,13 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/libtool" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/libtool"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+install_readme_files "${PKG_DIRS[1]}" libtool-dev
 
-# skel
+# libtool
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" libtool
