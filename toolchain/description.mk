@@ -7,10 +7,13 @@ toolchain_SRC_VERSION := 0.0.0
 toolchain_SRC_DIR := dummy_src_pkg
 toolchain_SRC_ARCHIVE := dummy_src_pkg.tar.gz
 toolchain_SRC_CDEPS := \
+	autoconf-dev_collected \
+	automake-dev_collected \
 	bash-dev_collected \
 	binutils_collected \
 	bison-dev_collected \
 	bzip2-dev_collected \
+	cmake_collected \
 	coreutils-dev_collected \
 	dejagnu-dev_collected \
 	diffutils-dev_collected \
@@ -23,10 +26,14 @@ toolchain_SRC_CDEPS := \
 	gettext-dev_collected \
 	grep-dev_collected \
 	gzip-dev_collected \
+	intltool-dev_collected \
+	libtool-dev_collected \
 	linux-headers-dev_collected \
 	m4-dev_collected \
 	make-dev_collected \
+	meson-dev_collected \
 	ncurses-dev_collected \
+	ninja_collected \
 	ocamlbuild-dev_collected \
 	ocaml-dev_collected \
 	patch-dev_collected \

@@ -102,6 +102,7 @@ SOURCE_PACKAGES := \
 	kmod \
 	less \
 	libffi \
+	libpng \
 	libtool \
 	libuv \
 	libXau \

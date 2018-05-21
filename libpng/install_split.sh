@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev,skel-libs}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{libpng,libpng-dev,libpng-libs}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -36,7 +36,7 @@ make DESTDIR=${INSTALL_DIR}/target install-strip
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# skel-dev
+# libpng-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,14 +66,14 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/libpng" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/libpng"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+install_readme_files "${PKG_DIRS[1]}" libpng-dev
 
-# skel-lib
+# libpng-lib
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -98,8 +98,8 @@ then
     mv usr/share/locale "${PKG_DIRS[2]}/usr/share/"
 fi
 
-install_readme_files "${PKG_DIRS[2]}" skel-libs
+install_readme_files "${PKG_DIRS[2]}" libpng-libs
 
-# skel
+# libpng
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" libpng
