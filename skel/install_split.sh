@@ -49,7 +49,7 @@ do
     fi
 
     mv "$FILE" "${PKG_DIRS[1]}/$DIR/"
-done < <(find \( -iname \*.a -o -iname \*.la \) -a -type f)
+done < <(find \( -iname \*.a -o -iname \*.la -o -iname \*gdb.py \) -a -type f)
 
 for DIR in {,usr/}include usr/share/{man,doc,info} usr/{share,lib}/pkgconfig
 do

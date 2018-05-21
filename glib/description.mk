@@ -11,12 +11,16 @@ glib_SRC_VERSION := 2.56.1
 glib_SRC_DIR := glib-$(glib_SRC_VERSION)
 glib_SRC_ARCHIVE := $(glib_SRC_DIR).tar.xz
 glib_SRC_CDEPS := \
-	licenses_installed \
 	gcc_installed \
 	glibc-dev_installed \
 	ninja_installed \
 	meson_installed \
-	pcre-dev_installed
+	pcre-dev_installed \
+	intltool-dev_installed \
+	zlib-dev_installed \
+	elfutils-dev_installed \
+	util-linux-dev_installed \
+	libffi-dev_installed
 
 glib-libs_TSL_TYPE := sw
 glib-libs_TSL_RDEPS =

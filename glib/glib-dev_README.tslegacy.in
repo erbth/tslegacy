@@ -1,6 +1,6 @@
 BASIC_PKG_INFO
 
-This package contains the programs, scripts and other utilities of Glib
+This package contains the development files and the documentation of Glib
 version PKG_UPSTREAM_VERSION.
 
 Licensing information can be found in /usr/share/doc/PKG_NAME.

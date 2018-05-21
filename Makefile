@@ -85,6 +85,7 @@ SOURCE_PACKAGES := \
 	gcc \
 	gdbm \
 	gettext \
+	glib \
 	glibc \
 	gmp \
 	gperf \

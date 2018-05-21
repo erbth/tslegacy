@@ -13,8 +13,8 @@ $(BUILD_DIR)/configured:
 	cd build-glib && \
 	meson \
 		--prefix=/usr \
-		-Dwith-pcre=system \
-		-Dwith-docs=no \
+		-Dinternal_pcre=false \
+		-Dselinux=false \
 		..
 	> $@
 
