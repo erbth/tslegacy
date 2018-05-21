@@ -4,7 +4,7 @@ set -e
 
 function install_readme_files
 {
-    for FILE in "${BUILD_DIR}/${SRC_DIR}"/{README*,COPYING*,LICENSE*,NOTICE,NOTES,THANKS,AUTHORS}
+    for FILE in "${BUILD_DIR}/${SRC_DIR}"/{README*,COPYING*,Copyright*,LICENSE*,NOTICE,NOTES,THANKS,AUTHORS}
     do
         if [ -r "$FILE" ]
         then

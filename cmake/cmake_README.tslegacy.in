@@ -1,0 +1,18 @@
+BASIC_PKG_INFO
+
+This package contains CMake version PKG_UPSTREAM_VERSION.
+
+CMake is subject to a 3-clause BSD license, a copy of which is included in
+/usr/share/doc/PKG_NAME/Copyright.txt.
+
+This binary distribution may also include software which subject to the
+GNU Lesser General Public License version 2.1 or 3.0. A copy of those licenses
+can be found in /usr/share/doc/licenses, or may be retrieved from
+https://www.gnu.org/licenses/.
+
+See also the file README.licenses.rst in /usr/share/doc/PKG_NAME, which is
+originally located in the 'Licenses' folder of the source tree.
+
+This CMake contains a copy of cURL and libarchive.
+
+ERBTH_FOOTER

@@ -69,6 +69,7 @@ SOURCE_PACKAGES := \
 	bison \
 	bzip2 \
 	cifs-utils \
+	cmake \
 	coreutils \
 	dejagnu \
 	diffutils \

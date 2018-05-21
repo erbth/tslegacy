@@ -1,4 +1,4 @@
-SRC_NAME := skel
+SRC_NAME := ninja
 
 include description.mk
 include ../common/basic.mk
@@ -7,18 +7,12 @@ include ../common/basic.mk
 # `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
 # Bruce Dubbs. At the time I initially wrote this file, the book was available
 # from www.linuxfromscratch.org/lfs.
-
-# I adapted the configure and build procedures from the book
-# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
-# Team. At the time I initially wrote this file, the book was available
-# from www.linuxfromscratch.org/blfs.
 $(BUILD_DIR)/configured:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
-	./configure \
-		--prefix=/usr
+	python3 configure.py --bootstrap
 	> $@
 
 $(BUILD_DIR)/built:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
-	$(MAKE)
+	python3 configure.py
 	> $@

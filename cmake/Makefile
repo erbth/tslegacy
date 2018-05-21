@@ -1,4 +1,4 @@
-SRC_NAME := glib
+SRC_NAME := cmake
 
 include description.mk
 include ../common/basic.mk
@@ -9,16 +9,19 @@ include ../common/basic.mk
 # from www.linuxfromscratch.org/blfs.
 $(BUILD_DIR)/configured:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
-	mkdir build-glib && \
-	cd build-glib && \
-	meson \
+	./bootstrap \
 		--prefix=/usr \
-		-Dwith-pcre=system \
-		-Dwith-docs=no \
-		..
+		--system-libs \
+		--mandir=/usr/share/man \
+		--no-system-jsoncpp \
+		--no-system-librhash \
+		--no-system-curl \
+		--no-system-libarchive \
+		--docdir=share/doc/cmake \
+		--mandir=share/man
 	> $@
 
 $(BUILD_DIR)/built:
-	cd $(BUILD_DIR)/$(SRC_DIR)/build-glib && \
-	ninja
+	cd $(BUILD_DIR)/$(SRC_DIR) && \
+	$(MAKE)
 	> $@

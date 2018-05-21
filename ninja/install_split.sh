@@ -19,55 +19,23 @@ function install_readme_files
 }
 
 # Clean the packaging target
-declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev}/${DESTDIR}
-do
-    PKG_DIRS+=($DIR)
-    rm -rf ${DIR}/*
-done
+PKG_DIR="${PACKAGING_LOCATION}/ninja/${DESTDIR}"
+rm -rf "$PKG_DIR"/*
 
 # Install and adapt the package
-rm -rf ${INSTALL_DIR}/target/*
-install -dm755 ${INSTALL_DIR}/target
+
+# The installation procedure was adapted from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
 
 cd ${BUILD_DIR}/${SRC_DIR}
-make DESTDIR=${INSTALL_DIR}/target install-strip
+install -vdm755 "${PKG_DIR}/usr/bin"
+install -vm755 ninja "${PKG_DIR}/usr/bin"
+install -vDm644 misc/bash-completion /usr/share/bash-completion/completions/ninja
+install -vDm644 misc/zsh-completion /usr/share/zsh/site-functions/_ninja
 
-cd ${INSTALL_DIR}/target
+cd "${PKG_DIR}"
 bash ../adapt.sh
 
-# skel-dev
-cd ${INSTALL_DIR}/target
-
-while IFS='' read -r FILE
-do
-    DIR="$(dirname \"$FILE\")"
-
-    if ! [ -d "${PKG_DIRS[1]}/$DIR" ]
-    then
-        install -dm755 "${PKG_DIRS[1]}/$DIR"
-    fi
-
-    mv "$FILE" "${PKG_DIRS[1]}/$DIR/"
-done < <(find \( -iname \*.a -o -iname \*.la \) -a -type f)
-
-for DIR in {usr/}include usr/share/{man,doc,info} usr/{share,lib}/pkgconfig
-do
-    if [ -d "$DIR" ]
-    then
-        PARENT="$(dirname \"$DIR\")"
-
-        if ! [ -d "${PKG_DIRS[1]}/$PARENT" ]
-        then
-            install -dm755 "${PKG_DIRS[1]}/$PARENT"
-        fi
-
-        mv "$DIR" "${PKG_DIRS[1]}/$PARENT/"
-    fi
-done
-
-install_readme_files "${PKG_DIRS[1]}" skel-dev
-
-# skel
-mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "$PKG_DIR" ninja

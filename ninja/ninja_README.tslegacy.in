@@ -1,0 +1,8 @@
+BASIC_PKG_INFO
+
+This package contains the Ninja build system version PKG_UPSTREAM_VERSION.
+
+Ninja is distributed under the terms of the Apache License version 2.0. A copy
+can be found in /usr/share/doc/PKG_NAME/COPYING.
+
+ERBTH_FOOTER

@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{meson,meson-dev}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -30,13 +30,14 @@ done
 rm -rf ${INSTALL_DIR}/target/*
 install -dm755 ${INSTALL_DIR}/target
 
+# The command to install was taken from the book
+# `Linux From Scratch', `Version 8.2' by Gerard Beekmans and Managing Editor
+# Bruce Dubbs. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/lfs.
 cd ${BUILD_DIR}/${SRC_DIR}
-make DESTDIR=${INSTALL_DIR}/target install-strip
+python3 setup.by install --root "${INSTALL_DIR}/target"
 
-cd ${INSTALL_DIR}/target
-bash ../adapt.sh
-
-# skel-dev
+# meson-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,8 +67,8 @@ do
     fi
 done
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+install_readme_files "${PKG_DIRS[1]}" meson-dev
 
-# skel
+# meson
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" meson
