@@ -19,92 +19,19 @@ function install_readme_files
 }
 
 # Clean the packaging target
-declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev,skel-libs}/${DESTDIR}
-do
-    PKG_DIRS+=($DIR)
-    rm -rf ${DIR}/*
-done
+PKG_DIR="${PACKAGING_LOCATION}/funcsigs/${DESTDIR}"
+rm -rf "$PKG_DIR"/*
 
 # Install and adapt the package
-rm -rf ${INSTALL_DIR}/target/*
-install -dm755 ${INSTALL_DIR}/target
-
+#
+# I adapted the configure and build procedures from the book
+# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
+# Team. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/blfs.
 cd ${BUILD_DIR}/${SRC_DIR}
-make DESTDIR=${INSTALL_DIR}/target install-strip
+python setup.py install --optimize=1 --root="$PKG_DIR"
 
-cd ${INSTALL_DIR}/target
-bash ../adapt.sh
+cd "$PKG_DIR"
+bash "${INSTALL_DIR}/adapt.sh"
 
-# skel-dev
-cd ${INSTALL_DIR}/target
-
-while IFS='' read -r FILE
-do
-    DIR="$(dirname $FILE)"
-
-    if ! [ -d "${PKG_DIRS[1]}/$DIR" ]
-    then
-        install -dm755 "${PKG_DIRS[1]}/$DIR"
-    fi
-
-    mv "$FILE" "${PKG_DIRS[1]}/$DIR/"
-done < <(find \( -iname \*.a -o -iname \*.la -o -iname \*gdb.py \) -a \( -type f -o -type l \))
-
-for DIR in {,usr/}include usr/share/{man,{gtk-,}doc,info,aclocal} usr/{share,lib}/{pkgconfig,cmake}
-do
-    if [ -d "$DIR" ]
-    then
-        PARENT="$(dirname $DIR)"
-
-        if ! [ -d "${PKG_DIRS[1]}/$PARENT" ]
-        then
-            install -dm755 "${PKG_DIRS[1]}/$PARENT"
-        fi
-
-        mv "$DIR" "${PKG_DIRS[1]}/$PARENT/"
-    fi
-done
-
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
-then
-    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
-fi
-
-install_readme_files "${PKG_DIRS[1]}" skel-dev
-
-# skel-libs
-cd ${INSTALL_DIR}/target
-
-for DIR in usr/share/locale usr/lib/python*
-do
-    if [ -d "$DIR" ]
-    then
-        PARENT="$(dirname $DIR)"
-
-        if ! [ -d "${PKG_DIRS[2]}/$PARENT" ]
-        then
-            install -dm755 "${PKG_DIRS[2]}/$PARENT"
-        fi
-
-        mv "$DIR" "${PKG_DIRS[2]}/$PARENT/"
-    fi
-done
-
-while IFS='' read -r FILE
-do
-    DIR="$(dirname $FILE)"
-
-    if ! [ -d "${PKG_DIRS[2]}/$DIR" ]
-    then
-        install -dm755 "${PKG_DIRS[2]}/$DIR"
-    fi
-
-    mv "$FILE" "${PKG_DIRS[2]}/$DIR/"
-done < <(find \( -iname \*.so -o -iregex .\*\\.so\\.[0-9.]\* \) -a \( -type f -o -type l \))
-
-install_readme_files "${PKG_DIRS[2]}" skel-libs
-
-# skel
-mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "$PKG_DIR" funcsigs

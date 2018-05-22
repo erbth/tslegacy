@@ -1,34 +1,20 @@
-ifndef skel_description_included
-skel_description_included := 1
+ifndef funcsigs_description_included
+funcsigs_description_included := 1
 
 include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
-include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
-include $(PACKAGING_RESOURCE_DIR)/gcc/description.mk
-
-skel_SRC_VERSION := 0.0.0
-skel_SRC_DIR := skel-$(skel_SRC_VERSION)
-skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.xz
-skel_SRC_CDEPS := \
-	licenses_installed \
+funcsigs_SRC_VERSION := 1.0.2
+funcsigs_SRC_DIR := funcsigs-$(funcsigs_SRC_VERSION)
+funcsigs_SRC_ARCHIVE := $(funcsigs_SRC_DIR).tar.gz
+funcsigs_SRC_CDEPS := \
 	gcc_installed \
-	glibc-dev_installed
+	glibc-dev_installed \
+	python-dev_installed
 
-export skel_ABI := 10
+funcsigs_TSL_TYPE := sw
+funcsigs_TSL_RDEPS =
+funcsigs_TSL_SRC_PKG := funcsigs
 
-skel-$(skel_ABI)_TSL_TYPE := sw
-skel-$(skel_ABI)_TSL_RDEPS = \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
-	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
-	$(call bigger_equal_dep,licenses)
-skel-$(skel_ABI)_TSL_SRC_PKG := skel
-
-skel-dev_TSL_TYPE := sw
-skel-dev_TSL_RDEPS = \
-	$(call equal_dep,skel-$(skel_ABI)) \
-	$(call bigger_equal_dep,licenses)
-skel-dev_TSL_SRC_PKG := skel
-
-skel_TSL_PKGS := skel-dev skel-$(skel_ABI)
+funcsigs_TSL_PKGS := funcsigs
 
 endif

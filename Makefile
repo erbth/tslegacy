@@ -83,6 +83,7 @@ SOURCE_PACKAGES := \
 	findutils \
 	fontconfig \
 	freetype \
+	funcsigs \
 	gawk \
 	gcc \
 	gdbm \
