@@ -197,46 +197,13 @@ function generate_build_system
             -e "s/skel/$PKG/g" \
             "${GENERATOR_DIR}/description.mk.in" > "$PKG_DIR/description.mk"
 
-        # Add compiletime dependencies, the important ones of which I took from
-        # the book `Beyond Linux From Scratch', `Version 8.2' by the BLFS
-        # Development Team. At the time I initially wrote this file, the book
-        # was available from www.linuxfromscratch.org/blfs.
-        case "$PKG" in
-        "xcb-util")
-            sed '/SRC_CDEPS/s/$/ libxcb-dev_installed/' \
-            -i "$PKG_DIR/description.mk"
-            ;;
-
-        "xcb-util-image")
-            sed '/SRC_CDEPS/s/$/ xcb-util-dev_installed/' \
-            -i "$PKG_DIR/description.mk"
-            ;;
-
-        "xcb-util-keysyms")
-            sed '/SRC_CDEPS/s/$/ libxcb-dev_installed/' \
-            -i "$PKG_DIR/description.mk"
-            ;;
-
-        "xcb-util-renderutil")
-            sed '/SRC_CDEPS/s/$/ libxcb-dev_installed/' \
-            -i "$PKG_DIR/description.mk"
-            ;;
-
-        "xcb-util-wm")
-            sed '/SRC_CDEPS/s/$/ libxcb-dev_installed/' \
-            -i "$PKG_DIR/description.mk"
-            ;;
-
-        "xcb-util-cursor")
-            sed '/SRC_CDEPS/s/$/ xcb-util-dev_installed/' \
-            -i "$PKG_DIR/description.mk"
-            ;;
-
-        *)
-            echo "Adding compiletime dependencies: Invalid package: \"$PKG\""
-            exit 1
-            ;;
-        esac
+        # Let each package depend on its predecessor (important because of
+        # compiletime dependencies)
+        if [ -n "$PREV_PKG" ]
+        then
+            sed "/SRC_CDEPS/s/=/= ${PREV_PKG}-dev_installed/" -i \
+                "$PKG_DIR/description.mk"
+        fi
 
         sed -e "s/skel_version/$VERSION/g" \
             -e "s/skel_compression/$COMPRESSION/g"\
@@ -264,6 +231,8 @@ function generate_build_system
             -e "s/skel/$PKG/g" \
             "${GENERATOR_DIR}/skel-dev_README.tslegacy.in.in" > "$PKG_DIR/$PKG-dev_README.tslegacy.in"
 
+        # Remember which packages was processed bevore the next one
+        PREV_PKG="$PKG"
     done < <(cat "$GENERATOR_DIR/$PKG_VERSIONS")
 
     echo >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"

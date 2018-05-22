@@ -10,7 +10,10 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 skel_SRC_VERSION := skel_version
 skel_SRC_DIR := skel-$(skel_SRC_VERSION)
 skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.skel_compression
-skel_SRC_CDEPS := gcc_installed glibc-dev_installed
+skel_SRC_CDEPS := \
+	gcc_installed \
+	glibc-dev_installed \
+	libxcb-dev_installed
 
 skel_TSL_TYPE := sw
 skel_TSL_RDEPS =
