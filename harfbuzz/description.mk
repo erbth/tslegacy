@@ -18,7 +18,12 @@ harfbuzz_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
 	icu-dev_installed \
-	glib-dev_installed
+	glib-dev_installed \
+	bzip2-dev_installed \
+	zlib-dev_installed \
+	libpng-dev_installed \
+	pcre-dev_installed \
+	libffi-dev_installed
 
 harfbuzz-libs_TSL_TYPE := sw
 harfbuzz-libs_TSL_RDEPS =

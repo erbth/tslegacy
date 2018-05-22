@@ -4,6 +4,6 @@ This package contains the libraries of the FreeType TrueType renderer
 version PKG_UPSTREAM_VERSION. Their ABI versions are not respected that is no
 ABI versioned packages exist.
 
-Licensin information can be found in /usr/share/doc/PKG_NAME.
+LICENSE_GPL20([FreeType])
 
 ERBTH_FOOTER

@@ -271,13 +271,14 @@ $(STATE_DIR)/perl_symlinks_removed: \
 # Special build procedures that cannot be included in the packages' Makfiles
 # since they require an overall view on the system:
 # HarfBuzz and FreeType
-$(STATE_DIR)/harfbuzz_clean_to_build: FORCE_freetype_without_harfbuzz
+$(STATE_DIR)/freetype_clean_to_build: $(STATE_DIR)/harfbuzz-dev_installed
+$(STATE_DIR)/harfbuzz_built: $(STATE_DIR)/freetype_without_harfbuzz
 
-.PHONY: FORCE_freetype_without_harfbuzz
-FORCE_freetype_without_harfbuzz: override SRC = harfbuzz
-FORCE_freetype_without_harfbuzz: \
+$(STATE_DIR)/freetype_without_harfbuzz: override SRC = freetype
+$(STATE_DIR)/freetype_without_harfbuzz: \
 	$(SOURCE_LOCATION)/$$($$(SRC)_SRC_ARCHIVE) \
-	$(STATE_DIR)/$$(SRC)_clean_to_build | $(COLLECTING_DIR) $(STATE_DIR)
+	$$(patsubst %,$(STATE_DIR)/%,$$($$(SRC)_SRC_CDEPS)) \
+	$(STATE_DIR)/harfbuzz_clean_to_build | $(COLLECTING_DIR) $(STATE_DIR)
 	cd $(SRC) && \
 	$(MAKE) clean && \
 	$(MAKE) WITHOUT_HARFBUZZ=1 built
@@ -288,8 +289,9 @@ FORCE_freetype_without_harfbuzz: \
 	then \
 		tpmdb --db $(PKGDB) --create-from-directory $(COLLECTING_DIR); \
 	fi
-	tpm --install harfbuzz-dev
+	tpm --install freetype-dev
 	tpm --remove-unneeded
+	> $@
 
 # Other rules
 $(STATE_DIR)/toolchain_adjusted: adjust_toolchain.sh $(STATE_DIR)/glibc-dev_installed

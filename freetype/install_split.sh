@@ -31,7 +31,7 @@ rm -rf ${INSTALL_DIR}/target/*
 install -dm755 ${INSTALL_DIR}/target
 
 cd ${BUILD_DIR}/${SRC_DIR}
-make DESTDIR=${INSTALL_DIR}/target install-strip
+make DESTDIR=${INSTALL_DIR}/target install
 
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
@@ -70,19 +70,6 @@ if [ -d "${PKG_DIRS[1]}/usr/share/doc/freetype" ]
 then
     mv "${PKG_DIRS[1]}/usr/share/doc/freetype"{,-dev}
 fi
-
-# Move a utility that is used when building applications that use freetype
-#
-# I read about freetype-config in the book
-# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
-# Team. At the time I initially wrote this file, the book was available
-# from www.linuxfromscratch.org/blfs.
-if ! [ -d "${PKG_DIRS[1]}/usr/bin" ]
-then
-    install -dm755 "${PKG_DIRS[1]}/usr/bin"
-fi
-
-mv usr/bin/freetype-config "${PKG_DIRS[1]}/usr/bin/"
 
 install_readme_files "${PKG_DIRS[1]}" freetype-dev
 

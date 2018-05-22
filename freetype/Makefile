@@ -4,7 +4,7 @@ include description.mk
 include ../common/basic.mk
 
 ifdef WITHOUT_HARFBUZZ
-freetype_CONFIG_HARFBUZZ := --without-harfbuzz
+freetype_CONFIG_HARFBUZZ := --with-harfbuzz=no
 endif
 
 # I adapted the configure and build procedures from the book
