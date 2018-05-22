@@ -15,7 +15,7 @@ include ../utils/xorg/build_env.mk
 # Thomas Erbesdobler <t.erbesdobler@gmx.de>
 $(BUILD_DIR)/configured:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
-	./configure CFLAGS='-O2' CXXFLAGS='-O2' \
+	./configure CFLAGS='-O2' CXXFLAGS='-O2' LDFLAGS='-lLLVM' \
 		--prefix=$(XORG_PREFIX) \
 		--sysconfdir=/etc \
 		--disable-texture-float \

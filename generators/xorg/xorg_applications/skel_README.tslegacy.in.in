@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the libraries and other runtime files of skel
+version PKG_UPSTREAM_VERSION. The libraries' ABI version is not respected that is no
+ABI versioned package exist for each shared object.
+
+Licensing information (if provided by the upstream source package in an easily
+readable format) can be found in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER

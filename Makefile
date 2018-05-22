@@ -123,6 +123,7 @@ SOURCE_PACKAGES := \
 	mako \
 	make \
 	markup-safe \
+	mesa \
 	meson \
 	mpc \
 	mpfr \
