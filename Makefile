@@ -118,6 +118,7 @@ SOURCE_PACKAGES := \
 	linux \
 	linux-headers \
 	m4 \
+	mako \
 	make \
 	markup-safe \
 	meson \
