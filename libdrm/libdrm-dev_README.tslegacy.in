@@ -1,0 +1,14 @@
+BASIC_PKG_INFO
+
+This package contains the documentation and the development files of libdrm
+version PKG_UPSTREAM_VERSION.
+
+libdrm does not prominently give a license under the terms of which it is to be
+distributed. However a source file states that it is necessary to redistribute
+the included licensing and copyright information. It looks like the MIT license.
+
+I do not include it herein and may never do that, depending on how much time I
+have. However the source package can (or at least could as the time of this
+writing) be found at https://dri.freedesktop.org/libdrm/.
+
+ERBTH_FOOTER

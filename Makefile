@@ -106,6 +106,7 @@ SOURCE_PACKAGES := \
 	kbd \
 	kmod \
 	less \
+	libdrm \
 	libffi \
 	libpng \
 	libtool \
