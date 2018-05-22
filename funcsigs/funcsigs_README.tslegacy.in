@@ -1,7 +1,7 @@
 BASIC_PKG_INFO
 
-This package contains the runtime files of funcsigs version PKG_UPSTREAM_VERSION,
-including the Python 2 module.
+This package contains funcsigs version PKG_UPSTREAM_VERSION, including the
+Python 2 module.
 
 Licensing information can be found in /usr/share/doc/PKG_NAME.
 

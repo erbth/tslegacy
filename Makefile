@@ -119,6 +119,7 @@ SOURCE_PACKAGES := \
 	linux-headers \
 	m4 \
 	make \
+	markup-safe \
 	meson \
 	mpc \
 	mpfr \

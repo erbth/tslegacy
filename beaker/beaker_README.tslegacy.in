@@ -1,7 +1,7 @@
 BASIC_PKG_INFO
 
-This package contains the runtime files of Beaker version PKG_UPSTREAM_VERSION,
-including the Python 2 and the Python 3 module.
+This package contains Beaker version PKG_UPSTREAM_VERSION, including the
+Python 2 and the Python 3 module.
 
 According to its description in the PyPI Beaker is subject to a so called
 'OSI Approved BSD License'. I Have no idea what they are referring to, I could
