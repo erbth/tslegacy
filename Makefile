@@ -160,6 +160,7 @@ SOURCE_PACKAGES := \
 	util-macros \
 	vim \
 	wayland \
+	wayland-protocols \
 	xcb-proto \
 	xml-light \
 	xml-parser \
