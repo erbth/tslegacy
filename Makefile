@@ -64,6 +64,7 @@ SOURCE_PACKAGES := \
 	automake \
 	bash \
 	basic_fhs \
+	beaker \
 	bc \
 	binutils \
 	bison \

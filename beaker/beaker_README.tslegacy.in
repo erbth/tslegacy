@@ -1,0 +1,11 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of Beaker version PKG_UPSTREAM_VERSION,
+including the Python 2 and the Python 3 module.
+
+According to its description in the PyPI Beaker is subject to a so called
+'OSI Approved BSD License'. I Have no idea what they are referring to, I could
+not find a license file. However, a source file states it would be subject to
+a MIT License available from http://www.opensource.org/licenses/mit-license.php.
+
+ERBTH_FOOTER
