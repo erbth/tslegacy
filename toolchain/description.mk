@@ -24,6 +24,7 @@ toolchain_SRC_CDEPS := \
 	gawk-dev_collected \
 	gcc_collected \
 	gettext-dev_collected \
+	gperf-dev_collected \
 	grep-dev_collected \
 	gzip-dev_collected \
 	intltool-dev_collected \

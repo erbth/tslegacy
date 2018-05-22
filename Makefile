@@ -81,6 +81,7 @@ SOURCE_PACKAGES := \
 	file \
 	findlib \
 	findutils \
+	fontconfig \
 	freetype \
 	gawk \
 	gcc \

@@ -14,7 +14,16 @@ fontconfig_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
 	freetype-dev_installed \
-	libxml2-dev_installed
+	libxml2-dev_installed \
+	gperf-dev_installed \
+	glib-dev_installed \
+	harfbuzz-dev_installed \
+	expat-dev_installed \
+	libpng-dev_installed \
+	util-linux-dev_installed \
+	pcre-dev_installed \
+	zlib-dev_installed \
+	bzip2-dev_installed
 
 fontconfig-libs_TSL_TYPE := sw
 fontconfig-libs_TSL_RDEPS =
