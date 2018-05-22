@@ -163,6 +163,7 @@ SOURCE_PACKAGES := \
 	vim \
 	wayland \
 	wayland-protocols \
+	xbitmaps \
 	xcb-proto \
 	xml-light \
 	xml-parser \
