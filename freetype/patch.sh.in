@@ -1,0 +1,10 @@
+
+# This file was created by Thomas Erbesdobler <t.erbesdobler@gmx.de>
+
+# I took this information from the book
+# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
+# Team. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/blfs.
+
+# Enable GX/AAT and OpenType table validation
+sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg

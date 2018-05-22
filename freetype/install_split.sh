@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev,skel-libs}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{freetype,freetype-dev}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -36,7 +36,7 @@ make DESTDIR=${INSTALL_DIR}/target install-strip
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# skel-dev
+# freetype-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,45 +66,26 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/freetype" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/freetype"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+# Move a utility that is used when building applications that use freetype
+#
+# I read about freetype-config in the book
+# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
+# Team. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/blfs.
+if ! [ -d "${PKG_DIRS[1]}/usr/bin" ]
+then
+    install -dm755 "${PKG_DIRS[1]}/usr/bin"
+fi
 
-# skel-libs
-cd ${INSTALL_DIR}/target
+mv usr/bin/freetype-config "${PKG_DIRS[1]}/usr/bin/"
 
-for DIR in usr/share/locale usr/lib/python*
-do
-    if [ -d "$DIR" ]
-    then
-        PARENT="$(dirname $DIR)"
+install_readme_files "${PKG_DIRS[1]}" freetype-dev
 
-        if ! [ -d "${PKG_DIRS[2]}/$PARENT" ]
-        then
-            install -dm755 "${PKG_DIRS[2]}/$PARENT"
-        fi
-
-        mv "$DIR" "${PKG_DIRS[2]}/$PARENT/"
-    fi
-done
-
-while IFS='' read -r FILE
-do
-    DIR="$(dirname $FILE)"
-
-    if ! [ -d "${PKG_DIRS[2]}/$DIR" ]
-    then
-        install -dm755 "${PKG_DIRS[2]}/$DIR"
-    fi
-
-    mv "$FILE" "${PKG_DIRS[2]}/$DIR/"
-done < <(find \( -iname \*.so -o -iregex .\*\\.so\\.[0-9.]\* \) -a \( -type f -o -type l \))
-
-install_readme_files "${PKG_DIRS[2]}" skel-libs
-
-# skel
+# freetype
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" freetype

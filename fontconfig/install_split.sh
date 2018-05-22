@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{skel,skel-dev,skel-libs}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{fontconfig,fontconfig-dev,fontconfig-libs}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -36,7 +36,7 @@ make DESTDIR=${INSTALL_DIR}/target install-strip
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# skel-dev
+# fontconfig-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,14 +66,14 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/skel" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/fontconfig" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/skel"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/fontconfig"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" skel-dev
+install_readme_files "${PKG_DIRS[1]}" fontconfig-dev
 
-# skel-libs
+# fontconfig-libs
 cd ${INSTALL_DIR}/target
 
 for DIR in usr/share/locale usr/lib/python*
@@ -103,8 +103,8 @@ do
     mv "$FILE" "${PKG_DIRS[2]}/$DIR/"
 done < <(find \( -iname \*.so -o -iregex .\*\\.so\\.[0-9.]\* \) -a \( -type f -o -type l \))
 
-install_readme_files "${PKG_DIRS[2]}" skel-libs
+install_readme_files "${PKG_DIRS[2]}" fontconfig-libs
 
-# skel
+# fontconfig
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" skel
+install_readme_files "${PKG_DIRS[0]}" fontconfig

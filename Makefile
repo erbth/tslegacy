@@ -81,6 +81,7 @@ SOURCE_PACKAGES := \
 	file \
 	findlib \
 	findutils \
+	freetype \
 	gawk \
 	gcc \
 	gdbm \
@@ -92,6 +93,7 @@ SOURCE_PACKAGES := \
 	grep \
 	grub \
 	gzip \
+	harfbuzz \
 	iana-etc \
 	icu \
 	inetutils \
@@ -266,6 +268,29 @@ $(STATE_DIR)/perl_symlinks_removed: \
 	> $@
 
 
+# Special build procedures that cannot be included in the packages' Makfiles
+# since they require an overall view on the system:
+# HarfBuzz and FreeType
+$(STATE_DIR)/harfbuzz_clean_to_build: FORCE_freetype_without_harfbuzz
+
+.PHONY: FORCE_freetype_without_harfbuzz
+FORCE_freetype_without_harfbuzz: override SRC = harfbuzz
+FORCE_freetype_without_harfbuzz: \
+	$(SOURCE_LOCATION)/$$($$(SRC)_SRC_ARCHIVE) \
+	$(STATE_DIR)/$$(SRC)_clean_to_build | $(COLLECTING_DIR) $(STATE_DIR)
+	cd $(SRC) && \
+	$(MAKE) clean && \
+	$(MAKE) WITHOUT_HARFBUZZ=1 built
+	for PKG in $($(SRC)_TSL_PKGS); do \
+		cp $(PACKAGING_LOCATION)/$${PKG}/*.tpm.tar $(COLLECTING_DIR)/; \
+	done
+	if type tpmdb > /dev/zero 2>&1; \
+	then \
+		tpmdb --db $(PKGDB) --create-from-directory $(COLLECTING_DIR); \
+	fi
+	tpm --install harfbuzz-dev
+	tpm --remove-unneeded
+
 # Other rules
 $(STATE_DIR)/toolchain_adjusted: adjust_toolchain.sh $(STATE_DIR)/glibc-dev_installed
 	cd $(TOOLS_DIR) && \
@@ -420,7 +445,7 @@ dist:
 	install -dm755 tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	cp -a \
 		utils/{Makefile,remove_old_package_versions.ml,.gitignore,compute_rdeps.sh,update_pkgdb.sh,xorg,bash_utils.sh} \
-		utils/unpack_pkg.sh \
+		utils/{unpack_pkg.sh,select_rdeps_from_db.sh} \
 		tslegacy_packaging-$(TSLPACK_VERSION)/utils
 	tar -cJf tslegacy_packaging-$(TSLPACK_VERSION).tar.xz tslegacy_packaging-$(TSLPACK_VERSION)
 	rm -rf tslegacy_packaging-$(TSLPACK_VERSION)

@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of the
+FreeType TrueType renderer version PKG_UPSTREAM_VERSION. The utility
+freetype-config is also included.
+
+Licensin information can be found in /usr/share/doc/PKG_NAME.
+
+ERBTH_FOOTER
