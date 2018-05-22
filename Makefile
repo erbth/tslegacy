@@ -159,6 +159,7 @@ SOURCE_PACKAGES := \
 	util-linux \
 	util-macros \
 	vim \
+	wayland \
 	xcb-proto \
 	xml-light \
 	xml-parser \
