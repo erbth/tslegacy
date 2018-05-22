@@ -118,6 +118,7 @@ SOURCE_PACKAGES := \
 	licenses \
 	linux \
 	linux-headers \
+	llvm \
 	m4 \
 	mako \
 	make \

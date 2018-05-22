@@ -1,0 +1,12 @@
+BASIC_PKG_INFO
+
+This package contains the development files and the documentation of
+Mesa version PKG_UPSTREAM_VERSION.
+
+Licensing information can be found in /usr/share/doc/PKG_NAME, however it is
+incomplete.
+
+This distribution is compiled with --disable-texture-float to avoid patent
+issues. For details, thee /usr/share/doc/PKG_NAME/patents.txt.
+
+ERBTH_FOOTER
