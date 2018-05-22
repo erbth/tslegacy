@@ -6,6 +6,10 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 include $(PACKAGING_RESOURCE_DIR)/gcc/description.mk
 
+# I got information about the compiletime dependencies in the book
+# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
+# Team. At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/blfs.
 skel_SRC_VERSION := skel_version
 skel_SRC_DIR := skel-$(skel_SRC_VERSION)
 skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.skel_compression
