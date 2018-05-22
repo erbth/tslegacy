@@ -199,6 +199,14 @@ function generate_build_system
             -e "s/skel/$PKG/g" \
             "${GENERATOR_DIR}/description.mk.in" > "$PKG_DIR/description.mk"
 
+        # Let each package depend on its predecessor (important because of
+        # compiletime dependencies)
+        if [ -n "$PREV_PKG" ]
+        then
+            sed "/SRC_CDEPS/s/=/= ${PREV_PKG}-dev_installed/" -i \
+                "$PKG_DIR/description.mk"
+        fi
+
         sed -e "s/skel_version/$VERSION/g" \
             -e "s/skel_compression/$COMPRESSION/g"\
             -e "s/skel/$PKG/g" \
@@ -212,22 +220,22 @@ function generate_build_system
         # from www.linuxfromscratch.org/blfs.)
         case "$PKG" in
         libxshmfence)
-            sed '/configure/s/$/ CFLAGS="$(CFLAGS) -D_GNU_SOURCE"/' \
+            sed '/configure /s/$/ CFLAGS="$(CFLAGS) -D_GNU_SOURCE"/' \
                 -i "$RESOURCE_LOCATION/$PKG"/Makefile
             ;;
 
         libICE)
-            sed '/configure/s/$/ ICE_LIBS=-pthread/' \
+            sed '/configure /s/$/ ICE_LIBS=-pthread/' \
                 -i "$RESOURCE_LOCATION/$PKG"/Makefile
             ;;
 
         libXfont2)
-            sed '/configure/s/$/ --disable-devel-docs/' \
+            sed '/configure /s/$/ --disable-devel-docs/' \
                 -i "$RESOURCE_LOCATION/$PKG"/Makefile
             ;;
 
         libXt)
-            sed '/configure/s@$@ --with-appdefaultdir=/etc/X11/app-defaults@' \
+            sed '/configure /s@$@ --with-appdefaultdir=/etc/X11/app-defaults@' \
                 -i "$RESOURCE_LOCATION/$PKG"/Makefile
             ;;
 
@@ -242,6 +250,8 @@ function generate_build_system
             -e "s/skel/$PKG/g" \
             "${GENERATOR_DIR}/install_split.sh.in" > "$PKG_DIR/install_split.sh"
 
+        chmod +x "$PKG_DIR/install_split.sh"
+
         cp "${GENERATOR_DIR}"/skel-dev_configure.sh.in "$PKG_DIR"/"$PKG"-dev_configure.sh.in
 
         sed -e "s/skel_version/$VERSION/g" \
@@ -254,6 +264,8 @@ function generate_build_system
             -e "s/skel/$PKG/g" \
             "${GENERATOR_DIR}/skel-dev_README.tslegacy.in.in" > "$PKG_DIR/$PKG-dev_README.tslegacy.in"
 
+        # Remember which packages was processed bevore the next one
+        PREV_PKG="$PKG"
     done < <(cat "$GENERATOR_DIR/$PKG_VERSIONS")
 
     # Generate a meta package, which depends on all the other protocols

@@ -2,7 +2,6 @@ ifndef skel_description_included
 skel_description_included := 1
 
 include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
-include $(PACKAGING_RESOURCE_DIR)/gcc/description.mk
 
 # I got information about the compiletime dependencies in the book
 # `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
@@ -15,7 +14,16 @@ skel_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
 	libxcb-dev_installed \
-	fontconfig-dev_installed
+	fontconfig-dev_installed \
+	freetype-dev_installed \
+	harfbuzz-dev_installed \
+	glib-dev_installed \
+	zlib-dev_installed \
+	bzip2-dev_installed \
+	expat-dev_installed \
+	libpng-dev_installed \
+	util-linux-dev_installed \
+	pcre-dev_installed
 
 skel_TSL_TYPE := sw
 skel_TSL_RDEPS =
