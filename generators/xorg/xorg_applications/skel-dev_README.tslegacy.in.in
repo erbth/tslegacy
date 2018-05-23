@@ -1,9 +1,10 @@
 BASIC_PKG_INFO
 
-This package contains the development files and the documentation of
-skel version PKG_UPSTREAM_VERSION.
+This package contains the development files and the documentaion of
+skel version PKG_UPSTREAM_VERSION if any of these exist.
 
 Licensing information (if provided by the upstream source package in an easily
 readable format) can be found in /usr/share/doc/PKG_NAME.
+It is probably incomplete but must do for now, and maybe forever.
 
 ERBTH_FOOTER

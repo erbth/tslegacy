@@ -13,7 +13,12 @@ skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.skel_compression
 skel_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
-	libxcb-dev_installed
+	libpng-dev_installed \
+	mesa-dev_installed \
+	xbitmaps \
+	libxcb-dev_installed \
+	xcb-util-dev_installed \
+	xorg-libraries-dev_installed
 
 skel_TSL_TYPE := sw
 skel_TSL_RDEPS =

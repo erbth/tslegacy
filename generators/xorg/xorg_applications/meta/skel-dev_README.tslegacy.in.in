@@ -1,6 +1,6 @@
 BASIC_PKG_INFO
 
 This is a meta package that depends on the development packages of all packaged
-Xorg libraries.
+Xorg related applications (i.e. xrandr-dev or xev-dev).
 
 ERBTH_FOOTER
