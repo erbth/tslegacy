@@ -12,4 +12,8 @@ Additionally, LICENSE_GPL30([GNU GMP])
 
 Additionally, LICENSE_LGPL30([GNU GMP])
 
+Licensing information if provided by the upstream package in an easily readable
+manner, can be found in /usr/share/doc/PKG_NAME.
+It is probably incomplete for now and may stay incomplete forever.
+
 ERBTH_FOOTER
