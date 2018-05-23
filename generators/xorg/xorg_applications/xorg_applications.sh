@@ -12,9 +12,10 @@ RESOURCE_LOCATION="${EXEC_DIR%/generators/xorg/xorg_applications}"
 enable_debug_from_cmdline "$@"
 
 # Script configuration
-INPUT="xorg_applications_packages.conf"
-PKG_VERSIONS="xorg_applications_package_versions"
-SRC_PKG_EXTENSION="xorg_applications.mk"
+GENERATOR_NAME="xorg_applications"
+INPUT="${GENERATOR_NAME}_packages.conf"
+PKG_VERSIONS="${GENERATOR_NAME}_package_versions"
+SRC_PKG_EXTENSION="${GENERATOR_NAME}.mk"
 META_PACKAGE="xorg-applications-all-dev"
 
 debug "EXEC_DIR:          $EXEC_DIR"
@@ -286,6 +287,17 @@ function generate_build_system
         > "$PKG_DIR/${META_PACKAGE}_README.tslegacy.in"
 
     echo -e "\t$META_PACKAGE \\" >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"
+
+    echo >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"
+
+    # Add rule for cleaning all generated packages to the Master Makefile
+    # Extension
+    echo "generator_${GENERATOR_NAME}_all_packages_clean:" >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"
+
+    for PKG in "${PACKAGES[@]}"
+    do
+        echo -e "\t${PKG}_clean \\" >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"
+    done
 
     echo >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"
 }

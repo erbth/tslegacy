@@ -1,0 +1,21 @@
+ifndef skel_description_included
+skel_description_included := 1
+
+include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
+
+include $(PACKAGING_RESOURCE_DIR)/util-macros/description.mk
+
+skel_SRC_VERSION := 0.0.0
+skel_SRC_DIR := dummy_src_pkg
+skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.gz
+skel_SRC_CDEPS := \
+	skel_cdeps
+
+skel_TSL_TYPE := sw
+skel_TSL_RDEPS = \
+	skel_rdeps
+skel_TSL_SRC_PKG := skel
+
+skel_TSL_PKGS := skel
+
+endif

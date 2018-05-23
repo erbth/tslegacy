@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This is a meta package that depends on all packaged Xorg fonts (those available
+from https://www.x.org/pub/individual/font/) as well as on font-util and the
+'encodings' package (also from the URL above).
+
+ERBTH_FOOTER
