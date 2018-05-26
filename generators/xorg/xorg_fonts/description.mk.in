@@ -18,7 +18,8 @@ skel_SRC_CDEPS := \
 	xbitmaps_installed \
 	libxcb-dev_installed \
 	xcb-util-dev_installed \
-	xorg-libraries-dev_installed
+	xorg-libraries-dev_installed \
+	font-util-dev_installed
 
 skel_TSL_TYPE := sw
 skel_TSL_RDEPS =

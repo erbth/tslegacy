@@ -115,7 +115,6 @@
 /xorg-applications-all-dev
 
 # Xorg Fonts
-/font-util
 /encodings
 /font-alias
 /font-adobe-utopia-type1

@@ -1,0 +1,9 @@
+BASIC_PKG_INFO
+
+This package contains the runtime files of font-util version PKG_UPSTREAM_VERSION.
+
+Licensing information (if provided by the upstream source package in an easily
+readable format) can be found in /usr/share/doc/PKG_NAME.
+It is probably incomplete but must do for now, and maybe forever.
+
+ERBTH_FOOTER
