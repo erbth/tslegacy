@@ -179,6 +179,7 @@ SOURCE_PACKAGES := \
 	xf86-input-libinput \
 	xf86-input-synaptics \
 	xf86-input-vmmouse \
+	xf86-input-wacom \
 	xkeyboard-config \
 	xinit \
 	xml-light \

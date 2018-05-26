@@ -14,15 +14,18 @@ xf86-input-wacom_SRC_ARCHIVE := $(xf86-input-wacom_SRC_DIR).tar.bz2
 xf86-input-wacom_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
-	xorg-server-dev_installed
+	xorg-server-dev_installed \
+	eudev-dev_installed
 
 xf86-input-wacom_TSL_TYPE := sw
-xf86-input-wacom_TSL_RDEPS =
+xf86-input-wacom_TSL_RDEPS = \
+	$(call bigger_equal_dep,licenses)
 xf86-input-wacom_TSL_SRC_PKG := xf86-input-wacom
 
 xf86-input-wacom-dev_TSL_TYPE := sw
 xf86-input-wacom-dev_TSL_RDEPS = \
-	$(call equal_dep,xf86-input-wacom)
+	$(call equal_dep,xf86-input-wacom) \
+	$(call bigger_equal_dep,licenses)
 xf86-input-wacom-dev_TSL_SRC_PKG := xf86-input-wacom
 
 xf86-input-wacom_TSL_PKGS := xf86-input-wacom-dev xf86-input-wacom

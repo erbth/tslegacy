@@ -3,8 +3,11 @@ BASIC_PKG_INFO
 This package contains the runtime files of the wacom Xorg input driver
 version PKG_UPSTREAM_VERSION.
 
-Licensing information if provided by the upstream package in an easily readable
-manner, can be found in /usr/share/doc/PKG_NAME.
-It is probably incomplete for now and may stay incomplete forever.
+xf86-input-wacom appears to be distributed under the terms of the GNU General
+Public License version 2.0. A copy can be found in /usr/share/doc/licenses.
+Additional information that was included in the upstream package can be found
+in /usr/share/doc/PKG_NAME.
+The licensing information is probably incomplete for now and may stay
+incomplete forever.
 
 ERBTH_FOOTER
