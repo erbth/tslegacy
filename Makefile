@@ -133,6 +133,7 @@ SOURCE_PACKAGES := \
 	meson \
 	mpc \
 	mpfr \
+	mtdev \
 	ncurses \
 	ninja \
 	ntfs-3g \

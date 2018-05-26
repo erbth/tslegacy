@@ -5,7 +5,7 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
 mtdev_SRC_VERSION := 1.1.5
 mtdev_SRC_DIR := mtdev-$(mtdev_SRC_VERSION)
-mtdev_SRC_ARCHIVE := $(mtdev_SRC_DIR).tar.xz
+mtdev_SRC_ARCHIVE := $(mtdev_SRC_DIR).tar.bz2
 mtdev_SRC_CDEPS := \
 	licenses_installed \
 	gcc_installed \
