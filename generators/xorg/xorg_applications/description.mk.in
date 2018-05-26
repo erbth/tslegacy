@@ -18,7 +18,23 @@ skel_SRC_CDEPS := \
 	xbitmaps_installed \
 	libxcb-dev_installed \
 	xcb-util-dev_installed \
-	xorg-libraries-dev_installed
+	xorg-libraries-dev_installed \
+	fontconfig-dev_installed \
+	freetype-dev_installed \
+	glib-dev_installed \
+	harfbuzz-dev_installed \
+	icu-dev_installed \
+	bzip2-dev_installed \
+	libdrm-dev_installed \
+	expat-dev_installed \
+	libffi-dev_installed \
+	xz-dev_installed \
+	util-linux-dev_installed \
+	libxml2-dev_installed \
+	llvm-dev_installed \
+	ncurses-dev_installed \
+	pcre-dev_installed \
+	zlib-dev_installed
 
 skel_TSL_TYPE := sw
 skel_TSL_RDEPS =

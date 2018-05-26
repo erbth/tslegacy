@@ -180,7 +180,7 @@ include generators/xorg/protocols/xorg-protocols.mk
 include generators/xorg/xorg_libraries/xorg-libraries.mk
 include generators/xorg/xcb_utils/xcb_utils.mk
 include generators/xorg/xorg_applications/xorg_applications.mk
-# include generators/xorg/xorg_applications/xorg_fonts.mk
+include generators/xorg/xorg_fonts/xorg_fonts.mk
 
 include $(SOURCE_PACKAGES:%=%/description.mk)
 

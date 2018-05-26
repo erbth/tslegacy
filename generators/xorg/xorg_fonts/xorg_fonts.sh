@@ -205,7 +205,7 @@ function generate_build_system
         # compiletime dependencies)
         if [ -n "$PREV_PKG" ]
         then
-            sed "/SRC_CDEPS/s/=/= ${PREV_PKG}-dev_installed/" -i \
+            sed "/SRC_CDEPS/s/=/= ${PREV_PKG}_installed/" -i \
                 "$PKG_DIR/description.mk"
         fi
 

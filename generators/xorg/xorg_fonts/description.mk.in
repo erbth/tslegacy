@@ -15,7 +15,7 @@ skel_SRC_CDEPS := \
 	glibc-dev_installed \
 	libpng-dev_installed \
 	mesa-dev_installed \
-	xbitmaps \
+	xbitmaps_installed \
 	libxcb-dev_installed \
 	xcb-util-dev_installed \
 	xorg-libraries-dev_installed
@@ -24,10 +24,6 @@ skel_TSL_TYPE := sw
 skel_TSL_RDEPS =
 skel_TSL_SRC_PKG := skel
 
-skel-dev_TSL_TYPE := sw
-skel-dev_TSL_RDEPS =
-skel-dev_TSL_SRC_PKG := skel
-
-skel_TSL_PKGS := skel-dev skel
+skel_TSL_PKGS := skel
 
 endif
