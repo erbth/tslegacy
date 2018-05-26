@@ -13,7 +13,7 @@ xcursor-themes_SRC_ARCHIVE := $(xcursor-themes_SRC_DIR).tar.bz2
 xcursor-themes_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
-	xorg-applications-dev_installed
+	xorg-applications-all-dev_installed
 
 xcursor-themes_TSL_TYPE := sw
 xcursor-themes_TSL_RDEPS =

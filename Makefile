@@ -169,6 +169,7 @@ SOURCE_PACKAGES := \
 	wayland-protocols \
 	xbitmaps \
 	xcb-proto \
+	xcursor-themes \
 	xml-light \
 	xml-parser \
 	xz \
