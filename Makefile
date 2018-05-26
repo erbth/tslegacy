@@ -183,6 +183,7 @@ SOURCE_PACKAGES := \
 	xf86-video-amdgpu \
 	xf86-video-ati \
 	xf86-video-fbdev \
+	xf86-video-nouveau \
 	xkeyboard-config \
 	xinit \
 	xml-light \
