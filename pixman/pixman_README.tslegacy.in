@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the library of Pixman version PKG_UPSTREAM_VERSION.
+Its ABI version is not respected that is no ABI versioned packages exist.
+
+Licensing information if provided by the upstream package in an easily readable
+manner, can be found in /usr/share/doc/PKG_NAME.
+It is probably incomplete for now and may stay incomplete forever.
+
+ERBTH_FOOTER
