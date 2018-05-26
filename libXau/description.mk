@@ -12,7 +12,7 @@ libXau_SRC_ARCHIVE := $(libXau_SRC_DIR).tar.bz2
 libXau_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
-	x-proto-headers-dev_installed
+	xorgproto_installed
 
 libXau_TSL_TYPE := sw
 libXau_TSL_RDEPS =

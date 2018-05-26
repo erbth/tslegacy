@@ -12,7 +12,7 @@ libXdmcp_SRC_ARCHIVE := $(libXdmcp_SRC_DIR).tar.bz2
 libXdmcp_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
-	x-proto-headers-dev_installed
+	xorgproto_installed
 
 libXdmcp_TSL_TYPE := sw
 libXdmcp_TSL_RDEPS =

@@ -1,4 +1,4 @@
-SRC_NAME := skel
+SRC_NAME := xorgproto
 
 include description.mk
 include ../common/basic.mk

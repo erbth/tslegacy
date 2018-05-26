@@ -177,11 +177,11 @@ SOURCE_PACKAGES := \
 	xml-light \
 	xml-parser \
 	xorg-server \
+	xorgproto \
 	xz \
 	zlib
 
 # Add the source packages of automatically generated packages
-include generators/xorg/protocols/xorg-protocols.mk
 include generators/xorg/xorg_libraries/xorg-libraries.mk
 include generators/xorg/xcb_utils/xcb_utils.mk
 include generators/xorg/xorg_applications/xorg_applications.mk
