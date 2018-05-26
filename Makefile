@@ -112,6 +112,7 @@ SOURCE_PACKAGES := \
 	kmod \
 	less \
 	libdrm \
+	libepoxy \
 	libffi \
 	libpng \
 	libtool \
