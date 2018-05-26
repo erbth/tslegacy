@@ -184,6 +184,7 @@ SOURCE_PACKAGES := \
 	xf86-video-ati \
 	xf86-video-fbdev \
 	xf86-video-nouveau \
+	xf86-video-vmware \
 	xkeyboard-config \
 	xinit \
 	xml-light \
