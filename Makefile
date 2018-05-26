@@ -174,6 +174,7 @@ SOURCE_PACKAGES := \
 	xcb-proto \
 	xcursor-themes \
 	xkeyboard-config \
+	xinit \
 	xml-light \
 	xml-parser \
 	xorg-server \

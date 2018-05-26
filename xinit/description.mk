@@ -13,7 +13,8 @@ xinit_SRC_ARCHIVE := $(xinit_SRC_DIR).tar.bz2
 xinit_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
-	xorg-libraries-dev_installed
+	xorg-libraries-dev_installed \
+	libxcb-dev_installed
 
 xinit_TSL_TYPE := sw
 xinit_TSL_RDEPS =
