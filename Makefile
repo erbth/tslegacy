@@ -113,6 +113,7 @@ SOURCE_PACKAGES := \
 	less \
 	libdrm \
 	libepoxy \
+	libevdev \
 	libffi \
 	libpng \
 	libtool \

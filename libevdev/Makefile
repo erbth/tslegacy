@@ -2,7 +2,7 @@ SRC_NAME := libevdev
 
 include description.mk
 include ../common/basic.mk
-include ../uils/xorg/build_env.mk
+include ../utils/xorg/build_env.mk
 
 # I adapted the configure and build procedures from the book
 # `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
