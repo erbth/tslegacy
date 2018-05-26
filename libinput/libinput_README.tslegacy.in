@@ -1,6 +1,6 @@
 BASIC_PKG_INFO
 
-This package contains the programs of libinput version PKG_UPSTREAM_VERSION.
+This package contains the runtime files of libinput version PKG_UPSTREAM_VERSION.
 
 Licensing information if provided by the upstream package in an easily readable
 manner, can be found in /usr/share/doc/PKG_NAME.

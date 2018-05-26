@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{libinput,libinput-dev,libinput-libs}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{libinput,libinput-dev}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -30,7 +30,7 @@ done
 rm -rf ${INSTALL_DIR}/target/*
 install -dm755 ${INSTALL_DIR}/target
 
-cd ${BUILD_DIR}/${SRC_DIR}
+cd ${BUILD_DIR}/${SRC_DIR}/build
 DESTDIR=${INSTALL_DIR}/target ninja install
 
 cd ${INSTALL_DIR}/target
@@ -72,38 +72,6 @@ then
 fi
 
 install_readme_files "${PKG_DIRS[1]}" libinput-dev
-
-# libinput-libs
-cd ${INSTALL_DIR}/target
-
-for DIR in usr/share/locale usr/lib/python*
-do
-    if [ -d "$DIR" ]
-    then
-        PARENT="$(dirname $DIR)"
-
-        if ! [ -d "${PKG_DIRS[2]}/$PARENT" ]
-        then
-            install -dm755 "${PKG_DIRS[2]}/$PARENT"
-        fi
-
-        mv "$DIR" "${PKG_DIRS[2]}/$PARENT/"
-    fi
-done
-
-while IFS='' read -r FILE
-do
-    DIR="$(dirname $FILE)"
-
-    if ! [ -d "${PKG_DIRS[2]}/$DIR" ]
-    then
-        install -dm755 "${PKG_DIRS[2]}/$DIR"
-    fi
-
-    mv "$FILE" "${PKG_DIRS[2]}/$DIR/"
-done < <(find \( -iname \*.so -o -iregex .\*\\.so\\.[0-9.]\* \) -a \( -type f -o -type l \))
-
-install_readme_files "${PKG_DIRS[2]}" libinput-libs
 
 # libinput
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/

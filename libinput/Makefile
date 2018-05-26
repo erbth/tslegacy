@@ -10,6 +10,7 @@ include ../common/basic.mk
 $(BUILD_DIR)/configured:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
 	mkdir build && \
+	cd build && \
 	meson \
 		--prefix=/usr \
 		-Dudev-dir=/lib/udev \

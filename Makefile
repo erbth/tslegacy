@@ -115,6 +115,7 @@ SOURCE_PACKAGES := \
 	libepoxy \
 	libevdev \
 	libffi \
+	libinput \
 	libpng \
 	libtool \
 	libuv \
