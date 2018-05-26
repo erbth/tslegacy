@@ -1,0 +1,7 @@
+# The book
+# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
+# Team suggests to run ldconfig after the xserver has been installed. It says
+# this was only necessary for tests however it can't hurt. At the time I
+# initially wrote this file, the book was available from
+# www.linuxfromscratch.org/blfs.
+ldconfig
