@@ -1,0 +1,10 @@
+BASIC_PKG_INFO
+
+This package contains the programs xinit and startx of the package xinit
+version PKG_UPSTREAM_VERSION along with other files of that source package.
+
+Licensing information if provided by the upstream package in an easily readable
+manner, can be found in /usr/share/doc/PKG_NAME.
+It is probably incomplete for now and may stay incomplete forever.
+
+ERBTH_FOOTER
