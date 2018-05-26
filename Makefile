@@ -182,6 +182,7 @@ SOURCE_PACKAGES := \
 	xf86-input-wacom \
 	xf86-video-amdgpu \
 	xf86-video-ati \
+	xf86-video-fbdev \
 	xkeyboard-config \
 	xinit \
 	xml-light \
