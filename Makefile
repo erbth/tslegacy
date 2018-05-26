@@ -178,6 +178,7 @@ SOURCE_PACKAGES := \
 	xcursor-themes \
 	xf86-input-libinput \
 	xf86-input-synaptics \
+	xf86-input-vmmouse \
 	xkeyboard-config \
 	xinit \
 	xml-light \

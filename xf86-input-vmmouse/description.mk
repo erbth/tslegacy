@@ -14,7 +14,8 @@ xf86-input-vmmouse_SRC_ARCHIVE := $(xf86-input-vmmouse_SRC_DIR).tar.bz2
 xf86-input-vmmouse_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
-	xorg-server-dev_installed
+	xorg-server-dev_installed \
+	eudev-dev_installed
 
 xf86-input-vmmouse_TSL_TYPE := sw
 xf86-input-vmmouse_TSL_RDEPS =
