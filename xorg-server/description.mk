@@ -14,9 +14,16 @@ xorg-server_SRC_CDEPS := \
 	gcc_installed \
 	glibc-dev_installed \
 	pixman-dev_installed \
-	xorg-fonts-dev_installed \
+	font-util-dev_installed \
+	xorg-fonts_installed \
 	xkeyboard-config-dev_installed \
-	libepxoy-dev_installed
+	libepoxy-dev_installed \
+	xcb-util-keysyms-dev_installed \
+	xcb-util-image-dev_installed \
+	xcb-util-renderutil-dev_installed \
+	xcb-util-wm-dev_installed \
+	wayland-dev_installed \
+	wayland-protocols_installed
 
 xorg-server_TSL_TYPE := sw
 xorg-server_TSL_RDEPS =
