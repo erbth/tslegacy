@@ -9,7 +9,8 @@ include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 zlib_SRC_VERSION := 1.2.11
 zlib_SRC_DIR := zlib-$(zlib_SRC_VERSION)
 zlib_SRC_ARCHIVE := $(zlib_SRC_DIR).tar.gz
-zlib_SRC_CDEPS := toolchain_adjusted
+zlib_SRC_CDEPS := \
+	glibc-dev_installed
 
 export zlib_SRC_ABI_VERSION := 1
 export zlib_ABI := $(zlib_SRC_ABI_VERSION)

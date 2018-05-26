@@ -176,7 +176,6 @@ SOURCE_PACKAGES := \
 	xkeyboard-config \
 	xml-light \
 	xml-parser \
-	xorg-server \
 	xorgproto \
 	xz \
 	zlib
@@ -244,58 +243,7 @@ $(ALL_TSL_PACKAGES:%=$(STATE_DIR)/%_installed): \
 	$(TPM) --remove-unneeded
 	> $@
 
-# Special rule for gcc since a temporary symlink might have to be removed first
-$(STATE_DIR)/gcc_installed: $(STATE_DIR)/gcc_symlinks_removed
-
-$(STATE_DIR)/gcc_symlinks_removed: $(STATE_DIR)/gcc_collected $(STATE_DIR)/tool_links_created
-	if test -L $(TPM_TARGET)/usr/lib/gcc; then rm $(TPM_TARGET)/usr/lib/gcc; fi
-	rm -vf $(TPM_TARGET)/usr/lib/libstdc++.{a,so{,.$(libstdcxx_ABI)}} \
-	rm -vf $(TPM_TARGET)/usr/lib/libgcc_s.so{,.$(libgcc_ABI)} \
-	> $@
-
-# Special rule for installing coreutils since the preliminary runtime system
-# has some temporary symlinks which need to be removed no
-$(STATE_DIR)/coreutils_installed: $(STATE_DIR)/coreutils_symlinks_removed
-$(STATE_DIR)/coreutils-dev_installed: $(STATE_DIR)/coreutils_symlinks_removed
-
-$(STATE_DIR)/coreutils_symlinks_removed: \
-	$(STATE_DIR)/coreutils_collected \
-	$(STATE_DIR)/tool_links_created
-	if ! test -f $(STATE_DIR)/coreutils_installed && \
-	! test -f $(STATE_DIR)/coreutils_installed; then \
-		rm -vf $(TPM_TARGET)/usr/bin/install && \
-		rm -vf $(TPM_TARGET)/bin/{cat,dd,echo,ln,pwd,rm,stty}; \
-	fi
-	> $@
-
-# Special rule for installing bash since a symlink needs to be removed first
-$(STATE_DIR)/bash_installed: $(STATE_DIR)/bash_symlinks_removed
-$(STATE_DIR)/bash-dev_installed: $(STATE_DIR)/bash_symlinks_removed
-
-$(STATE_DIR)/bash_symlinks_removed: \
-	$(STATE_DIR)/bash_collected \
-	$(STATE_DIR)/tool_links_created
-	if ! test -f $(STATE_DIR)/bash_installed && \
-	! test -f $(STATE_DIR)/bash-dev_installed; then \
-		rm $(TPM_TARGET)/bin/bash; \
-	fi
-	> $@
-
-# Special rule for installing perl since a symlink needs to be removed first
-$(STATE_DIR)/perl_installed: $(STATE_DIR)/perl_symlinks_removed
-$(STATE_DIR)/perl-dev_installed: $(STATE_DIR)/perl_symlinks_removed
-
-$(STATE_DIR)/perl_symlinks_removed: \
-	$(STATE_DIR)/perl_collected \
-	$(STATE_DIR)/tool_links_created
-	if ! test -f $(STATE_DIR)/perl_installed && \
-	! test -f $(STATE_DIR)/perl-dev_installed; then \
-		rm $(TPM_TARGET)/usr/bin/perl; \
-	fi
-	> $@
-
-
-# Special build procedures that cannot be included in the packages' Makfiles
+# Special build procedures that cannot be included in the packages' Makefiles
 # since they require an overall view on the system:
 # HarfBuzz and FreeType
 $(STATE_DIR)/freetype_clean_to_build: $(STATE_DIR)/harfbuzz-dev_installed
@@ -321,16 +269,6 @@ $(STATE_DIR)/freetype_without_harfbuzz: \
 	> $@
 
 # Other rules
-$(STATE_DIR)/toolchain_adjusted: adjust_toolchain.sh $(STATE_DIR)/glibc-dev_installed
-	cd $(TOOLS_DIR) && \
-	$(PACKAGING_RESOURCE_DIR)/adjust_toolchain.sh && \
-	> $@
-
-$(STATE_DIR)/tool_links_created: create_tool_links.sh
-	cd $(TPM_TARGET) \
-	&& $(PACKAGING_RESOURCE_DIR)/create_tool_links.sh && \
-	> $@
-
 $(TPM_CONF): $(MAKEFILE_LIST)
 	install -dm755 $(dir $@)
 	install -m 644 <(echo -e \
@@ -340,11 +278,16 @@ $(TPM_CONF): $(MAKEFILE_LIST)
 	    <arch>$(PKG_ARCH)</arch>\n\
 	</tpm>" || kill $$$$) $@
 
-$(STATE_DIR)/dummy_pkgs_created: create_dummy_pkgs.sh
+# If the script is updated, manual interaction is required. The dummy packages
+# should never cause anything to rebuild automatically. Actually they are not
+# needed anymore since bootstrapping is complete.
+$(STATE_DIR)/dummy_pkgs_created: | create_dummy_pkgs.sh
 	bash $<
 	> $@
 
-$(SOURCE_LOCATION)/dummy_src_pkg.tar.gz: create_dummy_src_pkg.sh
+# If the script is updated, manual interaction is required. The dummy package
+# should never cause anything to rebuild automatically.
+$(SOURCE_LOCATION)/dummy_src_pkg.tar.gz: | create_dummy_src_pkg.sh
 	bash $<
 
 
@@ -364,9 +307,18 @@ $(RM_OLD_PKG_VERSIONS): FORCE
 	cd $(UTILS) && \
 	$(MAKE)
 
+source_package_of_%:
+	@echo $($(*)_TSL_SRC_PKG)
+
+tsl_packages_of_%:
+	@echo $($(*)_TSL_PKGS)
+
+cdeps_installed_of_%:
+	@echo $(patsubst %_installed,%,$($(*)_SRC_CDEPS))
+
 # Cleaning
 .PHONY: clean
-clean: clean_collecting_repo clean_packages clean_compiletime_system clean_toolchain
+clean: clean_collecting_repo clean_packages clean_compiletime_system
 
 # Cleaning and tidying up the collecting repo
 .PHONY: remove_old_collected_packages
@@ -412,27 +364,11 @@ clean_packages_confirmation:
 	@ echo Shall we proceed ? [y/N]
 	@ read -n1 -s && test "$$REPLY" == "y"
 
-# Cleaning the toolchain
-.PHONY: clean_toolchain
-clean_toolchain: clean_toolchain_confirmation
-	cd $(TOOLS_DIR) && \
-	$(PACKAGING_RESOURCE_DIR)/restore_toolchain.sh && \
-	rm -vf $(STATE_DIR)/toolchain_adjusted
-
-.PHONY: clean_toolchain_confirmation
-clean_toolchain_confirmation:
-	@ echo
-	@ echo The toolchain will be cleaned
-	@ echo
-	@ echo Shall we proceed ? [y/N]
-	@ read -n1 -s && test "$$REPLY" == "y"
-
 # Cleaning the compiletime system
 .PHONY: clean_compiletime_system
 clean_compiletime_system: clean_compiletime_system_confirmation
 	rm -rvf $(TPM_TARGET)/{bin,boot,etc,home,lib,lib64,media,mnt,opt,root,sbin,srv,tmp,usr,var}
-	rm -vf $(STATE_DIR)/*_installed $(STATE_DIR)/*_symlinks_removed \
-		$(STATE_DIR)/tool_links_created $(STATE_DIR)/dummy_pkgs_created
+	rm -vf $(STATE_DIR)/*_installed $(STATE_DIR)/dummy_pkgs_created
 
 .PHONY: clean_compiletime_system_confirmation
 clean_compiletime_system_confirmation:
@@ -466,6 +402,7 @@ dist:
 		set_env.sample \
 		makefile_utilities.mk \
 		show_todos.sh \
+		restore_status_from_collecting_repo.sh \
 		common \
 		skel \
 		generators \

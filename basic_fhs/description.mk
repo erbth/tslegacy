@@ -7,7 +7,7 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 basic_fhs_SRC_VERSION := 3.0
 basic_fhs_SRC_ARCHIVE := basic_fhs-$(basic_fhs_SRC_VERSION).tar.xz
 basic_fhs_SRC_DIR := basic_fhs-$(basic_fhs_SRC_VERSION)
-basic_fhs_SRC_CDEPS := tool_links_created
+basic_fhs_SRC_CDEPS :=
 
 # Information about the differrent packages that are built out of this source
 # package.
