@@ -8,7 +8,7 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 # Team. At the time I initially wrote this file, the book was available
 # from www.linuxfromscratch.org/blfs.
 xkeyboard-config_SRC_VERSION := 2.23.1
-xkeyboard-config_SRC_DIR := xkeyoardconfig-$(xkeyboard-config_SRC_VERSION)
+xkeyboard-config_SRC_DIR := xkeyboard-config-$(xkeyboard-config_SRC_VERSION)
 xkeyboard-config_SRC_ARCHIVE := $(xkeyboard-config_SRC_DIR).tar.bz2
 xkeyboard-config_SRC_CDEPS := \
 	gcc_installed \

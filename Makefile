@@ -171,6 +171,7 @@ SOURCE_PACKAGES := \
 	xbitmaps \
 	xcb-proto \
 	xcursor-themes \
+	xkeyboard-config \
 	xml-light \
 	xml-parser \
 	xz \
