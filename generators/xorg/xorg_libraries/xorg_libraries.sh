@@ -315,9 +315,11 @@ function generate_build_system
 
     echo >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"
 
+    PACKAGES+=($META_PACKAGE)
+
     # Add rule for cleaning all generated packages to the Master Makefile
     # Extension
-    echo "generator_${GENERATOR_NAME}_all_packages_clean:" >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"
+    echo "generator_${GENERATOR_NAME}_all_packages_clean: \\" >> "$GENERATOR_DIR/$SRC_PKG_EXTENSION"
 
     for PKG in "${PACKAGES[@]}"
     do

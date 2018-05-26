@@ -15,7 +15,7 @@ skel_SRC_CDEPS := \
 	glibc-dev_installed \
 	libpng-dev_installed \
 	mesa-dev_installed \
-	xbitmaps \
+	xbitmaps_installed \
 	libxcb-dev_installed \
 	xcb-util-dev_installed \
 	xorg-libraries-dev_installed

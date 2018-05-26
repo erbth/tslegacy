@@ -3,6 +3,7 @@ BASIC_PKG_INFO
 This package contains the development files and the documentation of
 Wayland version PKG_UPSTREAM_VERSION. The utility wayland-scanner is also
 included.
+The static libwayland-egl is not included since Mesa's version shall be used.
 
 Licensing information can be found in /usr/share/doc/PKG_NAME. It is probably
 incomplete.

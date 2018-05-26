@@ -12,6 +12,10 @@ TPM ?= tpm
 # TPM's database does not allow concurrent installation
 .NOTPARALLEL:
 
+# Make sure that the defult rule is the first rule defined in this Makfile
+.PHONY: default_rule
+default_rule: master
+
 # Makefile utilities
 include makefile_utilities.mk
 
@@ -174,7 +178,7 @@ SOURCE_PACKAGES := \
 include generators/xorg/protocols/xorg-protocols.mk
 include generators/xorg/xorg_libraries/xorg-libraries.mk
 include generators/xorg/xcb_utils/xcb_utils.mk
-# include generators/xorg/xorg_applications/xorg_applications.mk
+include generators/xorg/xorg_applications/xorg_applications.mk
 # include generators/xorg/xorg_applications/xorg_fonts.mk
 
 include $(SOURCE_PACKAGES:%=%/description.mk)
@@ -185,6 +189,9 @@ ALL_TSL_PACKAGES := $(foreach SRC,$(SOURCE_PACKAGES),$($(SRC)_TSL_PKGS))
 ALL_COLLECTED := $(ALL_TSL_PACKAGES:%=$(STATE_DIR)/%_collected)
 
 # Rules
+.PHONY: master
+master: all_packages_collected
+
 .PHONY: all_packages_collected
 all_packages_collected: $(ALL_COLLECTED)
 

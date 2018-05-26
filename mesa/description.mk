@@ -34,9 +34,12 @@ mesa_TSL_TYPE := sw
 mesa_TSL_RDEPS =
 mesa_TSL_SRC_PKG := mesa
 
+# The dependency on wayland-dev is required since wayland-dev contains the
+# header file wayland-egl.h.
 mesa-dev_TSL_TYPE := sw
 mesa-dev_TSL_RDEPS = \
-	$(call equal_dep,mesa)
+	$(call equal_dep,mesa) \
+	$(call bigger_equal_dep,wayland-dev)
 mesa-dev_TSL_SRC_PKG := mesa
 
 mesa_TSL_PKGS := mesa-dev mesa

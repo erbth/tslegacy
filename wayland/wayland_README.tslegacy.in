@@ -2,6 +2,7 @@ BASIC_PKG_INFO
 
 This package contains the libraries of Wayland version PKG_UPSTREAM_VERSION.
 Their ABI versions are not respected that is no ABI versioned packages exist.
+The shared libwayland-egl is not included since Mesa's version shall be used.
 
 Licensing information can be found in /usr/share/doc/PKG_NAME. It is probably
 incomplete.

@@ -1,1 +1,6 @@
 HANDLE_TEXINFO
+
+# Remove libwayland-egl and related files as we will use the version of Mesa.
+# This is so ugly because the source package's build system does not offer an
+# easy way to disable this library.
+find -iname \*egl\* -a ! -iname \*.h -delete
