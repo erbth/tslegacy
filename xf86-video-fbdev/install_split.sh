@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{xf86-input-libinput,xf86-input-libinput-dev}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{xf86-video-fbdev,xf86-video-fbdev-dev}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -36,7 +36,7 @@ make DESTDIR=${INSTALL_DIR}/target install-strip
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# xf86-input-libinput-dev
+# xf86-video-fbdev-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,13 +66,13 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/xf86-input-libinput" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/xf86-video-fbdev" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/xf86-input-libinput"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/xf86-video-fbdev"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" xf86-input-libinput-dev
+install_readme_files "${PKG_DIRS[1]}" xf86-video-fbdev-dev
 
-# xf86-input-libinput
+# xf86-video-fbdev
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" xf86-input-libinput
+install_readme_files "${PKG_DIRS[0]}" xf86-video-fbdev

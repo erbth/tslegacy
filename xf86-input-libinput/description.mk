@@ -1,34 +1,31 @@
-ifndef skel_description_included
-skel_description_included := 1
+ifndef xf86-input-libinput_description_included
+xf86-input-libinput_description_included := 1
 
 include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
-include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
-include $(PACKAGING_RESOURCE_DIR)/gcc/description.mk
-
-skel_SRC_VERSION := 0.0.0
-skel_SRC_DIR := skel-$(skel_SRC_VERSION)
-skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.xz
-skel_SRC_CDEPS := \
-	licenses_installed \
+# I took the important compiletime dependencies from the book
+# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
+# Team and added others, some of which I discovered after the build.
+# At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/blfs.
+xf86-input-libinput_SRC_VERSION := 0.27.1
+xf86-input-libinput_SRC_DIR := xf86-input-libinput-$(xf86-input-libinput_SRC_VERSION)
+xf86-input-libinput_SRC_ARCHIVE := $(xf86-input-libinput_SRC_DIR).tar.bz2
+xf86-input-libinput_SRC_CDEPS := \
 	gcc_installed \
-	glibc-dev_installed
+	glibc-dev_installed \
+	libinput-dev_installed \
+	xorg-server-dev_installed
 
-export skel_ABI := 10
+xf86-input-libinput_TSL_TYPE := sw
+xf86-input-libinput_TSL_RDEPS =
+xf86-input-libinput_TSL_SRC_PKG := xf86-input-libinput
 
-skel-$(skel_ABI)_TSL_TYPE := sw
-skel-$(skel_ABI)_TSL_RDEPS = \
-	$(call bigger_equal_dep,glibc-$(glibc_SRC_VERSION)) \
-	$(call bigger_equal_dep,libgcc-$(libgcc_ABI)) \
-	$(call bigger_equal_dep,licenses)
-skel-$(skel_ABI)_TSL_SRC_PKG := skel
+xf86-input-libinput-dev_TSL_TYPE := sw
+xf86-input-libinput-dev_TSL_RDEPS = \
+	$(call equal_dep,xf86-input-libinput)
+xf86-input-libinput-dev_TSL_SRC_PKG := xf86-input-libinput
 
-skel-dev_TSL_TYPE := sw
-skel-dev_TSL_RDEPS = \
-	$(call equal_dep,skel-$(skel_ABI)) \
-	$(call bigger_equal_dep,licenses)
-skel-dev_TSL_SRC_PKG := skel
-
-skel_TSL_PKGS := skel-dev skel-$(skel_ABI)
+xf86-input-libinput_TSL_PKGS := xf86-input-libinput-dev xf86-input-libinput
 
 endif

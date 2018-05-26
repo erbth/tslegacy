@@ -176,6 +176,7 @@ SOURCE_PACKAGES := \
 	xkeyboard-config \
 	xml-light \
 	xml-parser \
+	xorg-server \
 	xorgproto \
 	xz \
 	zlib

@@ -6,6 +6,11 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 include $(PACKAGING_RESOURCE_DIR)/gcc/description.mk
 
+# I took the important compiletime dependencies from the book
+# `Beyond Linux From Scratch', `Version 8.2' by the BLFS Development
+# Team and added others, some of which I discovered after the build.
+# At the time I initially wrote this file, the book was available
+# from www.linuxfromscratch.org/blfs.
 skel_SRC_VERSION := 0.0.0
 skel_SRC_DIR := skel-$(skel_SRC_VERSION)
 skel_SRC_ARCHIVE := $(skel_SRC_DIR).tar.xz

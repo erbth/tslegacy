@@ -33,6 +33,8 @@ install -dm755 ${INSTALL_DIR}/target
 cd ${BUILD_DIR}/${SRC_DIR}
 make DESTDIR=${INSTALL_DIR}/target install-strip
 
+# TODO: createfiles and /tmp/.ICE-unix, /tmp/.X11-unix (BLFS)
+
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 

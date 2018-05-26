@@ -1,4 +1,4 @@
-SRC_NAME := xf86-input-libinput
+SRC_NAME := xf86-input-wacom
 
 include description.mk
 include ../common/basic.mk
@@ -10,7 +10,9 @@ include ../utils/xorg/build_env.mk
 # from www.linuxfromscratch.org/blfs.
 $(BUILD_DIR)/configured:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
-	./configure $(XORG_CONFIG)
+	./configure \
+		$(XORG_CONFIG) \
+		--with-systemd-unit-dir=no
 	> $@
 
 $(BUILD_DIR)/built:

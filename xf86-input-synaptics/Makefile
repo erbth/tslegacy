@@ -1,4 +1,4 @@
-SRC_NAME := xf86-input-libinput
+SRC_NAME := xf86-input-synaptics
 
 include description.mk
 include ../common/basic.mk

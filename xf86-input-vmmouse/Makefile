@@ -1,4 +1,4 @@
-SRC_NAME := xf86-input-libinput
+SRC_NAME := xf86-input-vmmouse
 
 include description.mk
 include ../common/basic.mk
@@ -10,7 +10,11 @@ include ../utils/xorg/build_env.mk
 # from www.linuxfromscratch.org/blfs.
 $(BUILD_DIR)/configured:
 	cd $(BUILD_DIR)/$(SRC_DIR) && \
-	./configure $(XORG_CONFIG)
+	./configure \
+		$(XORG_CONFIG) \
+		--without-hal-fdi-dir \
+		--without-hal-callouts-dir \
+		--with-udev-rules-dir=/lib/udev/rules.d
 	> $@
 
 $(BUILD_DIR)/built:

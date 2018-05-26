@@ -20,7 +20,7 @@ function install_readme_files
 
 # Clean the packaging target
 declare -a PKG_DIRS
-for DIR in ${PACKAGING_LOCATION}/{xf86-input-libinput,xf86-input-libinput-dev}/${DESTDIR}
+for DIR in ${PACKAGING_LOCATION}/{xf86-video-ati,xf86-video-ati-dev}/${DESTDIR}
 do
     PKG_DIRS+=($DIR)
     rm -rf ${DIR}/*
@@ -33,10 +33,12 @@ install -dm755 ${INSTALL_DIR}/target
 cd ${BUILD_DIR}/${SRC_DIR}
 make DESTDIR=${INSTALL_DIR}/target install-strip
 
+# TODO: install 10-radeon.conf? (BLFS)
+
 cd ${INSTALL_DIR}/target
 bash ../adapt.sh
 
-# xf86-input-libinput-dev
+# xf86-video-ati-dev
 cd ${INSTALL_DIR}/target
 
 while IFS='' read -r FILE
@@ -66,13 +68,13 @@ do
     fi
 done
 
-if [ -d "${PKG_DIRS[1]}/usr/share/doc/xf86-input-libinput" ]
+if [ -d "${PKG_DIRS[1]}/usr/share/doc/xf86-video-ati" ]
 then
-    mv "${PKG_DIRS[1]}/usr/share/doc/xf86-input-libinput"{,-dev}
+    mv "${PKG_DIRS[1]}/usr/share/doc/xf86-video-ati"{,-dev}
 fi
 
-install_readme_files "${PKG_DIRS[1]}" xf86-input-libinput-dev
+install_readme_files "${PKG_DIRS[1]}" xf86-video-ati-dev
 
-# xf86-input-libinput
+# xf86-video-ati
 mv ${INSTALL_DIR}/target/* ${PKG_DIRS[0]}/
-install_readme_files "${PKG_DIRS[0]}" xf86-input-libinput
+install_readme_files "${PKG_DIRS[0]}" xf86-video-ati
