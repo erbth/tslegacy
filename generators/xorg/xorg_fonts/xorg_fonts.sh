@@ -225,6 +225,42 @@ function generate_build_system
 
         cp "${GENERATOR_DIR}"/skel_configure.sh.in "$PKG_DIR"/"$PKG"_configure.sh.in
 
+        # Add code to handle the font indeces fonts.dir and fonts.scale
+        case "$PKG" in
+            *-type1)
+                echo "rm -f usr/share/fonts/X11/Type1/fonts.{dir,scale}" >> \
+                    "$PKG_DIR/adapt.sh.in"
+
+                echo "mkfontscale /usr/share/fonts/X11/Type1" >> \
+                "$PKG_DIR/${PKG}_configure.sh.in"
+
+                echo "mkfontdir /usr/share/fonts/X11/Type1" >> \
+                    "$PKG_DIR/${PKG}_configure.sh.in"
+                ;;
+
+            *-ttf | font-misc-ethiopic)
+                echo "rm -f usr/share/fonts/X11/TTF/fonts.{dir,scale}" >> \
+                    "$PKG_DIR/adapt.sh.in"
+
+                echo "mkfontscale /usr/share/fonts/X11/TTF" >> \
+                "$PKG_DIR/${PKG}_configure.sh.in"
+
+                echo "mkfontdir /usr/share/fonts/X11/TTF" >> \
+                    "$PKG_DIR/${PKG}_configure.sh.in"
+                ;;
+
+            *-otf | font-misc-ethiopic)
+                echo "rm -f usr/share/fonts/X11/OTF/fonts.{dir,scale}" >> \
+                    "$PKG_DIR/adapt.sh.in"
+
+                echo "mkfontscale /usr/share/fonts/X11/OTF" >> \
+                "$PKG_DIR/${PKG}_configure.sh.in"
+
+                echo "mkfontdir /usr/share/fonts/X11/OTF" >> \
+                    "$PKG_DIR/${PKG}_configure.sh.in"
+                ;;
+        esac
+
         sed -e "s/skel_version/$VERSION/g" \
             -e "s/skel_compression/$COMPRESSION/g"\
             -e "s/skel/$PKG/g" \

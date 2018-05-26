@@ -21,8 +21,11 @@ skel_SRC_CDEPS := \
 	xorg-libraries-dev_installed \
 	font-util-dev_installed
 
+# These two programs are requried to update the font indeces.
 skel_TSL_TYPE := sw
-skel_TSL_RDEPS =
+skel_TSL_RDEPS = \
+	$(call bigger_equal_dep,mkfontdir) \
+	$(call bigger_equal_dep,mkfontscale)
 skel_TSL_SRC_PKG := skel
 
 skel_TSL_PKGS := skel
