@@ -141,6 +141,7 @@ SOURCE_PACKAGES := \
 	patch \
 	pcre \
 	perl \
+	pixman \
 	pkg-config \
 	procps-ng \
 	python \
