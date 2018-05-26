@@ -176,6 +176,7 @@ SOURCE_PACKAGES := \
 	xbitmaps \
 	xcb-proto \
 	xcursor-themes \
+	xf86-input-libinput \
 	xkeyboard-config \
 	xinit \
 	xml-light \
