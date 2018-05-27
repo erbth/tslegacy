@@ -21,6 +21,7 @@ toolchain_SRC_CDEPS := \
 	file-dev_collected \
 	findlib-dev_collected \
 	findutils-dev_collected \
+	flex-dev_collected \
 	gawk-dev_collected \
 	gcc_collected \
 	gettext-dev_collected \

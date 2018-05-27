@@ -15,7 +15,8 @@ linux_SRC_CDEPS := \
 	bc-dev_installed \
 	openssl-dev_installed \
 	elfutils-dev_installed \
-	kmod-dev_installed
+	kmod-dev_installed \
+	flex-dev_installed
 
 linux_TSL_TYPE := sw
 linux_TSL_RDEPS = \

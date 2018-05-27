@@ -86,6 +86,7 @@ SOURCE_PACKAGES := \
 	file \
 	findlib \
 	findutils \
+	flex \
 	fontconfig \
 	font-util \
 	freetype \
