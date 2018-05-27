@@ -33,9 +33,6 @@ install -dm755 ${INSTALL_DIR}/target
 cd ${BUILD_DIR}/${SRC_DIR}
 make DESTDIR=${INSTALL_DIR}/target install-strip
 
-cd ${INSTALL_DIR}/target
-bash ../adapt.sh
-
 # libuv-dev
 cd ${INSTALL_DIR}/target
 

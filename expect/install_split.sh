@@ -19,7 +19,7 @@ install -dm755 ${INSTALL_DIR}/target
 # Bruce Dubbs. At the time I initially wrote this file, the book was available
 # from www.linuxfromscratch.org/lfs.
 cd ${BUILD_DIR}/${SRC_DIR}
-make SCRIPTS="" DESTDIR=${PKG_DIRS[0]}/target install
+make SCRIPTS="" DESTDIR=${PKG_DIRS[0]} install
 
 cd ${PKG_DIRS[0]}
 bash ${INSTALL_DIR}/adapt.sh

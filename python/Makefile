@@ -13,7 +13,7 @@ $(BUILD_DIR)/configured:
 		--enable-shared \
 		--with-system-expat \
 		--with-system-ffi \
-		--with-ensurepip=yes \
+		--with-ensurepip=install \
 		--enable-unicode=ucs4 \
 		# --enable-optimizations
 	> $@

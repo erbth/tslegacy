@@ -10,7 +10,8 @@ dejagnu_SRC_CDEPS := \
 	licenses_installed \
 	gcc_installed \
 	glibc-dev_installed \
-	bash-dev_installed
+	bash-dev_installed \
+	expect-dev_installed
 
 dejagnu-dev_TSL_TYPE := sw
 dejagnu-dev_TSL_RDEPS = \
