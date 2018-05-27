@@ -155,6 +155,7 @@ libnss_files-2_TSL_RDEPS = \
 	$(call bigger_equal_dep,basic_fhs)
 libnss_files-2_TSL_SRC_PKG := glibc
 
+# TODO: fix dependency on licenses
 libnss_hesiod-2_TSL_TYPE := sw
 libnss_hesiod-2_TSL_RDEPS = \
 	$(call bigger_equal_version,licenses) \

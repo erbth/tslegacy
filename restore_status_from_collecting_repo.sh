@@ -29,6 +29,7 @@ fi
 COLLECTING_DIR="$COLLECTING_REPO/$PKG_ARCH"
 STATE_DIR="$PACKAGING_BASE/state"
 PKGDB="$STATE_DIR/pkgdb.xml"
+PACKAGING_LOCATION="$PACKAGING_BASE/packaging_location"
 
 if ! [ -d "$COLLECTING_DIR" ]
 then
@@ -76,6 +77,11 @@ do
     touch -d "$TIMESTRING" "${STATE_DIR}/${TSL_PKG}_collected"
     touch -d "$TIMESTRING" "${STATE_DIR}/${SRC_PKG}_built"
     touch -d "$TIMESTRING" "${STATE_DIR}/${SRC_PKG}_clean_to_build"
+
+    # Restore the version files
+    mkdir -p "${PACKAGING_LOCATION}/${TSL_PKG}"
+    echo -n "${VERSION}" > "${PACKAGING_LOCATION}/${TSL_PKG}/version"
+    touch -d "$TIMESTRING" "${PACKAGING_LOCATION}/${TSL_PKG}/version"
 
     # Special status files
     case "$SRC_PKG" in
