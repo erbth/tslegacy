@@ -5,7 +5,7 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
 include $(PACKAGING_RESOURCE_DIR)/glibc/description.mk
 
-linux_SRC_VERSION := 4.16.5
+linux_SRC_VERSION := 4.16.12
 linux_SRC_DIR := linux-$(linux_SRC_VERSION)
 linux_SRC_ARCHIVE := $(linux_SRC_DIR).tar
 linux_SRC_CDEPS := \
