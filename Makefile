@@ -90,6 +90,7 @@ SOURCE_PACKAGES := \
 	fontconfig \
 	font-util \
 	freetype \
+	fribidi \
 	funcsigs \
 	gawk \
 	gcc \
