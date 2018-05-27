@@ -36,8 +36,10 @@ skel_SRC_CDEPS := \
 	pcre-dev_installed \
 	zlib-dev_installed
 
+# Some maybe shell scripts ...
 skel_TSL_TYPE := sw
-skel_TSL_RDEPS =
+skel_TSL_RDEPS = \
+	$(call bigger_equal_dep,bash)
 skel_TSL_SRC_PKG := skel
 
 skel-dev_TSL_TYPE := sw
