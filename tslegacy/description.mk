@@ -10,8 +10,10 @@ tslegacy_XORG_PACKAGES := \
 	xhost \
 	xlsclients \
 	xrdb \
+	xclock \
 	xcursor-themes \
 	xorg-fonts \
+	fontconfig \
 	xkeyboard-config \
 	xorg-server \
 	xf86-input-libinput \

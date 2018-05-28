@@ -25,15 +25,15 @@ make DESTDIR=${INSTALL_DIR}/target install-strip
 
 # libasm-<ABI>
 install -dm755 ${PKG_DIRS[0]}/usr/lib
-mv ${INSTALL_DIR}/target/usr/lib/libasm.so.* ${PKG_DIRS[0]}/usr/lib/
+mv ${INSTALL_DIR}/target/usr/lib/libasm*.so* ${PKG_DIRS[0]}/usr/lib/
 
 # libdw-<ABI>
 install -dm755 ${PKG_DIRS[1]}/usr/lib
-mv ${INSTALL_DIR}/target/usr/lib/libdw.so.* ${PKG_DIRS[1]}/usr/lib/
+mv ${INSTALL_DIR}/target/usr/lib/libdw*.so* ${PKG_DIRS[1]}/usr/lib/
 
 # libelf-<ABI>
 install -dm755 ${PKG_DIRS[2]}/usr/lib
-mv ${INSTALL_DIR}/target/usr/lib/libelf.so.* ${PKG_DIRS[2]}/usr/lib/
+mv ${INSTALL_DIR}/target/usr/lib/libelf*.so* ${PKG_DIRS[2]}/usr/lib/
 
 # elfutils-dev
 install -dm755 ${PKG_DIRS[3]}/usr

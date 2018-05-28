@@ -177,6 +177,7 @@ SOURCE_PACKAGES := \
 	wayland-protocols \
 	xbitmaps \
 	xcb-proto \
+	xclock \
 	xcursor-themes \
 	xf86-input-libinput \
 	xf86-input-synaptics \
