@@ -50,7 +50,8 @@ xorg-server_SRC_CDEPS := \
 	zlib-dev_installed
 
 xorg-server_TSL_TYPE := sw
-xorg-server_TSL_RDEPS =
+xorg-server_TSL_RDEPS = \
+	$(call bigger_equal_dep,xkbcomp)
 xorg-server_TSL_SRC_PKG := xorg-server
 
 xorg-server-dev_TSL_TYPE := sw
