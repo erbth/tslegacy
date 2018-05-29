@@ -1,0 +1,5 @@
+STRIP_SYMBOLS
+HANDLE_TEXINFO
+
+# Remove the daemon
+rm usr/bin/urxvt{c,d} usr/share/man/man1/urxvt{c,d}.1

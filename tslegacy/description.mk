@@ -11,6 +11,7 @@ tslegacy_XORG_PACKAGES := \
 	xlsclients \
 	xrdb \
 	xclock \
+	rxvt-unicode \
 	xcursor-themes \
 	xorg-fonts \
 	fontconfig \

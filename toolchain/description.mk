@@ -40,6 +40,7 @@ toolchain_SRC_CDEPS := \
 	ocaml-dev_collected \
 	patch-dev_collected \
 	perl-dev_collected \
+	pkg-config-dev_collected \
 	sed-dev_collected \
 	tar-dev_collected \
 	tcl-core-dev_collected \

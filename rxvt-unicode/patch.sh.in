@@ -1,0 +1,5 @@
+# Install the terminfo file of rxvt-unicode to DESTDIR
+sed \
+'/@TIC@/i \\t$(INSTALL) -d $(DESTDIR)/usr/share/terminfo
+s:@TIC@:& -o$(DESTDIR)/usr/share/terminfo:' \
+    -i doc/Makefile.in

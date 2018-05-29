@@ -153,6 +153,7 @@ SOURCE_PACKAGES := \
 	python \
 	python3 \
 	readline \
+	rxvt-unicode \
 	sed \
 	shadow \
 	sysvinit \

@@ -24,9 +24,13 @@ fi
 # Objdump
 find -exec objdump -p {} ';' 2> /dev/zero | grep NEEDED | awk '{print $2}' &&
 
+# Find the dynamic linkers
+find -exec readelf -l {} ';' 2> /dev/zero | grep interpreter | cut -d ']' -f 1 | \
+    awk '{print $4}'
+
 # ldd
-find -exec ldd {} ';' 2> /dev/zero | grep -e '.*\.so.*' | sed 's/^[ \t]*//' | \
-    sed -e 's/[ ]*=>.*$//' -e 's/[ ]*(.*$//'
+# find -exec ldd {} ';' 2> /dev/zero | grep -e '.*\.so.*' | sed 's/^[ \t]*//' | \
+#     sed -e 's/[ ]*=>.*$//' -e 's/[ ]*(.*$//'
 
 # It is important to escape characters that are treated specially by the regular
 # expression compiler of OCaml's Str module.
