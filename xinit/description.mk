@@ -17,7 +17,8 @@ xinit_SRC_CDEPS := \
 	libxcb-dev_installed
 
 xinit_TSL_TYPE := sw
-xinit_TSL_RDEPS =
+xinit_TSL_RDEPS = \
+	$(call bigger_equal_dep,xauth)
 xinit_TSL_SRC_PKG := xinit
 
 xinit-dev_TSL_TYPE := sw

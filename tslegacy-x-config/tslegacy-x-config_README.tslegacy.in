@@ -1,0 +1,6 @@
+BASIC_PKG_INFO
+
+This package contains all config files that are related with the X window system
+and related software. Precisely, it packages tslegacy-x-config version PKG_UPSTREAM_VERSION.
+
+ERBTH_FOOTER

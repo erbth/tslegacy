@@ -1,1 +1,5 @@
 HANDLE_TEXINFO
+
+# The xinitrc file should not be provided by this package but rather a upstream
+# software unrelated conf package, such as tslegacy-x-config.
+rm etc/X11/app-defaults/xinitrc

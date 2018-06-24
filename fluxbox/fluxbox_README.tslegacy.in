@@ -1,7 +1,6 @@
 BASIC_PKG_INFO
 
-This package contains the runtime files of rxvt-unicode version PKG_UPSTREAM_VERSION.
-The programs urxvtd and urxvtc are not included.
+This package contains the runtime files of Fluxbox version PKG_UPSTREAM_VERSION.
 
 Licensing information if provided by the upstream package in an easily readable
 manner, can be found in /usr/share/doc/PKG_NAME.

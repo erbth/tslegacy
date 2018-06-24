@@ -87,6 +87,7 @@ SOURCE_PACKAGES := \
 	findlib \
 	findutils \
 	flex \
+	fluxbox \
 	fontconfig \
 	font-util \
 	freetype \
@@ -169,7 +170,9 @@ SOURCE_PACKAGES := \
 	tslegacy-config \
 	tslegacy-installer \
 	tslegacy-sysconfig \
+	tslegacy-thinclient \
 	tslegacy-utils \
+	tslegacy-x-config \
 	tzdata \
 	util-linux \
 	util-macros \

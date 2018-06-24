@@ -1,0 +1,7 @@
+BASIC_PKG_INFO
+
+This package provides the thin client related functionality of TSClient LEGACY.
+Thus it may be considered as a very central package.
+Specifically it contains tslegacy-thinclient version PKG_UPSTREAM_VERSION.
+
+ERBTH_FOOTER

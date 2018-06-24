@@ -5,6 +5,7 @@ include ${PACKAGING_RESOURCE_DIR}/makefile_utilities.mk
 
 # Packages of Xorg that are included in tslegacy
 tslegacy_XORG_PACKAGES := \
+	fluxbox \
 	xrandr \
 	xbacklight \
 	xhost \
@@ -26,8 +27,7 @@ tslegacy_XORG_PACKAGES := \
 	xf86-video-fbdev \
 	xf86-video-intel \
 	xf86-video-nouveau \
-	xf86-video-vmware \
-	xinit
+	xf86-video-vmware
 
 tslegacy_SRC_VERSION := 0.0.0
 tslegacy_SRC_DIR := dummy_src_pkg
@@ -56,7 +56,9 @@ tslegacy_SRC_CDEPS := \
 	tslegacy-bootscripts_collected \
 	tslegacy-config_collected \
 	tslegacy-sysconfig_collected \
+	tslegacy-thinclient_collected \
 	tslegacy-utils_collected \
+	tslegacy-x-config_collected \
 	tzdata_collected \
 	util-linux_collected \
 	vim_collected \
